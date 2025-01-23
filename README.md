@@ -1,49 +1,70 @@
-# Requirements
+# Getting Started with Create React App
 
-[Node.js](https://nodejs.org/en/download) is required for this.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Getting started
+## Available Scripts
 
-1. `npx create-react-app my-app`
-2. `cd my-app`
-3. `npm install axios`
-4. `npm install react-router-dom`
+In the project directory, you can run:
 
-# Possible Errors
+### `yarn start`
 
-Backend needs `flask_cors` in order to serve data to another site.
-Since this React app has a different protocol / hostname / port combination than the backend,
-an error will be thrown by the browser unless the backend has a certain header in its responses.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-`$ pip install -U flask-cors`
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-```
-from flask import Flask
-from flask_cors import CORS
+### `yarn test`
 
-app = Flask(__name__)
-CORS(app)
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-@app.route("/")
-def helloWorld():
-  return "Hello, cross-origin-world!"
-```
+### `yarn build`
 
-# Creating the Router
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Rather than creating different files for different pages, React is used for single-page
-web apps. They have the functionality of multiple pages, but routing is done in the browser
-rather than on the server.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-# Creating the Navbar
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-React's component structure allows modularity - rather than having to write out a navbar in
-multiple pages, we can write one and import it where needed.
+### `yarn eject`
 
-# Creating the list of Pepole
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Use axios to send a GET request. Render the response in the browser.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-# Creating the Add Person button
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-Use axios to send a POST request.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
