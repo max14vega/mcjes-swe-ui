@@ -12,7 +12,11 @@ const PAGES = [
 function NavLink({ page }) {
 	const { label, destination } = page;
 	return (
-		<Button variant="contained" component={Link} to={destination}>
+		<Button 
+      variant="contained" 
+      component={Link} 
+      to={destination}
+      sx={{ display: 'inline-flex', alignItems: 'center' }}>
 			{label}
 		</Button>
 	);

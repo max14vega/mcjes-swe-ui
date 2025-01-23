@@ -18,15 +18,18 @@ html {
 }
 
 .wrapper {
-	max-width: min(800px, 100% - 4rem);
-	margin-inline: auto;
+	display: flex;
+  justify-content: center;  /* Center the buttons horizontally */
+  gap: 16px;  /* Add space between the buttons */
+  max-width: min(800px, 100% - 4rem);
+  margin-inline: auto;
 }
 
 .wrapper header {
 	display: flex;
-	flex-flow: row;
-	justify-content: space-between;
-	align-items: center;
+  justify-content: center;
+  flex-flow: row;
+  max-width: min(800px, 100% - 4rem);
 }
 
 button {
@@ -34,7 +37,7 @@ button {
 	padding: 0.5rem 1rem;
 	cursor: pointer;
 
-	border-radius: 5px;
+	border-radius: 20px;
 	border: 2px solid var(--accent-color);
 	color: var(--accent-color);
 	background: var(--background-color);
