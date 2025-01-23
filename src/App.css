@@ -24,7 +24,7 @@ html {
 
 .wrapper header {
 	display: flex;
-	flex-wrap: wrap;
+	flex-flow: row;
 	justify-content: space-between;
 	align-items: center;
 }

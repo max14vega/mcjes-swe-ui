@@ -1,3 +1,4 @@
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -11,9 +12,9 @@ const PAGES = [
 function NavLink({ page }) {
 	const { label, destination } = page;
 	return (
-		<li>
-			<Link to={destination}>{label}</Link>
-		</li>
+		<Button variant="contained" component={Link} to={destination}>
+			{label}
+		</Button>
 	);
 }
 NavLink.propTypes = {
@@ -25,13 +26,15 @@ NavLink.propTypes = {
 
 function Navbar() {
 	return (
-		<nav>
-			<ul className="wrapper">
-				{PAGES.map((page) => (
-					<NavLink key={page.destination} page={page} />
-				))}
-			</ul>
-		</nav>
+		<AppBar position="static">
+			<Toolbar>
+				<div className="wrapper">
+					{PAGES.map((page) => (
+						<NavLink key={page.destination} page={page} />
+					))}
+				</div>
+			</Toolbar>
+		</AppBar>
 	);
 }
 
