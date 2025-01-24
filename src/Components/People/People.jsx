@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 import { BACKEND_URL } from "../../constants";
 
-const GAMES_ENDPOINT = `${BACKEND_URL}/games`;
+const PEOPLE_ENDPOINT = `${BACKEND_URL}/people`;
 
-function AddGameForm({ visible, cancel, fetchGames, setError }) {
+function AddGameForm({ visible, cancel, fetchPeople, setError }) {
 	const [name, setName] = useState("");
 	const [number, setNumber] = useState(0);
 
@@ -21,8 +21,8 @@ function AddGameForm({ visible, cancel, fetchGames, setError }) {
 	const addGame = (event) => {
 		event.preventDefault();
 		axios
-			.post(GAMES_ENDPOINT, { name, numPlayers: number })
-			.then(fetchGames)
+			.post(PEOPLE_ENDPOINT, { name, numPlayers: number })
+			.then(fetchPeople)
 			.catch(() => {
 				setError("There was a problem adding the game.");
 			});
@@ -58,7 +58,7 @@ function AddGameForm({ visible, cancel, fetchGames, setError }) {
 AddGameForm.propTypes = {
 	visible: propTypes.bool.isRequired,
 	cancel: propTypes.func.isRequired,
-	fetchGames: propTypes.func.isRequired,
+	fetchPeople: propTypes.func.isRequired,
 	setError: propTypes.func.isRequired,
 };
 
@@ -98,9 +98,9 @@ function Games() {
 	const [games, setGames] = useState([]);
 	const [addingGame, setAddingGame] = useState(false);
 
-	const fetchGames = () => {
+	const fetchPeople = () => {
 		axios
-			.get(GAMES_ENDPOINT)
+			.get(PEOPLE_ENDPOINT)
 			.then(({ data }) => setGames(gamesObjectToArray(data)))
 			.catch(() =>
 				setError("There was a problem retrieving the list of games."),
@@ -114,7 +114,7 @@ function Games() {
 		setAddingGame(false);
 	};
 
-	useEffect(fetchGames, []);
+	useEffect(fetchPeople, []);
 
 	return (
 		<div className="wrapper">
@@ -127,7 +127,7 @@ function Games() {
 			<AddGameForm
 				visible={addingGame}
 				cancel={hideAddGameForm}
-				fetchGames={fetchGames}
+				fetchGames={fetchPeople}
 				setError={setError}
 			/>
 			{error && <ErrorMessage message={error} />}

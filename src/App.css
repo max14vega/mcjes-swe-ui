@@ -19,17 +19,17 @@ html {
 
 .wrapper {
 	display: flex;
-  justify-content: center;  /* Center the buttons horizontally */
-  gap: 16px;  /* Add space between the buttons */
-  max-width: min(800px, 100% - 4rem);
-  margin-inline: auto;
+	justify-content: center; /* Center the buttons horizontally */
+	gap: 16px; /* Add space between the buttons */
+	max-width: min(800px, 100% - 4rem);
+	margin-inline: auto;
 }
 
 .wrapper header {
 	display: flex;
-  justify-content: center;
-  flex-flow: row;
-  max-width: min(800px, 100% - 4rem);
+	justify-content: center;
+	flex-flow: row;
+	max-width: min(800px, 100% - 4rem);
 }
 
 button {

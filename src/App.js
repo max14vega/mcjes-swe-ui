@@ -5,7 +5,7 @@ import theme from "./Theme";
 
 import "./App.css";
 
-import Games from "./Components/Games";
+import Games from "./Components/People";
 import Navbar from "./Components/Navbar";
 
 function GamePage() {

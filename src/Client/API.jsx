@@ -24,4 +24,15 @@ export const PeopleAPI = {
 			throw error;
 		}
 	},
+
+	addPeople: async (person) => {
+		//async means we are making a call to a server and waiting for a response
+		try {
+			const response = await client.post("/people/create", person);
+			return response.data;
+		} catch (error) {
+			console.error("Error adding person:", error);
+			throw error;
+		}
+	},
 };
