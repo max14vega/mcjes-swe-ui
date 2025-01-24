@@ -5,8 +5,8 @@ import theme from "./Theme";
 
 import "./App.css";
 
-import Games from "./Components/People";
 import Navbar from "./Components/Navbar";
+import Games from "./Components/People";
 
 function GamePage() {
 	const { name } = useParams();

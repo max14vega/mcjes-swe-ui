@@ -13,11 +13,11 @@ function NavLink({ page }) {
 	const { label, destination } = page;
 	return (
 		<Button
-			variant='contained'
+			variant="contained"
 			component={Link}
 			to={destination}
 			sx={{ display: "inline-flex", alignItems: "center" }}
-			color='primary'
+			color="primary"
 		>
 			{label}
 		</Button>
@@ -32,7 +32,7 @@ NavLink.propTypes = {
 
 function Navbar() {
 	return (
-		<AppBar position="static" color='background'>
+		<AppBar position="static" color="background">
 			<Toolbar>
 				<div className="wrapper">
 					{PAGES.map((page) => (
