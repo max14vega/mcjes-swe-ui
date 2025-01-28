@@ -17,7 +17,7 @@ In this journal, there are multiple pages/modals that the user will see. These a
 |-----------------|----------------|-------------------|
 | Submitting a manuscript adds the _Author_ role to a person | Any large run of text in the system will be stored in the DB | Manuscripts will follow [this flowchart](https://github.com/AthenaKouKou/journal/blob/main/docs/Manuscript_FSM.jpg) |
 | Users can edit and delete their own accounts | Journal title can be edited? (unsure what this entails) | Have a Dashboard to present all manuscripts |
-| Assigning a _Refereee_ role when someone adds them to a manuscript | Only _Editors_ and _Managing Editors_ can edit texts | Only _Editors_and _Managing Editors_ can see all manuscripts |
+| Assigning a _Refereee_ role when someone adds them to a manuscript | Only _Editors_ and _Managing Editors_ can edit texts | Only _Editors_ and _Managing Editors_ can see all manuscripts |
 | Only _Editors_ and _Managing Editors_ can edit permissions of other accounts | | |
 | Only _Editors_ and _Managing Editors_ can see a list of all people | | |
 | Advanced: Record a history of each user's interactions in the system | | |
