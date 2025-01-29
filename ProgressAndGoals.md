@@ -22,6 +22,9 @@ In this journal, there are multiple pages/modals that the user will see. These a
 | Only _Editors_ and _Managing Editors_ can see a list of all people | | |
 | Advanced: Record a history of each user's interactions in the system | | |
 
+## Goal 3: Optimizing the following State Machine
+<img src="https://github.com/user-attachments/assets/96601abf-4fd7-4e92-a3f2-543e8663fea2" alt="Manuscript State Machine" width="500"/>
+
 # Progress so Far
 
 ## To Do:
