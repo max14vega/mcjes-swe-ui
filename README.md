@@ -1,6 +1,6 @@
 # MCJES Journal (UI)
 
-This React project is a collaborative effort between 5 engineers and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React project is a collaborative effort between 5 engineers and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). The back-end service of this project can be found using the following [link](https://github.com/jaylan-wu/mcjes-swe-service).
 
 ## Table of Contents
 
