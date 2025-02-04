@@ -6,9 +6,10 @@ import theme from "./Theme";
 import "./App.css";
 
 import Navbar from "./Components/Navbar";
-import Games from "./Components/People";
+import People from "./Components/People";
+import Footer from "./Components/Footer";
 
-function GamePage() {
+function PeoplePage() {
 	const { name } = useParams();
 	return <h1>{name}</h1>;
 }
@@ -19,10 +20,12 @@ function App() {
 			<BrowserRouter>
 				<Navbar />
 				<Routes>
-					<Route path="games" element={<Games />} />
-					<Route path="games/:name" element={<GamePage />} />
+					<Route path="people" element={<People />} />
+					<Route path="people/:name" element={<PeoplePage />} />
 				</Routes>
 			</BrowserRouter>
+
+			<Footer />
 		</ThemeProvider>
 	);
 }
