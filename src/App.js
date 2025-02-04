@@ -5,9 +5,9 @@ import theme from "./Theme";
 
 import "./App.css";
 
+import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import People from "./Components/People";
-import Footer from "./Components/Footer";
 
 function PeoplePage() {
 	const { name } = useParams();
