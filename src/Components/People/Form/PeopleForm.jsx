@@ -18,13 +18,13 @@ function PeopleForm({ visible, cancel, fetchPeople, setError }) {
 		setNumber(event.target.value);
 	};
 
-	const addGame = (event) => {
+	const addPerson = (event) => {
 		event.preventDefault();
 		axios
 			.post(PEOPLE_ENDPOINT, { name, numPlayers: number })
 			.then(fetchPeople)
 			.catch(() => {
-				setError("There was a problem adding the game.");
+				setError("There was a problem adding the Person.");
 			});
 	};
 
@@ -32,7 +32,7 @@ function PeopleForm({ visible, cancel, fetchPeople, setError }) {
 	return (
 		<Box sx={{ padding: 2, backgroundColor: "#fff", borderRadius: 2 }}>
 			<Typography variant="h6">Add Game</Typography>
-			<form onSubmit={addGame}>
+			<form onSubmit={addPerson}>
 				<TextField
 					required
 					label="Name"
