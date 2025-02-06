@@ -4,70 +4,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { BACKEND_URL } from "../../constants";
+import ErrorMessage from "./ErrorMessage";
+import PeopleForm from "./Form/PeopleForm";
 
 const PEOPLE_ENDPOINT = `${BACKEND_URL}/people`;
-
-function AddGameForm({ visible, cancel, fetchPeople, setError }) {
-	const [name, setName] = useState("");
-	const [number, setNumber] = useState(0);
-
-	const changeName = (event) => {
-		setName(event.target.value);
-	};
-	const changeNumber = (event) => {
-		setNumber(event.target.value);
-	};
-
-	const addGame = (event) => {
-		event.preventDefault();
-		axios
-			.post(PEOPLE_ENDPOINT, { name, numPlayers: number })
-			.then(fetchPeople)
-			.catch(() => {
-				setError("There was a problem adding the game.");
-			});
-	};
-
-	if (!visible) return null;
-	return (
-		<form>
-			<label htmlFor="name">Name</label>
-			<input
-				required
-				type="text"
-				id="name"
-				value={name}
-				onChange={changeName}
-			/>
-			<label htmlFor="number-of-players">Number of players</label>
-			<input
-				required
-				type="number"
-				id="number-of-players"
-				onChange={changeNumber}
-			/>
-			<button type="button" onClick={cancel}>
-				Cancel
-			</button>
-			<button type="submit" onClick={addGame}>
-				Submit
-			</button>
-		</form>
-	);
-}
-AddGameForm.propTypes = {
-	visible: propTypes.bool.isRequired,
-	cancel: propTypes.func.isRequired,
-	fetchPeople: propTypes.func.isRequired,
-	setError: propTypes.func.isRequired,
-};
-
-function ErrorMessage({ message }) {
-	return <div className="error-message">{message}</div>;
-}
-ErrorMessage.propTypes = {
-	message: propTypes.string.isRequired,
-};
 
 function Game({ game }) {
 	const { name, numPlayers } = game;
@@ -124,7 +64,7 @@ function Games() {
 					Add a Game
 				</button>
 			</header>
-			<AddGameForm
+			<PeopleForm
 				visible={addingGame}
 				cancel={hideAddGameForm}
 				fetchGames={fetchPeople}
