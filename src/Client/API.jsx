@@ -25,6 +25,7 @@ export const PeopleAPI = {
 		}
 	},
 
+	// CREATE a person given a person type
 	addPeople: async (person) => {
 		//async means we are making a call to a server and waiting for a response
 		try {
