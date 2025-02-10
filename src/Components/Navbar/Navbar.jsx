@@ -1,47 +1,33 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
-import propTypes from "prop-types";
 import React from "react";
+import { AppBar, Button, Toolbar, Typography, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';  // Icon for Home
+import InfoIcon from '@mui/icons-material/Info';  // Icon for About
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';  // Icon for Create Account
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';  // Icon for Contact Us
 
-const PAGES = [
-	{ label: "Home", destination: "/" },
-	{ label: "View All People", destination: "/people" },
-	{ label: "View All Users", destination: "/users" },
-];
-
-function NavLink({ page }) {
-	const { label, destination } = page;
-	return (
-		<Button
-			variant="contained"
-			component={Link}
-			to={destination}
-			sx={{ display: "inline-flex", alignItems: "center" }}
-			color="primary"
-		>
-			{label}
-		</Button>
-	);
-}
-NavLink.propTypes = {
-	page: propTypes.shape({
-		label: propTypes.string.isRequired,
-		destination: propTypes.string.isRequired,
-	}).isRequired,
+const Navbar = () => {
+  return (
+    <AppBar position="static" color="primary">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Insert Logo
+        </Typography>
+        <Button color="inherit" startIcon={<HomeIcon />} component={Link} to="/">
+          Home
+        </Button>
+        <Button color="inherit" startIcon={<InfoIcon />} component={Link} to="/about">
+          About
+        </Button>
+        <Button color="inherit" startIcon={<AccountCircleIcon />} component={Link} to="/create-account">
+          Create an Account
+        </Button>
+        <Button color="inherit" startIcon={<ContactSupportIcon />} component={Link} to="/contact">
+          Contact Us
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
 };
-
-function Navbar() {
-	return (
-		<AppBar position="static" color="background">
-			<Toolbar>
-				<div className="wrapper">
-					{PAGES.map((page) => (
-						<NavLink key={page.destination} page={page} />
-					))}
-				</div>
-			</Toolbar>
-		</AppBar>
-	);
-}
 
 export default Navbar;
