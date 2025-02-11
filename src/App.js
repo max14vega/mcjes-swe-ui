@@ -10,7 +10,7 @@ import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import People from "./Components/People";
 import Submissions from "./Pages/Submissions";
-import Mastheads from "./Pages/AboutPage";
+
 
 function PeoplePage() {
     const { name } = useParams();
