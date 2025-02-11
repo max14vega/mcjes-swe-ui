@@ -9,6 +9,7 @@ import Home from "./Components/Home";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import People from "./Components/People";
+import Mastheads from "./Pages/Masthead";
 
 function PeoplePage() {
     const { name } = useParams();
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/" element={<Home />} />  {/* Home page route */}
                     <Route path="people" element={<People />} />
                     <Route path="people/:name" element={<PeoplePage />} />
+                    <Route path="about" element={<Mastheads />} />  {/* Route for Mastheads page */}
                 </Routes>
                 <Footer />
             </BrowserRouter>
