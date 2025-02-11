@@ -20,10 +20,10 @@ const HomePage = () => {
                         A platform to share cutting-edge research in Software Engineering.
                     </Typography>
                     <Box mt={3} sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
-                        <Button variant="contained" color="primary" size="large" component={Link} to="/submit">
+                        <Button variant="contained" color="action" size="large" component={Link} to="/submit">
                             Submit a Manuscript
                         </Button>
-                        <Button variant="outlined" color="secondary" size="large" component={Link} to="/manuscripts">
+                        <Button variant="contained" color="primary" size="large" component={Link} to="/manuscripts">
                             Browse Manuscripts
                         </Button>
                     </Box>
@@ -40,7 +40,7 @@ const HomePage = () => {
                         <Grid item xs={12} md={4} key={journal.id}>
                             <Paper elevation={3} sx={{ padding: 2 }}>
                                 <Typography variant="h6">{journal.title}</Typography>
-                                <Button component={Link} to={`/journals/${journal.id}`} variant="outlined">
+                                <Button component={Link} to={`/journals/${journal.id}`} variant="outlined" color = "info">
                                     View More
                                 </Button>
                             </Paper>
