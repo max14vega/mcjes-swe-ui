@@ -59,9 +59,9 @@ function Games() {
 	return (
 		<div className="wrapper">
 			<header>
-				<h1>View All Games</h1>
+				<h1>View All People</h1>
 				<button type="button" onClick={showAddGameForm}>
-					Add a Game
+					Add a Person
 				</button>
 			</header>
 			<PeopleForm
