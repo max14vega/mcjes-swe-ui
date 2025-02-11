@@ -35,7 +35,7 @@ const HomePage = () => {
                         A platform to share cutting-edge research in Software Engineering.
                     </Typography>
                     <Box mt={3} sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
-                        <Button variant="contained" color="action" size="large" component={Link} to="/submit">
+                        <Button variant="contained" color="action" size="large" component={Link} to="/Submissions">
                             Submit a Manuscript
                         </Button>
                         <Button variant="contained" color="primary" size="large" component={Link} to="/manuscripts">
