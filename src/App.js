@@ -9,7 +9,7 @@ import Home from "./Components/Home";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import People from "./Components/People";
-import Mastheads from "./Pages/Masthead";
+import Mastheads from "./Pages/AboutPage";
 
 function PeoplePage() {
     const { name } = useParams();
