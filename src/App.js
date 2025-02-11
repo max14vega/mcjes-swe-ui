@@ -27,6 +27,7 @@ function App() {
                     <Route path="people" element={<People />} />
                     <Route path="people/:name" element={<PeoplePage />} />
                     <Route path="submissions" element={<Submissions />} /> 
+                    <Route path="about" element={<Mastheads />} /> 
                 </Routes>
                 <Footer />
             </BrowserRouter>
