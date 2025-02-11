@@ -11,6 +11,21 @@ const topJournals = [
 const HomePage = () => {
     return (
         <>
+            
+
+            {/* Register and Log In Button Bar */}
+            <Container maxWidth="xl" disableGutters>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 3 }}>
+                    <Button variant="outlined" color="secondary" component={Link} to="/register" sx={{ marginRight: 1, fontWeight: 'bold' }}>
+                        Register
+                    </Button>
+                    <Button variant="outlined" color="info" component={Link} to="/login" sx={{ fontWeight: 'bold' }}>
+                        Log In
+                    </Button>
+                </Box>
+            </Container>
+
+
             <Container maxWidth="md">
                 <Box textAlign="center" mt={5} p={3}>
                     <Typography variant="h2" gutterBottom>
