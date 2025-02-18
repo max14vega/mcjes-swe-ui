@@ -11,7 +11,7 @@ const Navbar = () => {
       <Toolbar>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', padding: '0 10px' }}> 
         <Link to="/">
-         <img src="/Images/LogoWhite.png" alt="Logo" style={{ height: '50px', marginRight: '25px' }} />
+         <img src="/Images/Logo/LogoClean.png" alt="Logo" style={{ height: '70px', marginRight: '25px' }} />
         </Link>
           <Button color="inherit" startIcon={<HomeIcon />} component={Link} to="/">
             Home
