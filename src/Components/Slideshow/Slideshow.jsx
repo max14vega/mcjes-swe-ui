@@ -16,22 +16,22 @@ const Slideshow = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: "90%", overflow: "hidden", mt: 4 }}>
+        <Box sx={{ maxWidth: "100%", mt: 5, padding: "0 0%" }}>
             <Slider {...settings}>
                 <div>
-                    <img src="/Images/SlideshowHome/image1.png" alt="Slide 1" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "10px" }} />
+                    <img src="/Images/SlideshowHome/image1.png" alt="Slide 1" style={{ width: "100%", height: "225px", objectFit: "cover", borderRadius: "0" }} />
                 </div>
                 <div>
-                    <img src="/Images/SlideshowHome/image2.png" alt="Slide 2" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "10px" }} />
+                    <img src="/Images/SlideshowHome/image2.png" alt="Slide 2" style={{ width: "100%", height: "225px", objectFit: "cover", borderRadius: "0" }} />
                 </div>
                 <div>
-                    <img src="/Images/SlideshowHome/image3.png" alt="Slide 3" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "10px" }} />
+                    <img src="/Images/SlideshowHome/image3.png" alt="Slide 3" style={{ width: "100%", height: "225px", objectFit: "cover", borderRadius: "0" }} />
                 </div>
                 <div>
-                    <img src="/Images/SlideshowHome/image4.png" alt="Slide 4" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "10px" }} />
+                    <img src="/Images/SlideshowHome/image4.png" alt="Slide 4" style={{ width: "100%", height: "225px", objectFit: "cover", borderRadius: "0" }} />
                 </div>
                 <div>
-                    <img src="/Images/SlideshowHome/image5.png" alt="Slide 5" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "10px" }} />
+                    <img src="/Images/SlideshowHome/image5.png" alt="Slide 5" style={{ width: "100%", height: "225px", objectFit: "cover", borderRadius: "0" }} />
                 </div>
             </Slider>
         </Box>

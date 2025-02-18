@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Container, Typography, Box, Paper, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Slideshow from '../../Components/Slideshow';  // Corrected path to go up two levels
+import Slideshow from '../../Components/Slideshow';  // Assuming this path is correct
 
 const topJournals = [
     { title: "Journal on Software Systems", id: 1 },
@@ -12,9 +12,6 @@ const topJournals = [
 const HomePage = () => {
     return (
         <>
-            {/* Slideshow Section */}
-            <Slideshow />
-
             <Container maxWidth="md">
                 <Box textAlign="center" mt={5} p={3}>
                     <Typography variant="h2" gutterBottom>
@@ -23,7 +20,10 @@ const HomePage = () => {
                     <Typography variant="h6" color="textSecondary">
                         A platform to share cutting-edge research in Software Engineering.
                     </Typography>
-                    <Box mt={3} sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
+                    {/* Slideshow Section */}
+                    <Slideshow />
+                    {/* Increased margin top here */}
+                    <Box mt={10} sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}> 
                         <Button variant="contained" color="action" size="large" component={Link} to="/Submissions">
                             Submit a Manuscript
                         </Button>
