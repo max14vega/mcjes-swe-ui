@@ -3,14 +3,14 @@ import { FormControl, InputLabel, Select, MenuItem, Container, Paper, TextField,
 
 const Submissions = () => {
     const [genre, setGenre] = React.useState('');
-  
+
     const handleChange = (event) => {
       setGenre(event.target.value);
     };
-  
+
     return (
-      <Container maxWidth="md">
-        <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+      <Container maxWidth="md" sx={{ pb: 10 }}>
+       <Paper elevation={3} sx={{ p: 4, mt: 4, mb: 4 }}> {/* Added mb for spacing from the container to the footer */}
           <Typography variant="h5" gutterBottom>Welcome to Our Manuscript Submissions!</Typography>
           <Typography variant="body1" paragraph>
             We are thrilled to have the opportunity to review new works from writers like you. Whether you’re a seasoned author or a first-time writer, we are committed to providing a platform for diverse voices and original stories.
@@ -25,7 +25,6 @@ const Submissions = () => {
           <Box component="form" noValidate autoComplete="off">
             <TextField
                 fullWidth
-                label="Author's Name"
                 margin="normal"
                 variant="outlined"
                 placeholder="Enter your name"
@@ -35,7 +34,6 @@ const Submissions = () => {
             />
             <TextField
                 fullWidth
-                label="Email Address"
                 margin="normal"
                 variant="outlined"
                 placeholder="example@email.com"
@@ -45,7 +43,6 @@ const Submissions = () => {
             />
             <TextField
                 fullWidth
-                label="Phone Number"
                 margin="normal"
                 variant="outlined"
                 placeholder="Enter your phone number"
@@ -55,7 +52,6 @@ const Submissions = () => {
             />
             <TextField
                 fullWidth
-                label="Manuscript Title"
                 margin="normal"
                 variant="outlined"
                 placeholder="Title of your manuscript"
@@ -63,27 +59,28 @@ const Submissions = () => {
                     shrink: true,
                 }}
             />
-                <FormControl fullWidth margin="normal" variant="outlined">
-                <InputLabel id="genre-label">Genre</InputLabel>
-                <Select
-                    labelId="genre-label"
-                    id="genre-select"
-                    value={genre}
-                    label="Genre"
-                    displayEmpty
-                    onChange={handleChange}
-                    sx={{ '.MuiSelect-select': { color: genre ? 'inherit' : 'gray' } }} 
-                >
-                    <MenuItem value="" disabled sx={{ color: 'gray' }}>Select Genre</MenuItem>
-                    <MenuItem value="Case Studies">Case Studies</MenuItem>
-                    <MenuItem value="Original Research">Original Research</MenuItem>
-                    <MenuItem value="Review Articles">Review Articles</MenuItem>
-                    <MenuItem value="Rapid Communications">Rapid Communications</MenuItem>
-                </Select>
-                </FormControl>
+            <FormControl fullWidth margin="normal" variant="outlined">
+              <InputLabel id="genre-label">Genre</InputLabel>
+              <Select
+                  labelId="genre-label"
+                  id="genre-select"
+                  value={genre}
+                  displayEmpty
+                  onChange={handleChange}
+                  renderValue={
+                      genre !== '' ? undefined : () => <span style={{ color: 'gray' }}>Select Genre</span>
+                  }
+              >
+                  <MenuItem value="" disabled style={{ color: 'gray' }}>Select Genre</MenuItem>
+                  <MenuItem value="Case Studies">Case Studies</MenuItem>
+                  <MenuItem value="Original Research">Original Research</MenuItem>
+                  <MenuItem value="Review Articles">Review Articles</MenuItem>
+                  <MenuItem value="Rapid Communications">Rapid Communications</MenuItem>
+              </Select>
+          </FormControl>
+
             <TextField
                 fullWidth
-                label="Summary"
                 multiline
                 rows={4}
                 margin="normal"
