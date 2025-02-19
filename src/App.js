@@ -26,7 +26,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="people" element={<People />} />
-                    <Route path="people/:name" element={<PeoplePage />} />
+                    <Route path="people-page" element={<PeoplePage />} />
                     <Route path="submissions" element={<Submissions />} />
                     <Route path="about" element={<Mastheads />} />
                     <Route path="login" element={<Login />} />

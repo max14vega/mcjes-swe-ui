@@ -18,6 +18,9 @@ const Navbar = () => {
         <Button color="inherit" startIcon={<InfoIcon />} component={Link} to="/about">
           About
         </Button>
+        <Button color="inherit" startIcon={<InfoIcon />} component={Link} to="/people">
+          People
+        </Button>
         <Button color="inherit" startIcon={<ContactSupportIcon />} component={Link} to="/contact">
           Contact Us
         </Button>
