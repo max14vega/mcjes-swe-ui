@@ -1,5 +1,4 @@
-import axios from "axios";
-import client from "./Client";
+import { client } from "./Client";
 
 // People REST Endpoints
 export const PeopleAPI = {

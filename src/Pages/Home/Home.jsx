@@ -1,7 +1,8 @@
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/Slideshow"; // Assuming this path is correct
+import PeopleButton from "../../Components/Buttons/PeopleButton";
 
 const topJournals = [
   { title: "Journal on Software Systems", id: 1 },
@@ -10,6 +11,8 @@ const topJournals = [
 ];
 
 const HomePage = () => {
+  const [people, setPeople] = useState();
+
   return (
     <>
       <Container maxWidth="md">
@@ -72,6 +75,8 @@ const HomePage = () => {
           ))}
         </Grid>
       </Container>
+
+      <PeopleButton/>
     </>
   );
 };
