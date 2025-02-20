@@ -1,27 +1,51 @@
 import React, { useState } from 'react';
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer, Box } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer, Box, Alert } from '@mui/material';
+import { PeopleAPI } from '../../Client/API';
 
 const Testing = () => {
   const [data, setData] = useState([]);
   const [dataType, setDataType] = useState('');
-
-  const fetchData = async (type) => {
-    setDataType(type);
-    const response = await fetch(`/api/${type}`);
-    const jsonData = await response.json();
-    setData(jsonData);
-  };
+  const [error, setError] = useState(null);  
 
   // Define the table headers for each data type
   const headers = {
-    people: ['First Name', 'Last Name', 'Affiliation', 'Email', 'Roles', 'Editor'],
+    people: ['First Name', 'Last Name', 'Affiliation', 'Email', 'Roles'],
     manuscripts: ['Title', 'Display Name', 'Abstract', 'Text', 'Author First Name', 'Author Last Name', 'Author Email'],
     texts: ['Content', 'Author First Name', 'Author Last Name', 'Affiliation', 'Email', 'Roles']
   };
 
+  const fetchData = async (type) => {
+    setDataType(type);
+    try {
+      let jsonData;
+      switch (type) {
+        case 'people':
+          jsonData = await PeopleAPI.getPeople();
+          // Convert object to an array of its values
+          jsonData = Object.values(jsonData);
+          console.log("Converted People Data:", jsonData); // Log to check the data structure
+          break;
+        case 'manuscripts':
+          // jsonData = await ManuscriptsAPI.getManuscripts();
+          break;
+        case 'texts':
+          // jsonData = await TextsAPI.getTexts();
+          break;
+        default:
+          jsonData = [];
+      }
+      setData(jsonData);
+      setError(null);
+    } catch (error) {
+      console.error(`Failed to fetch ${type}:`, error);
+      setError(`Failed to fetch ${type}.`);
+    }
+  };
+  
+
   return (
     <div>
-      <Box sx={{ display: 'flex', justifyContent: 'center', padding: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4, padding: 3 }}>
         <Button onClick={() => fetchData('people')} variant="contained" color="primary" sx={{ margin: 1 }}>
           Get People
         </Button>
@@ -32,6 +56,7 @@ const Testing = () => {
           Get Texts
         </Button>
       </Box>
+      {error && <Alert severity="error" style={{ marginTop: "20px" }}>{error}</Alert>}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -42,13 +67,9 @@ const Testing = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index} sx={{
-                '&:hover': {
-                  backgroundColor: 'secondary', // Custom hover color
-                }
-              }}>
-                {headers[dataType] && headers[dataType].map((header, headerIndex) => (
+            {Array.isArray(data) && data.map((item, index) => (
+              <TableRow key={index}>
+                {headers[dataType].map((header, headerIndex) => (
                   <TableCell key={headerIndex}>{item[header.toLowerCase().replace(/ /g, '_')]}</TableCell>
                 ))}
               </TableRow>
