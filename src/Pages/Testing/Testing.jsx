@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, TableContainer, Box, Alert } from '@mui/material';
-import { PeopleAPI } from '../../Client/API';
+import { PeopleAPI, ManuscriptsAPI, TextsAPI } from '../../Client/API';
+
 
 const Testing = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const Testing = () => {
   const headers = {
     people: ['First Name', 'Last Name', 'Affiliation', 'Email', 'Roles'],
     manuscripts: ['Title', 'Display Name', 'Abstract', 'Text', 'Author First Name', 'Author Last Name', 'Author Email'],
-    texts: ['Content', 'Author First Name', 'Author Last Name', 'Affiliation', 'Email', 'Roles']
+    texts: ['Key','Title','Text']
   };
 
   const fetchData = async (type) => {
@@ -21,15 +22,15 @@ const Testing = () => {
       switch (type) {
         case 'people':
           jsonData = await PeopleAPI.getPeople();
-          // Convert object to an array of its values
           jsonData = Object.values(jsonData);
-          console.log("Converted People Data:", jsonData); // Log to check the data structure
           break;
         case 'manuscripts':
-          // jsonData = await ManuscriptsAPI.getManuscripts();
+          jsonData = await ManuscriptsAPI.getManuscripts();
+          jsonData = Object.values(jsonData);
           break;
         case 'texts':
-          // jsonData = await TextsAPI.getTexts();
+          jsonData = await TextsAPI.getTexts();
+          jsonData = Object.values(jsonData);
           break;
         default:
           jsonData = [];
@@ -41,6 +42,7 @@ const Testing = () => {
       setError(`Failed to fetch ${type}.`);
     }
   };
+  
   
 
   return (
