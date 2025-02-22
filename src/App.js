@@ -11,6 +11,7 @@ import People from "./Components/People";
 import Mastheads from "./Pages/AboutPage";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import Testing from "./Pages/Testing";  // Corrected import path to match the directory structure
 
@@ -31,7 +32,8 @@ function App() {
           <Route path="submissions" element={<Submissions />} />
           <Route path="about" element={<Mastheads />} />
           <Route path="login" element={<Login />} />
-          <Route path="testing" element={<Testing />} /> 
+          <Route path="register" element={<Register />} />
+          <Route path="testing" element={<Testing />} />
         </Routes>
         <Footer />
       </BrowserRouter>
