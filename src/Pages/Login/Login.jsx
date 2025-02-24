@@ -121,13 +121,34 @@ export default function Login() {
             padding: "40px",
           }}
         >
-          <CardContent sx={{ width: "60%", display: "flex", flexDirection: "column", alignItems: "flex-end", textAlign: "left" }}>
-            <Typography variant="h5" gutterBottom sx={{ fontSize: "3rem", fontWeight: "bold", alignSelf: "center", marginRight:"-20px", marginBottom: "40px", whiteSpace: "nowrap" }}>
+          <CardContent
+            sx={{
+              width: "60%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              textAlign: "left",
+            }}
+          >
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginRight: "-20px",
+                marginBottom: "40px",
+                whiteSpace: "nowrap",
+              }}
+            >
               Welcome Back!
             </Typography>
 
             {/* Show error message if there is an error */}
-            {error && <ErrorMessage message={error} onClose={() => setError("")} />}
+            {error && (
+              <ErrorMessage message={error} onClose={() => setError("")} />
+            )}
 
             <div className="mb-4">
               <Typography variant="body1" gutterBottom>
@@ -147,7 +168,11 @@ export default function Login() {
                   textAlign: "right",
                   marginRight: "80px",
                   marginLeft: "-20px",
-                  "& input": { fontSize: "1.2rem", padding: "15px", textAlign: "left" },
+                  "& input": {
+                    fontSize: "1.2rem",
+                    padding: "15px",
+                    textAlign: "left",
+                  },
                 }}
               />
             </div>
@@ -167,7 +192,11 @@ export default function Login() {
                   textAlign: "right",
                   marginRight: "80px",
                   marginLeft: "-20px",
-                  "& input": { fontSize: "1.2rem", padding: "15px", textAlign: "left" },
+                  "& input": {
+                    fontSize: "1.2rem",
+                    padding: "15px",
+                    textAlign: "left",
+                  },
                 }}
                 variant="outlined"
                 placeholder="Enter your password"
@@ -178,7 +207,14 @@ export default function Login() {
               variant="contained"
               color="primary"
               onClick={handleLogin}
-              sx={{ width: "130%", fontSize: "1.2rem", padding: "30px", height: "40px", marginTop: "40px", marginRight: "-60px" }}
+              sx={{
+                width: "130%",
+                fontSize: "1.2rem",
+                padding: "30px",
+                height: "40px",
+                marginTop: "40px",
+                marginRight: "-60px",
+              }}
             >
               Login
             </Button>

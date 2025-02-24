@@ -13,7 +13,7 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
-import Testing from "./Pages/Testing";  // Corrected import path to match the directory structure
+import Testing from "./Pages/Testing"; // Corrected import path to match the directory structure
 
 function PeoplePage() {
   const { name } = useParams();

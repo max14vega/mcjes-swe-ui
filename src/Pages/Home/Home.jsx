@@ -1,8 +1,8 @@
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Slideshow from "../../Components/Slideshow"; 
 import PeopleButton from "../../Components/Buttons/PeopleButton";
+import Slideshow from "../../Components/Slideshow";
 
 const topJournals = [
   { title: "Journal on Software Systems", id: 1 },
@@ -76,7 +76,7 @@ const HomePage = () => {
         </Grid>
       </Container>
 
-      <PeopleButton/>
+      <PeopleButton />
     </>
   );
 };

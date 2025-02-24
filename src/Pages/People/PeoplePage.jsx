@@ -1,10 +1,10 @@
-import React from 'react';
-import { Grid2, Card, CardContent, Typography, Avatar } from '@mui/material';
+import { Avatar, Card, CardContent, Grid2, Typography } from "@mui/material";
+import React from "react";
 
 const people = [
-  { id: 1, name: 'John Doe', icon: 'https://via.placeholder.com/50' },
-  { id: 2, name: 'Jane Doe', icon: 'https://via.placeholder.com/50' },
-  { id: 3, name: 'Bob Smith', icon: 'https://via.placeholder.com/50' },
+  { id: 1, name: "John Doe", icon: "https://via.placeholder.com/50" },
+  { id: 2, name: "Jane Doe", icon: "https://via.placeholder.com/50" },
+  { id: 3, name: "Bob Smith", icon: "https://via.placeholder.com/50" },
   // Add more people here...
 ];
 

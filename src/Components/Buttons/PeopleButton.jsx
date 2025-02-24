@@ -1,6 +1,6 @@
+import { Alert, Button, List, ListItem, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { PeopleAPI } from "../../Client/API";
-import { Button, List, ListItem, Typography, Alert } from "@mui/material";
 
 const PeopleButton = () => {
   const [people, setPeople] = useState([]);
@@ -19,15 +19,15 @@ const PeopleButton = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={handleFetchPeople}
-      >
+      <Button variant="contained" color="primary" onClick={handleFetchPeople}>
         Fetch People
       </Button>
-      
-      {error && <Alert severity="error" style={{ marginTop: "10px" }}>{error}</Alert>}
+
+      {error && (
+        <Alert severity="error" style={{ marginTop: "10px" }}>
+          {error}
+        </Alert>
+      )}
     </div>
   );
 };

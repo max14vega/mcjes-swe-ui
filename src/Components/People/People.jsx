@@ -4,10 +4,24 @@ import {
   Button,
   Card,
   CardContent,
-  Container,
   Grid2,
   Icon,
+  Stack,
   ThemeProvider,
+} from "@mui/material";
+import {
+  Box,
+  Collapse,
+  IconButton,
+  KeyboardArrowDownIcon,
+  KeyboardArrowUpIcon,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -22,50 +36,34 @@ import PeopleForm from "./Form/PeopleForm";
 
 const PEOPLE_ENDPOINT = `${BACKEND_URL}/people`;
 
-const people = [
-  { id: 1, name: "Jaylan Wu", icon: "https://via.placeholder.com/50" },
-  { id: 2, name: "Max Vega", icon: "https://via.placeholder.com/50" },
-  { id: 3, name: "Saadat Rafin", icon: "https://via.placeholder.com/50" },
-  { id: 4, name: "Cheyenne Williams", icon: "https://via.placeholder.com/50" },
-  {
-    id: 5,
-    name: "Eduardo de los Santos",
-    icon: "https://via.placeholder.com/50",
-  },
-  // Add more people here...
+const rows = [
+  createData("Jaylan Wu"),
+  createData("Maximiliano Vega"),
+  createData("Cheyenne Williams"),
+  createData("Eduardo de los Santos"),
+  createData("Saadat Rafin"),
 ];
 
-function Person({ person }) {
-  const { name, icon } = person;
-  return (
-    <ThemeProvider theme={theme}>
-      <Card>
-        <CardContent
-          sx={{ display: "flex", alignItems: "center", marginBottom: -1 }}
-        >
-          <Avatar src={icon} sx={{ marginRight: 2 }} />
-          <Typography variant="body1">{name}</Typography>
-        </CardContent>
-      </Card>
-    </ThemeProvider>
-  );
+function createData(fullName, email, roles) {
+  return { fullName, email, roles, information: [{}, {}] };
 }
 
-Person.propTypes = {
-  person: propTypes.shape({
-    name: propTypes.string.isRequired,
-    icon: propTypes.string.isRequired,
-  }).isRequired,
-};
-
-function People() {
+const People = () => {
   const [error, setError] = useState("");
   const [peopleState, setPeopleState] = useState([]);
   const [addingPerson, setAddingPerson] = useState(false);
 
-  useEffect(() => {
-    setPeopleState(people);
-  }, []);
+  // useEffect(() => {
+  //   const fetchPeople = async () => {
+  //     try {
+  //       const response = await getPeople();
+  //       setPeopleState(response);
+  //     } catch (error) {
+  //       setError("Error fetching people");
+  //     }
+  //   };
+  //   fetchPeople();
+  // }, []);
 
   const handleAddPerson = (newPerson) => {
     setPeopleState([...peopleState, newPerson]);
@@ -77,57 +75,59 @@ function People() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="lg">
-        <div>
-          <Typography variant="h4" sx={{ marginBottom: 2, marginTop: 2 }}>
-            People
-          </Typography>
-        </div>
-        <hr />
-        <div>
-          <Grid2 container spacing={2}>
-            {error && <ErrorMessage message={error} />}
-            {addingPerson ? (
-              <PeopleForm
-                onAddPerson={handleAddPerson}
-                onCancelAddPerson={handleCancelAddPerson}
-              />
-            ) : (
-              <Grid2 xs={12} sm={6} md={4} lg={3}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setAddingPerson(true)}
-                >
-                  <CardContent
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: -1,
-                    }}
-                  >
-                    <Avatar AddIcon={AddIcon} sx={{ marginRight: 2 }} />
-                    <Typography variant="body1">Add Person</Typography>
-                  </CardContent>
-                </Card>
-              </Grid2>
-            )}
-            {peopleState.map((person) => (
-              <Grid2 key={person.id} xs={12} sm={6} md={4} lg={3}>
-                <Person person={person} />
-              </Grid2>
-            ))}
-          </Grid2>
-        </div>
-      </Container>
-    </ThemeProvider>
+    <Stack
+      container
+      spacing={2}
+      sx={{ display: "flex", justifyContent: "center", paddingTop: 5 }}
+    >
+      {error && <ErrorMessage message={error} />}
+      {addingPerson ? (
+        <PeopleForm onAddPerson={handleAddPerson} onCancelAddPerson={handleCancelAddPerson}/>
+      ) : (
+        <Grid2 xs={12} sm={6} md={4} lg={3}>
+          <Card sx={{ height: '100%', display: 'flex-row', alignItems: 'center', cursor: 'pointer' }}
+                onClick={() => setAddingPerson(true)}>
+            <CardContent sx={{ padding: 0 }}>
+              <AddIcon sx={{ fontSize: 40 }} />
+              <Typography variant="h6" sx={{ textAlign: 'center' }}>Add Person</Typography>
+            </CardContent>
+          </Card>
+          <Card></Card>
+        </Grid2>
+      )}
+      <hr></hr>
+      <Grid2
+        xs={12}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingLeft: 5,
+          paddingRight: 5,
+        }}
+      >
+        <TableContainer component={Paper} sx={{ width: "800%" }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">Full Name</TableCell>
+                <TableCell align="left">Email</TableCell>
+                <TableCell align="left">Roles</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={rows.id}>
+                  <TableCell scope="row">{row.fullName}</TableCell>
+                  <TableCell align="left">{row.email}</TableCell>
+                  <TableCell align="left">{row.roles}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid2>
+    </Stack>
   );
-}
+};
 
 export default People;
