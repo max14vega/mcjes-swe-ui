@@ -15,6 +15,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import Testing from "./Pages/Testing"; // Corrected import path to match the directory structure
+import Manuscripts from "./Pages/Manuscripts";
 
 // function PeoplePage() {
 //   const { name } = useParams();
@@ -35,6 +36,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="testing" element={<Testing />} />
+          <Route path="manuscripts" element={<Manuscripts />} />
         </Routes>
         <Footer />
       </BrowserRouter>
