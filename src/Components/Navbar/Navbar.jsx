@@ -2,6 +2,7 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport"; // Icon for
 import HomeIcon from "@mui/icons-material/Home"; // Icon for Home
 import InfoIcon from "@mui/icons-material/Info"; // Icon for About
 import ScienceIcon from "@mui/icons-material/Science"; // Icon for Testing
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -51,9 +52,9 @@ const Navbar = () => {
           </Button>
           <Button
             color="inherit"
-            startIcon={<ScienceIcon />}
+            startIcon={<AdminPanelSettingsIcon />}
             component={Link}
-            to="/people"
+            to="/peoplepage"
           >
             Admin
           </Button>

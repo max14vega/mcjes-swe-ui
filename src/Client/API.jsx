@@ -11,18 +11,18 @@ export const PeopleAPI = {
       throw error;
     }
   },
-  deletePeople: async (id) => {
+  deletePeople: async (_email) => {
     try {
-      const response = await client.delete(`/people/${id}`);
+      const response = await client.delete(`/people/${_email}`);
       return response.data;
     } catch (error) {
-      console.error(`Error deleting person with ID ${id}:`, error);
+      console.error(`Error deleting person with email ${_email}:`, error);
       throw error;
     }
   },
   addPeople: async (person) => {
     try {
-      const response = await client.post("/people/create", person);
+      const response = await client.post("/people", person);
       return response.data;
     } catch (error) {
       console.error("Error adding person:", error);
