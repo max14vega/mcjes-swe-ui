@@ -20,11 +20,11 @@ const Slideshow = () => {
       <Slider {...settings}>
         <div>
           <img
-            src="/Images/SlideshowHome/image1.png"
+            src="/Images/SlideshowHome/image1.jpeg"
             alt="Slide 1"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -32,11 +32,11 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/image2.png"
+            src="/Images/SlideshowHome/image2.jpeg"
             alt="Slide 2"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -44,11 +44,11 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/image3.png"
+            src="/Images/SlideshowHome/image3.jpeg"
             alt="Slide 3"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -56,11 +56,11 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/image4.png"
+            src="/Images/SlideshowHome/image4.jpeg"
             alt="Slide 4"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -68,11 +68,11 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/image5.png"
+            src="/Images/SlideshowHome/image5.jpeg"
             alt="Slide 5"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}

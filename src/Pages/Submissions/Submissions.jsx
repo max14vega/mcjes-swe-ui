@@ -49,7 +49,16 @@ const Submissions = () => {
             fullWidth
             margin="normal"
             variant="outlined"
-            placeholder="Enter your name"
+            placeholder="Enter Your First Name"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            placeholder="Enter Your Last Name"
             InputLabelProps={{
               shrink: true,
             }}
@@ -67,16 +76,7 @@ const Submissions = () => {
             fullWidth
             margin="normal"
             variant="outlined"
-            placeholder="Enter your phone number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            placeholder="Title of your manuscript"
+            placeholder="Title of Your Manuscript"
             InputLabelProps={{
               shrink: true,
             }}
@@ -113,7 +113,7 @@ const Submissions = () => {
             rows={4}
             margin="normal"
             variant="outlined"
-            placeholder="Write a brief summary of your manuscript"
+            placeholder="Enter Manuscript Abstract"
             InputLabelProps={{
               shrink: true,
             }}
