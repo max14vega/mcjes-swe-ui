@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Container, Grid, Typography, Card, CardContent, CardActions, CardMedia } from "@mui/material";
 import Slideshow from "../../Components/Slideshow";
+import SearchBar from "../../Components/SearchBar";
 
 // Sample data for top journals, current works, primary sources, and research articles
 const topJournals = [
@@ -74,6 +75,11 @@ const SectionCard = ({ item }) => (
 );
 
 const HomePage = () => {
+  const handleSearch = (query) => {
+    console.log('Searching for:', query);
+    // Implement your search logic here
+  };
+
   return (
     <>
       <Container maxWidth="xl">
@@ -84,6 +90,9 @@ const HomePage = () => {
           <Typography variant="h6" color="textSecondary">
             A Platform to Share Authored Works
           </Typography>
+          <Box mt={2}>
+            <SearchBar onSearch={handleSearch} placeholder="Search manuscripts, journals, articles..." />
+          </Box>
           <Slideshow />
           <Box mt={10} sx={{ display: "flex", justifyContent: "center", gap: 4 }}>
             <Button variant="contained" color="action" size="large" component={Link} to="/Submissions">
