@@ -15,59 +15,62 @@ import {
 import React, { useState, useEffect} from "react";
 import  { PeopleAPI } from "../../Client/API";
 import DeleteIcon from "@mui/icons-material/Delete";
-import  AddPerson  from "../../Components/AddPerson/AddPerson";
+import AddPerson  from "../../Components/AddPerson/AddPerson";
 
 
 const PeoplePage = () => {
 
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
-  const [dataType, setDataType] = useState(null);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
+    console.log("Before setting open to false:", open);
     setOpen(false);
+    console.log("After setting open to false:", open);
   };
 
-  const handleSubmit = async (data) => {
-    try {
-      await PeopleAPI.addPerson(data);
-      setOpen(false);
-      // Refresh the data
-      fetchData();
-    } catch (error) {
-      console.error("Failed to add person:", error);
-    }
+  const handleSubmit = (data) => {
+    PeopleAPI.addPeople(data)
+      .then(() => {
+        console.log("Before setting open to false:", open);
+        setOpen(false);
+        console.log("After setting open to false:", open);
+        // Refresh the data
+        fetchData();
+      })
+      .catch((error) => {
+        console.error("Error adding person:", error);
+      });
   };
 
-  const fetchData = async (type) => {
-    setDataType(type);
-    try {
-      let jsonData;
-      jsonData = await PeopleAPI.getPeople();
-      setData(jsonData);
-      setError(null);
-    } catch (error) {
-      console.error(`Failed to fetch ${type}:`, error);
-      setError(`Failed to fetch ${type}.`);
-    }
+  const fetchData = () => {
+    PeopleAPI.getPeople()
+      .then((jsonData) => {
+        setData(jsonData);
+        setError(null);
+      })
+      .catch((error) => {
+        setError("Error fetching people: " + error.message);
+      });
   };
 
-  const handleDelete = async (email) => {
-    try {
-      await PeopleAPI.deletePeople(email);
-      const updatedData = { ...data };
-      delete updatedData[email];
-      setData(updatedData);
-    } catch (error) {
-      console.error(`Failed to delete person with email ${email}:`, error);
-      setError(`Failed to delete person with email ${email}.`);
-    }
+  const handleDelete = (email) => {
+    PeopleAPI.deletePeople(email)
+      .then(() => {
+        const updatedData = { ...data };
+        delete updatedData[email];
+        setData(updatedData);
+      })
+      .catch((error) => {
+        setError("Error deleting person: " + error.message);
+      });
   };
 
-  useEffect(() => { 
-    fetchData("people");
+  useEffect(() => {
+    fetchData();
   }, []);
+
 
   return (
     <Container sx={{my: 1}}>
@@ -136,7 +139,9 @@ const PeoplePage = () => {
           </Table>
         </TableContainer>
       </Grid2>
-      <AddPerson open={open} onClose={handleClose} onSubmit={handleSubmit} />
+      <AddPerson open={open} onClose={handleClose} onSubmit={(data) => {
+        handleSubmit(data);
+      }} />
     </Container>
   );
 };

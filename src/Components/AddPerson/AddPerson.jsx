@@ -12,48 +12,20 @@ const AddPerson = ({ open, onClose, onSubmit }) => {
   const [selectedRoles, setSelectedRoles] = useState([]);
 
   useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await RolesAPI.getRoles();
-        if (response && typeof response === 'object') {
-          // Convert the object into an array of roles with the correct order: role_code, role, is_masthead
-          const transformedRoles = Object.keys(response).map(roleCode => ({
-            role_code: roleCode,        // role code (e.g., 'AU')
-            role: response[roleCode].role,  // role name (e.g., 'Author')
-            is_masthead: response[roleCode].is_masthead  // is_masthead flag
-          }));
-          setRoles(transformedRoles);
-        } else {
-          console.error('Invalid response data:', response);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    fetchRoles();
+    RolesAPI.getRolesConversion().then(setRoles).catch(console.error);
   }, []);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch('/people', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          affiliation: affiliation,
-          email: email,
-          roles: selectedRoles, // Send roles as a list of codes
-        }),
-      });
-      const data = await response.json();
-      console.log(data);
-      onClose(); // Close dialog after successful submission
-    } catch (error) {
-      console.error(error);
-    }
+    const personData = {
+      first_name: firstName,
+      last_name: lastName,
+      affiliation: affiliation,
+      email: email,
+      roles: selectedRoles,
+    };
+    onSubmit(personData);
+    onClose();
   };
 
   return (
@@ -111,7 +83,7 @@ const AddPerson = ({ open, onClose, onSubmit }) => {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button type="submit" variant="contained" color="primary">
+        <Button onClick={handleSubmit} type="submit" variant="contained" color="primary"> 
           Add
         </Button>
       </DialogActions>

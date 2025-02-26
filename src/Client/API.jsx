@@ -104,6 +104,26 @@ export const RolesAPI = {
       throw error;
     }
   },
+  getRolesConversion: async () => {
+    try {
+      const response = await client.get("/roles");
+      if (response && typeof response === 'object') {
+        // Convert the object into an array of roles with the correct order: role_code, role, is_masthead
+        const transformedRoles = Object.keys(response.data).map(roleCode => ({
+          role_code: roleCode,        // role code (e.g., 'AU')
+          role: response.data[roleCode].role,  // role name (e.g., 'Author')
+          is_masthead: response.data[roleCode].is_masthead  // is_masthead flag
+        }));
+        return transformedRoles;
+      } else {
+        console.error('Invalid response data:', response);
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  },
   deleteRole: async (id) => {
     try {
       const response = await client.delete(`/role/${id}`);
