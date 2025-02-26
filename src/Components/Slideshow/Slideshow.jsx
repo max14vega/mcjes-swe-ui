@@ -24,7 +24,7 @@ const Slideshow = () => {
             alt="Slide 1"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -36,7 +36,7 @@ const Slideshow = () => {
             alt="Slide 2"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -48,7 +48,7 @@ const Slideshow = () => {
             alt="Slide 3"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -60,7 +60,7 @@ const Slideshow = () => {
             alt="Slide 4"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
@@ -72,7 +72,7 @@ const Slideshow = () => {
             alt="Slide 5"
             style={{
               width: "100%",
-              height: "225px",
+              height: "400px",
               objectFit: "cover",
               borderRadius: "0",
             }}
