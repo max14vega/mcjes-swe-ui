@@ -92,3 +92,34 @@ export const TextsAPI = {
     }
   },
 };
+
+// Roles REST Endpoints
+export const RolesAPI = {
+  getRoles: async () => {
+    try {
+      const response = await client.get("/roles");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+      throw error;
+    }
+  },
+  deleteRole: async (id) => {
+    try {
+      const response = await client.delete(`/role/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error deleting role with ID ${id}:`, error);
+      throw error;
+    }
+  },
+  addRole: async (role) => {
+    try {
+      const response = await client.post("/role/create", role);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding role:", error);
+      throw error;
+    }
+  },
+};
