@@ -48,4 +48,3 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
           REACT_APP_BACKEND_URL: "https:jaylanwu.pythonanywhere.com"
-
