@@ -23,6 +23,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:local" : "exec ./local.sh",
+    "start:cloud" : "exec ./cloud.sh",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
