@@ -22,10 +22,10 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: yarn install
 
-      - name: Run tests
+      - name: Run Jest tests
         run: yarn test
 
   deploy-heroku:
@@ -46,4 +46,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+        env:
+          REACT_APP_BACKEND_URL: "https:jaylanwu.pythonanywhere.com"
 
