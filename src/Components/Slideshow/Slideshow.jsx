@@ -20,7 +20,7 @@ const Slideshow = () => {
       <Slider {...settings}>
         <div>
           <img
-            src="/Images/SlideshowHome/Image1.jpeg"
+            src="/Images/SlideshowHome/Image1.jpg"
             alt="Slide 1"
             style={{
               width: "100%",
@@ -32,7 +32,7 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/Image2.jpeg"
+            src="/Images/SlideshowHome/Image2.jpg"
             alt="Slide 2"
             style={{
               width: "100%",
@@ -44,7 +44,7 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/Image3.jpeg"
+            src="/Images/SlideshowHome/Image3.jpg"
             alt="Slide 3"
             style={{
               width: "100%",
@@ -56,7 +56,7 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/Image4.jpeg"
+            src="/Images/SlideshowHome/Image4.jpg"
             alt="Slide 4"
             style={{
               width: "100%",
@@ -68,7 +68,7 @@ const Slideshow = () => {
         </div>
         <div>
           <img
-            src="/Images/SlideshowHome/Image5.jpeg"
+            src="/Images/SlideshowHome/Image5.jpg"
             alt="Slide 5"
             style={{
               width: "100%",

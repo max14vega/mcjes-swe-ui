@@ -3,11 +3,11 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#7180B9", // Strong violet-blue
+      main: "#171738", // Dark Blue
       contrastText: "#FFFFFF", // White for contrast
     },
     secondary: {
-      main: "#171738", // Very dark blue for secondary elements
+      main: "#7180B9", // Violet-blue for secondary elements
       contrastText: "#FFFFFF", // White text on secondary color
     },
     background: {

@@ -23,29 +23,28 @@ const topJournals = [
 
 const currentWorks = [
   {
-    title: "Latest in Climate Change",
-    description:
-      "Cutting-edge research and discussions about climate change impacts.",
-    imageUrl: "/Images/Previews/climate-change.webp",
-    link: "/current/climate-change",
+    "title": "Latest in Climate Change",
+    "description": "Cutting-edge research and discussions about climate change impacts.",
+    "imageUrl": "Images/Previews/Image1.1.jpg",
+    "link": "/current/climate-change"
   },
   {
-    title: "Innovations in AI",
-    description: "Explore the forefront of artificial intelligence technology.",
-    imageUrl: "/Images/Previews/artificial-intelligence.jpeg",
-    link: "/current/ai",
+    "title": "Innovations in Entomology",
+    "description": "Explore the forefront of entomology techniques and discoveries.",
+    "imageUrl": "/Images/Previews/Image1.2.jpg",
+    "link": "/current/entomology"
   },
 ];
 
 const primarySources = [
   {
     title: "Historical Documents on Software Engineering",
-    imageUrl: "/Images/Previews/tech-history.jpg",
+    imageUrl: "/Images/Previews/Image2.1.jpg",
     link: "/sources/software-engineering",
   },
   {
     title: "Foundational Data Science Papers",
-    imageUrl: "/Images/Previews/data-science.jpeg",
+    imageUrl: "/Images/Previews/Image2.2.jpg",
     link: "/sources/data-science",
   },
 ];
@@ -54,13 +53,13 @@ const researchArticles = [
   {
     title: "Review on Big Data Analytics",
     description: "A comprehensive review of the latest trends in big data.",
-    imageUrl: "/Images/Previews/big-data.webp",
+    imageUrl: "/Images/Previews/Image3.1.jpg",
     link: "/articles/big-data",
   },
   {
     title: "Synthesis of AI Ethics",
     description: "A deep dive into the ethical considerations in AI.",
-    imageUrl: "/Images/Previews/ai-ethics.png",
+    imageUrl: "/Images/Previews/Image3.2.jpg",
     link: "/articles/ai-ethics",
   },
 ];
@@ -103,7 +102,7 @@ const HomePage = () => {
       <Container maxWidth="xl">
         <Box textAlign="center" mt={5} p={3}>
           <Typography variant="h2" gutterBottom>
-            Exploring Made Simple
+            Insects Here and Now
           </Typography>
           <Typography variant="h6" color="textSecondary">
             A Platform to Share Authored Works
@@ -178,7 +177,7 @@ const HomePage = () => {
 
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
-            Primary Sources
+            Understanding Bug Behavior 
           </Typography>
           <Grid container spacing={2}>
             {primarySources.map((source, index) => (
