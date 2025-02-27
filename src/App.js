@@ -7,20 +7,14 @@ import "./App.css";
 
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
-import PeoplePage from "./Pages/People/PeoplePage";
-import People from "./Components/People";
 import Mastheads from "./Pages/AboutPage";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
+import Manuscripts from "./Pages/Manuscripts";
+import PeoplePage from "./Pages/People/PeoplePage";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
-import Testing from "./Pages/Testing"; // Corrected import path to match the directory structure
-import Manuscripts from "./Pages/Manuscripts";
-
-// function PeoplePage() {
-//   const { name } = useParams();
-//   return <h1>{name}</h1>;
-// }
+import Testing from "./Pages/Testing";
 
 function App() {
   return (
@@ -29,7 +23,6 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="people" element={<People />} />
           <Route path="peoplepage" element={<PeoplePage />} />
           <Route path="submissions" element={<Submissions />} />
           <Route path="about" element={<Mastheads />} />

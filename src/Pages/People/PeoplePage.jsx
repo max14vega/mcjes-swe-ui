@@ -1,25 +1,23 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  Button,
+  Container,
+  Grid2,
+  IconButton,
   Paper,
   Table,
   TableBody,
   TableCell,
-  Container,
   TableContainer,
   TableHead,
   TableRow,
-  Grid2,
-  IconButton,
   Typography,
-  Button
 } from "@mui/material";
-import React, { useState, useEffect} from "react";
-import  { PeopleAPI } from "../../Client/API";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddPerson  from "../../Components/AddPerson/AddPerson";
-
+import React, { useState, useEffect } from "react";
+import { PeopleAPI } from "../../Client/API";
+import AddPerson from "../../Components/AddPerson/AddPerson";
 
 const PeoplePage = () => {
-
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -51,7 +49,7 @@ const PeoplePage = () => {
         setError(null);
       })
       .catch((error) => {
-        setError("Error fetching people: " + error.message);
+        setError("Error fetching people: ${error.message}");
       });
   };
 
@@ -71,20 +69,20 @@ const PeoplePage = () => {
     fetchData();
   }, []);
 
-
   return (
-    <Container sx={{my: 1}}>
-      <Grid2 
-        xs={12} 
-        sx={{ display: "flex", 
-              justifyContent: "left",
-              alignItems: "center",
-               }}>
-      <Typography variant="h4" gutterBottom sx={{my: 2}}> People </Typography>
-      {/* <Button variant="contained" onClick={() => fetchData("people")}> Add Person</Button> */}
+    <Container sx={{ my: 1 }}>
+      <Grid2
+        xs={12}
+        sx={{ display: "flex", justifyContent: "left", alignItems: "center" }}
+      >
+        <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
+          {" "}
+          People{" "}
+        </Typography>
+        {/* <Button variant="contained" onClick={() => fetchData("people")}> Add Person</Button> */}
       </Grid2>
-      <hr/>
-    <Grid2
+      <hr />
+      <Grid2
         xs={12}
         sx={{
           display: "flex",
@@ -93,7 +91,7 @@ const PeoplePage = () => {
           paddingRight: 2,
         }}
       >
-        <TableContainer component={Paper} sx={{ width: "700%", my: 1}}>
+        <TableContainer component={Paper} sx={{ width: "700%", my: 1 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -108,12 +106,22 @@ const PeoplePage = () => {
               {Object.keys(data).length > 0 ? (
                 Object.keys(data).map((email) => (
                   <TableRow key={email}>
-                    <TableCell scope="row">{data[email].first_name} {data[email].last_name}</TableCell>
+                    <TableCell scope="row">
+                      {data[email].first_name} {data[email].last_name}
+                    </TableCell>
                     <TableCell align="left">{email}</TableCell>
-                    <TableCell align="left">{data[email].affiliation}</TableCell>
-                    <TableCell align="left">{data[email].roles.join(", ")}</TableCell>
+                    <TableCell align="left">
+                      {data[email].affiliation}
+                    </TableCell>
+                    <TableCell align="left">
+                      {data[email].roles.join(", ")}
+                    </TableCell>
                     <TableCell align="center">
-                      <IconButton variant="contained" color="error" onClick={() => handleDelete(email)}>
+                      <IconButton
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleDelete(email)}
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -121,27 +129,33 @@ const PeoplePage = () => {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={5} align="center">No data available</TableCell>
+                  <TableCell colSpan={5} align="center">
+                    No data available
+                  </TableCell>
                 </TableRow>
               )}
               <TableRow>
-                  <TableCell colSpan={5} align="center">
-                    <Button 
-                      variant="contained" 
-                      onClick={() => setOpen(true)}
-                      sx={{width: "100%", my: 1, borderRadius: .25}}
-                      >
-                      Add New Person
-                    </Button>
-                  </TableCell>
+                <TableCell colSpan={5} align="center">
+                  <Button
+                    variant="contained"
+                    onClick={() => setOpen(true)}
+                    sx={{ width: "100%", my: 1, borderRadius: 0.25 }}
+                  >
+                    Add New Person
+                  </Button>
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       </Grid2>
-      <AddPerson open={open} onClose={handleClose} onSubmit={(data) => {
-        handleSubmit(data);
-      }} />
+      <AddPerson
+        open={open}
+        onClose={handleClose}
+        onSubmit={(data) => {
+          handleSubmit(data);
+        }}
+      />
     </Container>
   );
 };

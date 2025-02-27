@@ -1,6 +1,13 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { Autocomplete } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from "@mui/material";
-import { Autocomplete } from '@mui/material';
 import { RolesAPI } from "../../Client/API";
 
 const AddPerson = ({ open, onClose, onSubmit }) => {
@@ -67,23 +74,24 @@ const AddPerson = ({ open, onClose, onSubmit }) => {
             options={roles}
             sx={{ marginTop: "15px" }}
             getOptionLabel={(option) => option.role} // Display the role name
-            value={roles.filter(role => selectedRoles.includes(role.role_code))} // Filter selected roles by 'role_code'
-            onChange={(event, newValue) => setSelectedRoles(newValue.map(role => role.role_code))} // Store the selected role codes
+            value={roles.filter((role) =>
+              selectedRoles.includes(role.role_code),
+            )} // Filter selected roles by 'role_code'
+            onChange={(event, newValue) =>
+              setSelectedRoles(newValue.map((role) => role.role_code))
+            } // Store the selected role codes
             renderInput={(params) => (
-                <TextField
-                {...params}
-                placeholder="Select roles"
-                />
+              <TextField {...params} placeholder="Select roles" />
             )}
             filterSelectedOptions
-            />
+          />
         </form>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} type="submit" variant="contained" color="primary"> 
+        <Button onClick={handleSubmit} variant="contained" color="primary">
           Add
         </Button>
       </DialogActions>
