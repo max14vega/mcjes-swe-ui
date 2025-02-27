@@ -43,11 +43,11 @@ You may also see any lint errors in the console.
 
 #### `yarn start:local`
 
-Runs the app with connection to the local database [http://localhost:8000](http://localhost:8000).
+Runs the app with connection to the local API server on[http://localhost:8000](http://localhost:8000).
 
 #### `yarn start:cloud`
 
-Runs the app with connection to the local database [https://jaylanwu.pythonanywhere.com/](https://jaylanwu.pythonanywhere.com/).
+Runs the app with connection to the cloud API server on [https://jaylanwu.pythonanywhere.com/](https://jaylanwu.pythonanywhere.com/).
 
 #### `yarn lint`
 
