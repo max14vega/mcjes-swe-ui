@@ -88,7 +88,7 @@ export default function Login() {
             sx={{
               width: "100%",
               height: "100%",
-              backgroundColor: "#171738",
+              backgroundColor: "Black",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -97,7 +97,7 @@ export default function Login() {
             }}
           >
             <img
-              src="/Images/Logo/LogoClean.png"
+              src="/Images/Logo/CatLogoBlack.png"
               alt="Logo"
               style={{
                 width: "100%",
