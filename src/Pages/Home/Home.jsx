@@ -26,13 +26,13 @@ const currentWorks = [
     title: "Latest in Climate Change",
     description:
       "Cutting-edge research and discussions about climate change impacts.",
-    imageUrl: "/images/current-climate.jpg",
+    imageUrl: "/Images/Previews/climate-change.webp",
     link: "/current/climate-change",
   },
   {
     title: "Innovations in AI",
     description: "Explore the forefront of artificial intelligence technology.",
-    imageUrl: "/images/current-ai.jpg",
+    imageUrl: "/Images/Previews/artificial-intelligence.jpeg",
     link: "/current/ai",
   },
 ];
@@ -40,12 +40,12 @@ const currentWorks = [
 const primarySources = [
   {
     title: "Historical Documents on Software Engineering",
-    imageUrl: "/images/historical-se.jpg",
+    imageUrl: "/Images/Previews/tech-history.jpg",
     link: "/sources/software-engineering",
   },
   {
     title: "Foundational Data Science Papers",
-    imageUrl: "/images/historical-ds.jpg",
+    imageUrl: "/Images/Previews/data-science.jpeg",
     link: "/sources/data-science",
   },
 ];
@@ -54,13 +54,13 @@ const researchArticles = [
   {
     title: "Review on Big Data Analytics",
     description: "A comprehensive review of the latest trends in big data.",
-    imageUrl: "/images/research-bigdata.jpg",
+    imageUrl: "/Images/Previews/big-data.webp",
     link: "/articles/big-data",
   },
   {
     title: "Synthesis of AI Ethics",
     description: "A deep dive into the ethical considerations in AI.",
-    imageUrl: "/images/research-ai-ethics.jpg",
+    imageUrl: "/Images/Previews/ai-ethics.png",
     link: "/articles/ai-ethics",
   },
 ];
