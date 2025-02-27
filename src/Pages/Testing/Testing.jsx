@@ -105,10 +105,9 @@ const Testing = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {headers[dataType] &&
-                headers[dataType].map((header, index) => (
-                  <TableCell key={index}>{header}</TableCell>
-                ))}
+              {headers[dataType]?.map((header, index) => (
+                <TableCell key={index}>{header}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
