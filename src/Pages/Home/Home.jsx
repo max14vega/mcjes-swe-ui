@@ -169,7 +169,7 @@ const HomePage = () => {
                       {journal.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {journal.description}  // This line adds the description
+                      {journal.description}  
                     </Typography>
                   </CardContent>
                   <CardActions>
