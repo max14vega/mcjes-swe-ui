@@ -25,13 +25,13 @@ const currentWorks = [
   {
     "title": "Latest in Climate Change",
     "description": "Cutting-edge research and discussions about climate change impacts.",
-    "imageUrl": "Images/Previews/Image1.1.jpg",
+    "imageUrl": "Images/Previews/long-ahh-bug.jpg",
     "link": "/current/climate-change"
   },
   {
     "title": "Innovations in Entomology",
     "description": "Explore the forefront of entomology techniques and discoveries.",
-    "imageUrl": "/Images/Previews/Image1.2.jpg",
+    "imageUrl": "/Images/Previews/yellow-little-guy-dots.jpg",
     "link": "/current/entomology"
   },
 ];
@@ -39,12 +39,12 @@ const currentWorks = [
 const primarySources = [
   {
     title: "Historical Documents on Software Engineering",
-    imageUrl: "/Images/Previews/Image2.1.jpg",
+    imageUrl: "/Images/Previews/blue-ahh-bug.jpg",
     link: "/sources/software-engineering",
   },
   {
     title: "Foundational Data Science Papers",
-    imageUrl: "/Images/Previews/Image2.2.jpg",
+    imageUrl: "/Images/Previews/yellow-little-guy.jpg",
     link: "/sources/data-science",
   },
 ];
@@ -53,13 +53,13 @@ const researchArticles = [
   {
     title: "Review on Big Data Analytics",
     description: "A comprehensive review of the latest trends in big data.",
-    imageUrl: "/Images/Previews/Image3.1.jpg",
+    imageUrl: "/Images/Previews/long-ahh-bug-winged.jpg",
     link: "/articles/big-data",
   },
   {
     title: "Synthesis of AI Ethics",
     description: "A deep dive into the ethical considerations in AI.",
-    imageUrl: "/Images/Previews/Image3.2.jpg",
+    imageUrl: "/Images/Previews/yellow-little-guy-dots.jpg",
     link: "/articles/ai-ethics",
   },
 ];
