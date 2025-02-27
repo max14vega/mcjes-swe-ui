@@ -36,11 +36,18 @@ In the project directory, you can run:
 
 #### `yarn start`
 
-Runs the app in the development mode.  
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the react app. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.  
 You may also see any lint errors in the console.
+
+#### `yarn start:local`
+
+Runs the app with connection to the local database [http://localhost:8000](http://localhost:8000).
+
+#### `yarn start:cloud`
+
+Runs the app with connection to the local database [https://jaylanwu.pythonanywhere.com/](https://jaylanwu.pythonanywhere.com/).
 
 #### `yarn lint`
 
