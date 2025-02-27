@@ -47,4 +47,7 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
         run: |
           heroku git:remote -a $HEROKU_APP_NAME
-          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:main 
+          git fetch heroku main
+          git reset --soft heroku/main
+          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:main --force
+
