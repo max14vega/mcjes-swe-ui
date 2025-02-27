@@ -21,7 +21,7 @@ const Navbar = () => {
         >
           <Link to="/">
             <img
-              src="/Images/Logo/LogoClean.png"
+              src="/Images/Logo/LogoUpdated.png"
               alt="Logo"
               style={{ height: "70px", marginRight: "25px" }}
             />
