@@ -35,16 +35,18 @@ const topJournals = [
 
 const currentWorks = [
   {
-    "title": "Latest in Climate Change",
-    "description": "Cutting-edge research and discussions about climate change impacts.",
-    "imageUrl": "Images/Previews/long-ahh-bug.jpg",
-    "link": "/current/climate-change"
+    title: "Latest in Climate Change",
+    description:
+      "Cutting-edge research and discussions about climate change impacts.",
+    imageUrl: "Images/Previews/long-ahh-bug.jpg",
+    link: "/current/climate-change",
   },
   {
-    "title": "Innovations in Entomology",
-    "description": "Explore the forefront of entomology techniques and discoveries.",
-    "imageUrl": "/Images/Previews/yellow-little-guy-dots.jpg",
-    "link": "/current/entomology"
+    title: "Innovations in Entomology",
+    description:
+      "Explore the forefront of entomology techniques and discoveries.",
+    imageUrl: "/Images/Previews/yellow-little-guy-dots.jpg",
+    link: "/current/entomology",
   },
 ];
 
@@ -202,7 +204,7 @@ const HomePage = () => {
 
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
-            Understanding Bug Behavior 
+            Understanding Bug Behavior
           </Typography>
           <Grid container spacing={2}>
             {primarySources.map((source, index) => (

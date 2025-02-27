@@ -115,9 +115,6 @@ export const RolesAPI = {
           is_masthead: response.data[roleCode].is_masthead, // is_masthead flag
         }));
         return transformedRoles;
-      } else {
-        console.error("Invalid response data:", response);
-        return [];
       }
     } catch (error) {
       console.error(error);

@@ -61,7 +61,6 @@ export default function Login() {
           flex: 1,
           width: "90vw",
           height: "90vh",
-          display: "flex",
           alignItems: "center",
           justifyContent: "center",
           padding: "32px",
