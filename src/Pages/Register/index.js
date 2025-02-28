@@ -1,8 +1,3 @@
-// src/Pages/Register.js
-import React from "react";
+import Register from "./Register";
 
-const Register = () => {
-  return <div>Register Page</div>;
-};
-
-export default Register; // Make sure this is a default export
+export default Register;
