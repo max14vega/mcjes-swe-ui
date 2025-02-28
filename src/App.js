@@ -15,6 +15,7 @@ import PeoplePage from "./Pages/People/PeoplePage";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import Testing from "./Pages/Testing";
+import Contact from "./Pages/Contact"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="peoplepage" element={<PeoplePage />} />
+          <Route path="contact" element={<Contact />} />
           <Route path="submissions" element={<Submissions />} />
           <Route path="about" element={<Mastheads />} />
           <Route path="login" element={<Login />} />
