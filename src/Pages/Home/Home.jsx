@@ -75,7 +75,7 @@ const researchArticles = [
   {
     title: "Advancements in Insect Studies",
     description: "A detailed examination of recent breakthroughs in understanding the complex behaviors of insects.",
-    imageUrl: "/Images/Previews/yellow-little-guy-dots.jpg",
+    imageUrl: "/Images/Previews/green-little-guy.jpg",
     link: "/articles/insect-behavior",
   },
 ];
