@@ -5,26 +5,92 @@ import{Paper, Grid, Card, CardMedia, CardContent} from "@mui/material"; // Added
 import AddReactionIcon from "@mui/icons-material/AddReaction"; //Addedd the Icon for Register Page
 
 const Signup = () => {
-  const PaperStyle = { padding:'30px 20px', width: 400, margin: "auto" }; //Adjust Paper Style
-  const avatarStyle = { backgroundColor: "#171738", marginBottom: 10, width: 50,height: 50} // Adjust avatar style
-  const formStyle = { marginTop: 20, display: "flex", flexDirection: "column", gap: "15px" }; // Adjuct Form Style
-  const buttonStyle = { marginTop: 10, padding: "10px", fontSize: "16px" }; // Adjuct button style
-  const leftcolStyle =
-    {flex: 2, // Takes up 2 parts of the available space (more width than the right column)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhone = (phone) => /^\d{10}$/.test(phone);
+
+  const handleSignup = (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    setNameError("");
+    setEmailError("");
+    setPhoneError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+
+    let isValid = true;
+
+    if (!name) {
+      setNameError("Name is required.");
+      isValid = false;
+    }
+    if (!email) {
+      setEmailError("Email is required.");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Invalid email format.");
+      isValid = false;
+    }
+    if (!phone) {
+      setPhoneError("Phone number is required.");
+      isValid = false;
+    } else if (!validatePhone(phone)) {
+      setPhoneError("Invalid phone number. Use 10 digits.");
+      isValid = false;
+    }
+    if (!password) {
+      setPasswordError("Password is required.");
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long.");
+      isValid = false;
+    }
+    if (!confirmPassword) {
+      setConfirmPasswordError("Please confirm your password.");
+      isValid = false;
+    } else if (confirmPassword !== password) {
+      setConfirmPasswordError("Passwords do not match.");
+      isValid = false;
+    }
+
+    if (isValid) {
+      console.log("User registered successfully:", { name, email, phone });
+    }
+  };
+
+  const PaperStyle = { padding: "30px 20px", width: 400, margin: "auto" };
+  const avatarStyle = { backgroundColor: "#171738", marginBottom: 10, width: 50, height: 50 };
+  const formStyle = { marginTop: 20, display: "flex", flexDirection: "column", gap: "15px" };
+  const buttonStyle = { marginTop: 10, padding: "10px", fontSize: "16px" };
+
+  const leftColStyle = {
+    flex: 2,
     height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: "20px", // Adjust margin to move it more left
-    }
-  const rigthcolStyle =
-   {flex: 1, // Takes up 1 part of the card width
+    marginRight: "20px",
+  };
+
+  const rightColStyle = {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
     justifyContent: "center",
     padding: "40px",
-   }
+  };
 
   return (
     <div className="min-h-screen flex bg-gray-100 items-center justify-center">
@@ -46,7 +112,7 @@ const Signup = () => {
         }}
       >
         {/* Left Column - Store Image */}
-        <div style={leftcolStyle}>
+        <div style={leftColStyle}>
           <Card
             sx={{
               width: "100%", // Makes the card fill the container
@@ -73,7 +139,7 @@ const Signup = () => {
         </div>
 
         {/* Right Column - Form */}
-        <div style={rigthcolStyle}>
+        <div style={rightColStyle}>
             <CardContent
                 sx={{
                 width: "100%",
@@ -100,21 +166,69 @@ const Signup = () => {
                         <Typography variant="body2" color="textSecondary"> Please fill this form to register </Typography>
 
                     {/* Form */}
-                    <form style={formStyle}>
-                        <TextField id="name" placeholder="Enter your name" fullWidth variant="outlined" size="medium" style={{ marginBottom: "10px"}} />
-                        <TextField id="email" placeholder="Enter your email" fullWidth type="email" variant="outlined" size="medium" style={{ marginBottom: "10px" }}/>
-                        <TextField id="phone" placeholder="Enter your phone number" fullWidth type="tel" variant="outlined" size="medium" style={{ marginBottom: "10px" }} />
-                        <TextField id="password" type="password" placeholder="Enter your password" fullWidth variant="outlined" size="medium" style={{ marginBottom: "10px" }} />
-                        <TextField id="confirm-password" type="password" placeholder="Re-enter your password" fullWidth variant="outlined" size="medium" style={{ marginBottom: "10px" }} />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            style={buttonStyle}
-                        >
+                    <form style={formStyle} onSubmit={handleSignup}>
+                      <TextField
+                      id="name"
+                      placeholder="Enter your name"
+                      fullWidth
+                      variant="outlined"
+                      size="medium"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      error={!!nameError}
+                      helperText={nameError}
+                      />
+                      <TextField
+                      id="email"
+                      placeholder="Enter your email"
+                      fullWidth
+                      type="email"
+                      variant="outlined"
+                      size="medium"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      error={!!emailError}
+                      helperText={emailError}
+                      />
+                      <TextField
+                      id="phone"
+                      placeholder="Enter your phone number"
+                      fullWidth
+                      type="tel"
+                      variant="outlined"
+                      size="medium"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      error={!!phoneError}
+                      helperText={phoneError}
+                      />
+                      <TextField
+                      id="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      fullWidth
+                      variant="outlined"
+                      size="medium"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      error={!!passwordError}
+                      helperText={passwordError}
+                      />
+                      <TextField
+                      id="confirm-password"
+                      type="password"
+                      placeholder="Re-enter your password"
+                      fullWidth
+                      variant="outlined"
+                      size="medium"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      error={!!confirmPasswordError}
+                      helperText={confirmPasswordError}
+                      />
+                      <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
                         Register
-                        </Button>
+                      </Button>
                     </form>
                 </Paper>
             </CardContent>
