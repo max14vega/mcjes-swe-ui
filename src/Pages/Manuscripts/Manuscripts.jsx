@@ -8,39 +8,35 @@ import {
   Paper,
   TextField,
   Typography,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
-import React, { useState } from "react";
-
-const manuscriptExamples = [
-  {
-    title: "Pride and Prejudice",
-    author: "Jane Austin",
-    id: 1,
-    description: "blah blah blah",
-  },
-  {
-    title: "Catcher and the Rye",
-    author: "J.D. Salinger",
-    id: 2,
-    description: "blah blah blah",
-  },
-  {
-    title: "One Piece",
-    author: "Eichiro Oda",
-    id: 3,
-    description: "the one piece is real",
-  },
-];
+import React, { useState, useEffect } from "react";
+import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [manuscripts, setManuscripts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Filter manuscripts based on the search term
-  const filteredManuscripts = manuscriptExamples.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  // Fetch manuscripts 
+  useEffect(() => {
+    const fetchManuscripts = async () => {
+      setLoading(true);
+      try {
+        const data = await ManuscriptsAPI.getManuscripts();
+        setManuscripts(Object.values(data));
+        setError(null);
+      } catch (error) {
+        console.error("Failed to fetch manuscripts:", error);
+        setError("Failed to fetch manuscripts.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchManuscripts();
+  }, []);
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
@@ -63,43 +59,57 @@ const Manuscript = () => {
 
         {/* Main Content */}
         <Grid item xs={12} md={9}>
-          {/* Search Bar */}
+          {/* Static Search Bar */}
           <TextField
             fullWidth
             label="Search by title or author"
             variant="outlined"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
             style={{ marginBottom: "2rem" }}
+            disabled // Disabled the search box to make it clear it's non-functional
           />
+
+          {/* Loading and Error Handling */}
+          {loading && (
+            <Box display="flex" justifyContent="center" my={4}>
+              <CircularProgress />
+            </Box>
+          )}
+          {error && (
+            <Alert severity="error" style={{ marginBottom: "2rem" }}>
+              {error}
+            </Alert>
+          )}
 
           {/* Manuscript List */}
           <Grid container spacing={3}>
-            {filteredManuscripts.map((book) => (
-              <Grid item xs={12} sm={6} md={4} key={book.id}>
-                <Card elevation={3}>
-                  <CardContent>
-                    <Typography variant="h5" component="h2" gutterBottom>
-                      {book.title}
-                    </Typography>
-                    <Typography variant="subtitle1" component="p" gutterBottom>
-                      <strong>Author:</strong> {book.author}
-                    </Typography>
-                    <Typography variant="body1" component="p">
-                      {book.description}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ marginTop: "1rem" }}
-                      onClick={() => alert(`You clicked ${book.title}`)}
-                    >
-                      View Details
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+            {manuscripts.map((book) => {
+              const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim(); // Combine first and last name
+              return (
+                <Grid item xs={12} sm={6} md={4} key={book._id}>
+                  <Card elevation={3}>
+                    <CardContent>
+                      <Typography variant="h5" component="h2" gutterBottom>
+                        {book.title || "No Title"} {/* For undefined title */}
+                      </Typography>
+                      <Typography variant="subtitle1" component="p" gutterBottom>
+                        <strong>Author:</strong> {author || "Unknown Author"} {/* For undefined author */}
+                      </Typography>
+                      <Typography variant="body1" component="p">
+                        <strong>Abstract:</strong> {book.abstract || "No abstract available"} {/* For undefined abstract */}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ marginTop: "1rem" }}
+                        onClick={() => alert(`You clicked ${book.title || "this manuscript"}`)}
+                      >
+                        View Details
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
         </Grid>
       </Grid>
