@@ -1,15 +1,15 @@
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   Grid,
   Paper,
   TextField,
   Typography,
-  CircularProgress,
-  Alert,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { ManuscriptsAPI } from "../../Client/API";
@@ -19,7 +19,7 @@ const Manuscript = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch manuscripts 
+  // Fetch manuscripts
   useEffect(() => {
     const fetchManuscripts = async () => {
       setLoading(true);
@@ -83,7 +83,8 @@ const Manuscript = () => {
           {/* Manuscript List */}
           <Grid container spacing={3}>
             {manuscripts.map((book) => {
-              const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim(); // Combine first and last name
+              const author =
+                `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim(); // Combine first and last name
               return (
                 <Grid item xs={12} sm={6} md={4} key={book._id}>
                   <Card elevation={3}>
@@ -91,17 +92,28 @@ const Manuscript = () => {
                       <Typography variant="h5" component="h2" gutterBottom>
                         {book.title || "No Title"} {/* For undefined title */}
                       </Typography>
-                      <Typography variant="subtitle1" component="p" gutterBottom>
-                        <strong>Author:</strong> {author || "Unknown Author"} {/* For undefined author */}
+                      <Typography
+                        variant="subtitle1"
+                        component="p"
+                        gutterBottom
+                      >
+                        <strong>Author:</strong> {author || "Unknown Author"}{" "}
+                        {/* For undefined author */}
                       </Typography>
                       <Typography variant="body1" component="p">
-                        <strong>Abstract:</strong> {book.abstract || "No abstract available"} {/* For undefined abstract */}
+                        <strong>Abstract:</strong>{" "}
+                        {book.abstract || "No abstract available"}{" "}
+                        {/* For undefined abstract */}
                       </Typography>
                       <Button
                         variant="contained"
                         color="primary"
                         style={{ marginTop: "1rem" }}
-                        onClick={() => alert(`You clicked ${book.title || "this manuscript"}`)}
+                        onClick={() =>
+                          alert(
+                            `You clicked ${book.title || "this manuscript"}`,
+                          )
+                        }
                       >
                         View Details
                       </Button>

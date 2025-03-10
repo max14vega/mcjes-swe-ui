@@ -1,8 +1,8 @@
-import { useState} from "react";
-import { Typography, TextField, Button} from "@mui/material"
-import {Avatar} from "@mui/material"; //Avatar import
-import{Paper, Grid, Card, CardMedia, CardContent} from "@mui/material"; // Added Card, CardMedia, and CardContent imports
 import AddReactionIcon from "@mui/icons-material/AddReaction"; //Addedd the Icon for Register Page
+import { Button, TextField, Typography } from "@mui/material";
+import { Avatar } from "@mui/material"; //Avatar import
+import { Card, CardContent, CardMedia, Grid, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
+import { useState } from "react";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -70,8 +70,18 @@ const Signup = () => {
   };
 
   const PaperStyle = { padding: "30px 20px", width: 400, margin: "auto" };
-  const avatarStyle = { backgroundColor: "#171738", marginBottom: 10, width: 50, height: 50 };
-  const formStyle = { marginTop: 20, display: "flex", flexDirection: "column", gap: "15px" };
+  const avatarStyle = {
+    backgroundColor: "#171738",
+    marginBottom: 10,
+    width: 50,
+    height: 50,
+  };
+  const formStyle = {
+    marginTop: 20,
+    display: "flex",
+    flexDirection: "column",
+    gap: "15px",
+  };
   const buttonStyle = { marginTop: 10, padding: "10px", fontSize: "16px" };
 
   const leftColStyle = {
@@ -97,18 +107,18 @@ const Signup = () => {
       {/* Main Card containing both image and form */}
       <Card
         sx={{
-            flex: 1,
-            display: "flex",
-            width: "90vw",  //90% of the viewport width
-            height: "80vh", // 80% of viewport height
-            padding: "32px",
-            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-            borderRadius: "40px",
-            backgroundColor: "white", //backgroung color
-            flexDirection: "row", // Align items in a row
-            marginTop: "30px", // Adjust the top margin
-            marginLeft: "auto", // Push card away from the left
-            marginRight: "auto", // Push card away from the right
+          flex: 1,
+          display: "flex",
+          width: "90vw", //90% of the viewport width
+          height: "80vh", // 80% of viewport height
+          padding: "32px",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+          borderRadius: "40px",
+          backgroundColor: "white", //backgroung color
+          flexDirection: "row", // Align items in a row
+          marginTop: "30px", // Adjust the top margin
+          marginLeft: "auto", // Push card away from the left
+          marginRight: "auto", // Push card away from the right
         }}
       >
         {/* Left Column - Store Image */}
@@ -120,7 +130,7 @@ const Signup = () => {
               backgroundColor: "#171738",
               display: "flex", // Uses flexbox inside the card
               alignItems: "center", // Centers the image vertically
-              justifyContent: "center",  // Centers the image horizontally
+              justifyContent: "center", // Centers the image horizontally
               borderRadius: "20px", // Rounds the corners of the card
               boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)", // Adds a soft shadow for depth
             }}
@@ -140,98 +150,109 @@ const Signup = () => {
 
         {/* Right Column - Form */}
         <div style={rightColStyle}>
-            <CardContent
-                sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center",
+          <CardContent
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Paper elevation={10} style={PaperStyle}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center", // Center avatar horizontally
+                  alignItems: "center", // Center avatar vertically
+                  marginBottom: 10, // Ensure spacing between avatar and form
                 }}
-            >
-                <Paper elevation={10} style={PaperStyle}>
-                    <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",  // Center avatar horizontally
-                        alignItems: "center",      // Center avatar vertically
-                        marginBottom: 10,          // Ensure spacing between avatar and form
-                    }}
-                    >
-                        <Avatar style={avatarStyle}>
-                            <AddReactionIcon />
-                        </Avatar>
-                    </div>
-                        <Typography variant="h5" gutterBottom>Sign Up</Typography>
-                        <Typography variant="body2" color="textSecondary"> Please fill this form to register </Typography>
+              >
+                <Avatar style={avatarStyle}>
+                  <AddReactionIcon />
+                </Avatar>
+              </div>
+              <Typography variant="h5" gutterBottom>
+                Sign Up
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {" "}
+                Please fill this form to register{" "}
+              </Typography>
 
-                    {/* Form */}
-                    <form style={formStyle} onSubmit={handleSignup}>
-                      <TextField
-                      id="name"
-                      placeholder="Enter your name"
-                      fullWidth
-                      variant="outlined"
-                      size="medium"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      error={!!nameError}
-                      helperText={nameError}
-                      />
-                      <TextField
-                      id="email"
-                      placeholder="Enter your email"
-                      fullWidth
-                      type="email"
-                      variant="outlined"
-                      size="medium"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      error={!!emailError}
-                      helperText={emailError}
-                      />
-                      <TextField
-                      id="phone"
-                      placeholder="Enter your phone number"
-                      fullWidth
-                      type="tel"
-                      variant="outlined"
-                      size="medium"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      error={!!phoneError}
-                      helperText={phoneError}
-                      />
-                      <TextField
-                      id="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      fullWidth
-                      variant="outlined"
-                      size="medium"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      error={!!passwordError}
-                      helperText={passwordError}
-                      />
-                      <TextField
-                      id="confirm-password"
-                      type="password"
-                      placeholder="Re-enter your password"
-                      fullWidth
-                      variant="outlined"
-                      size="medium"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      error={!!confirmPasswordError}
-                      helperText={confirmPasswordError}
-                      />
-                      <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
-                        Register
-                      </Button>
-                    </form>
-                </Paper>
-            </CardContent>
+              {/* Form */}
+              <form style={formStyle} onSubmit={handleSignup}>
+                <TextField
+                  id="name"
+                  placeholder="Enter your name"
+                  fullWidth
+                  variant="outlined"
+                  size="medium"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  error={!!nameError}
+                  helperText={nameError}
+                />
+                <TextField
+                  id="email"
+                  placeholder="Enter your email"
+                  fullWidth
+                  type="email"
+                  variant="outlined"
+                  size="medium"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={!!emailError}
+                  helperText={emailError}
+                />
+                <TextField
+                  id="phone"
+                  placeholder="Enter your phone number"
+                  fullWidth
+                  type="tel"
+                  variant="outlined"
+                  size="medium"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  error={!!phoneError}
+                  helperText={phoneError}
+                />
+                <TextField
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  fullWidth
+                  variant="outlined"
+                  size="medium"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={!!passwordError}
+                  helperText={passwordError}
+                />
+                <TextField
+                  id="confirm-password"
+                  type="password"
+                  placeholder="Re-enter your password"
+                  fullWidth
+                  variant="outlined"
+                  size="medium"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={!!confirmPasswordError}
+                  helperText={confirmPasswordError}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  style={buttonStyle}
+                >
+                  Register
+                </Button>
+              </form>
+            </Paper>
+          </CardContent>
         </div>
       </Card>
     </div>
