@@ -1,18 +1,18 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Box, Button, TextField, Typography, Container } from '@mui/material';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+    name: '',
+    email: '',
+    message: ''
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -20,9 +20,9 @@ const ContactPage = () => {
     e.preventDefault();
     // Process form data here (e.g., send to an API)
     console.log(formData);
-    alert("Thank you for your message! We will get back to you soon.");
+    alert('Thank you for your message! We will get back to you soon.');
     // Optionally clear the form
-    setFormData({ name: "", email: "", message: "" });
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (

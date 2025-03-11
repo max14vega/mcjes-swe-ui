@@ -17,23 +17,20 @@ import Slideshow from "../../Components/Slideshow";
 // Sample data for top journals, current works, primary sources, and research articles
 const topJournals = [
   {
-    title: "Global Insect Ecology",
-    id: 1,
-    description:
-      "This journal provides a comprehensive look at the ecological roles of insects across the globe, exploring their interactions within ecosystems, effects on plant and animal populations, and responses to environmental changes.",
+    "title": "Global Insect Ecology",
+    "id": 1,
+    "description": "This journal provides a comprehensive look at the ecological roles of insects across the globe, exploring their interactions within ecosystems, effects on plant and animal populations, and responses to environmental changes."
   },
   {
-    title: "Arthropod Conservation Quarterly",
-    id: 2,
-    description:
-      "Focused on the conservation of arthropods, this journal publishes research on habitat preservation, species sustainability, and the impacts of human activity on arthropod populations, offering insights and solutions for conservation efforts.",
+    "title": "Arthropod Conservation Quarterly",
+    "id": 2,
+    "description": "Focused on the conservation of arthropods, this journal publishes research on habitat preservation, species sustainability, and the impacts of human activity on arthropod populations, offering insights and solutions for conservation efforts."
   },
   {
-    title: "Parasitology and Vector Research",
-    id: 3,
-    description:
-      "Dedicated to studying parasites and their vectors, this journal covers all aspects of parasitology and vector-borne diseases, including pathogen biology, vector ecology, and the development of control methods and treatments.",
-  },
+    "title": "Parasitology and Vector Research",
+    "id": 3,
+    "description": "Dedicated to studying parasites and their vectors, this journal covers all aspects of parasitology and vector-borne diseases, including pathogen biology, vector ecology, and the development of control methods and treatments."
+  }
 ];
 
 const currentWorks = [
@@ -58,30 +55,26 @@ const primarySources = [
     title: "Classical Texts on Insect Taxonomy",
     imageUrl: "/Images/Previews/blue-ahh-bug.jpg",
     link: "/sources/insect-taxonomy",
-    description:
-      "Explore the seminal works that shaped the way we classify and understand insect species around the world.",
+    description: "Explore the seminal works that shaped the way we classify and understand insect species around the world."
   },
   {
     title: "Foundational Papers on Pollinator Ecology",
     imageUrl: "/Images/Previews/yellow-little-guy.jpg",
     link: "/sources/pollinator-ecology",
-    description:
-      "Key research papers that delve into the ecology of pollinators and their critical roles in ecosystems.",
+    description: "Key research papers that delve into the ecology of pollinators and their critical roles in ecosystems."
   },
 ];
 
 const researchArticles = [
   {
     title: "Latest Trends in Pest Control Technologies",
-    description:
-      "A comprehensive review of modern methods and innovations in managing pest populations effectively.",
+    description: "A comprehensive review of modern methods and innovations in managing pest populations effectively.",
     imageUrl: "/Images/Previews/long-ahh-bug-winged.jpg",
     link: "/articles/pest-control",
   },
   {
     title: "Advancements in Insect Studies",
-    description:
-      "A detailed examination of recent breakthroughs in understanding the complex behaviors of insects.",
+    description: "A detailed examination of recent breakthroughs in understanding the complex behaviors of insects.",
     imageUrl: "/Images/Previews/green-little-guy.jpg",
     link: "/articles/insect-behavior",
   },
@@ -124,9 +117,9 @@ const HomePage = () => {
     <>
       <Container maxWidth="xl">
         <Box textAlign="center" mt={5} p={3}>
-          <Typography variant="h2" gutterBottom sx={{ fontWeight: 400 }}>
-            Insects Here and Now
-          </Typography>
+        <Typography variant="h2" gutterBottom sx={{ fontWeight: 400 }}>
+          Insects Here and Now
+        </Typography>
 
           <Typography variant="h6" color="textSecondary">
             A Platform to Share Authored Works in the Insect World
@@ -170,16 +163,13 @@ const HomePage = () => {
           <Grid container spacing={2}>
             {topJournals.map((journal) => (
               <Grid item xs={12} md={4} key={journal.id}>
-                <Card
-                  elevation={3}
-                  sx={{ padding: 2, display: "flex", flexDirection: "column" }}
-                >
+                <Card elevation={3} sx={{ padding: 2, display: "flex", flexDirection: "column" }}>
                   <CardContent>
                     <Typography variant="h6" component="div">
                       {journal.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {journal.description}
+                      {journal.description}  
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -197,6 +187,7 @@ const HomePage = () => {
             ))}
           </Grid>
         </Container>
+
 
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
