@@ -58,12 +58,6 @@ const Navbar = () => {
           </ListItemIcon>
           <ListItemText primary="Admin" />
         </ListItem>
-        <ListItem button component={Link} to="/testing">
-          <ListItemIcon>
-            <ScienceIcon />
-          </ListItemIcon>
-          <ListItemText primary="Testing" />
-        </ListItem>
         <ListItem button component={Link} to="/manuscripts">
           <ListItemIcon>
             <ArticleIcon />
@@ -134,14 +128,6 @@ const Navbar = () => {
             to="/peoplepage"
           >
             Admin
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<ScienceIcon />}
-            component={Link}
-            to="/testing"
-          >
-            Testing
           </Button>
           <Button
             variant="contained"
