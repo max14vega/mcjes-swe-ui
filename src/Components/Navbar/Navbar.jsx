@@ -1,34 +1,109 @@
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport"; // Icon for Contact Us
-import HomeIcon from "@mui/icons-material/Home"; // Icon for Home
-import InfoIcon from "@mui/icons-material/Info"; // Icon for About
-import ScienceIcon from "@mui/icons-material/Science"; // Icon for Testing
-import ArticleIcon from '@mui/icons-material/Article'; // Icon for Manuscripts
-import { AppBar, Box, Button, Toolbar } from "@mui/material";
-import React from "react";
+import ArticleIcon from "@mui/icons-material/Article";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
+import MenuIcon from "@mui/icons-material/Menu";
+import ScienceIcon from "@mui/icons-material/Science";
+import {
+  AppBar,
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <List>
+        <ListItem button component={Link} to="/">
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button component={Link} to="/about">
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="About" />
+        </ListItem>
+        <ListItem button component={Link} to="/contact">
+          <ListItemIcon>
+            <ContactSupportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contact Us" />
+        </ListItem>
+        <ListItem button component={Link} to="/peoplepage">
+          <ListItemIcon>
+            <AdminPanelSettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Admin" />
+        </ListItem>
+        <ListItem button component={Link} to="/testing">
+          <ListItemIcon>
+            <ScienceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Testing" />
+        </ListItem>
+        <ListItem button component={Link} to="/manuscripts">
+          <ListItemIcon>
+            <ArticleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Browse Manuscripts" />
+        </ListItem>
+      </List>
+    </Box>
+  );
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+        <Link to="/" sx={{ display: "flex", alignItems: "center" }}>
+          <img
+            src="/Images/Logo/LogoUpdated.png"
+            alt="Logo"
+            style={{ height: "70px", marginRight: "25px" }}
+          />
+        </Link>
         <Box
           sx={{
             flexGrow: 1,
-            display: "flex",
+            display: { xs: "none", md: "flex" },
             alignItems: "center",
-            padding: "0 10px",
           }}
         >
-          <Link to="/">
-            <img
-              src="/Images/Logo/LogoUpdated.png"
-              alt="Logo"
-              style={{ height: "70px", marginRight: "25px" }}
-            />
-          </Link>
           <Button
-            color="inherit"
+            variant="contained"
             startIcon={<HomeIcon />}
             component={Link}
             to="/"
@@ -36,7 +111,7 @@ const Navbar = () => {
             Home
           </Button>
           <Button
-            color="inherit"
+            variant="contained"
             startIcon={<InfoIcon />}
             component={Link}
             to="/about"
@@ -44,7 +119,7 @@ const Navbar = () => {
             About
           </Button>
           <Button
-            color="inherit"
+            variant="contained"
             startIcon={<ContactSupportIcon />}
             component={Link}
             to="/contact"
@@ -52,33 +127,32 @@ const Navbar = () => {
             Contact Us
           </Button>
           <Button
-            color="inherit"
+            variant="contained"
+            //color="inherit"
             startIcon={<AdminPanelSettingsIcon />}
             component={Link}
             to="/peoplepage"
           >
             Admin
           </Button>
-          <Button // New Testing button
+          <Button
             variant="contained"
-            color="action"
             startIcon={<ScienceIcon />}
             component={Link}
             to="/testing"
           >
             Testing
           </Button>
-          <Button // New Manuscripts button
+          <Button
             variant="contained"
-            color="primary"
-            startIcon={<ArticleIcon />} // Use the Article icon
+            startIcon={<ArticleIcon />}
             component={Link}
             to="/manuscripts"
           >
             Browse Manuscripts
           </Button>
         </Box>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant="contained"
             color="secondary"
@@ -98,6 +172,16 @@ const Navbar = () => {
             Log In
           </Button>
         </Box>
+        <Drawer
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {drawer}
+        </Drawer>
       </Toolbar>
     </AppBar>
   );
