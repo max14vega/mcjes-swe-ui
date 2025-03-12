@@ -34,31 +34,31 @@ const Navbar = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
-        <ListItem button component={Link} to="/">
+        <ListItem component={Link} to="/">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button component={Link} to="/about">
+        <ListItem component={Link} to="/about">
           <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
           <ListItemText primary="About" />
         </ListItem>
-        <ListItem button component={Link} to="/contact">
+        <ListItem component={Link} to="/contact">
           <ListItemIcon>
             <ContactSupportIcon />
           </ListItemIcon>
           <ListItemText primary="Contact Us" />
         </ListItem>
-        <ListItem button component={Link} to="/peoplepage">
+        <ListItem component={Link} to="/peoplepage">
           <ListItemIcon>
             <AdminPanelSettingsIcon />
           </ListItemIcon>
           <ListItemText primary="Admin" />
         </ListItem>
-        <ListItem button component={Link} to="/manuscripts">
+        <ListItem component={Link} to="/manuscripts">
           <ListItemIcon>
             <ArticleIcon />
           </ListItemIcon>
