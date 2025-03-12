@@ -25,5 +25,4 @@ test("renders navbar with correct links", async () => {
 
   const loginLink = await screen.findByRole("link", { name: /log in/i });
   expect(loginLink).toBeInTheDocument();
-
 });

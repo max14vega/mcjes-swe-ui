@@ -1,7 +1,7 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import PeopleButton from "./PeopleButton"; // Import the PeopleButton component
 import { PeopleAPI } from "../../Client/API";
+import PeopleButton from "./PeopleButton"; // Import the PeopleButton component
 
 // Mock the PeopleAPI to control the behavior of the data fetching
 jest.mock("../../Client/API");

@@ -204,7 +204,7 @@ const HomePage = () => {
           </Typography>
           <Grid container spacing={2}>
             {currentWorks.map((work) => (
-              <Grid item xs={12} md={6} key={work}>
+              <Grid item xs={12} md={6} key={work.id}>
                 <SectionCard item={work} />
               </Grid>
             ))}
@@ -217,7 +217,7 @@ const HomePage = () => {
           </Typography>
           <Grid container spacing={2}>
             {primarySources.map((source) => (
-              <Grid item xs={12} md={6} key={source}>
+              <Grid item xs={12} md={6} key={source.id}>
                 <SectionCard item={source} />
               </Grid>
             ))}
@@ -230,7 +230,7 @@ const HomePage = () => {
           </Typography>
           <Grid container spacing={2}>
             {researchArticles.map((article) => (
-              <Grid item xs={12} md={6} key={article}>
+              <Grid item xs={12} md={6} key={article.id}>
                 <SectionCard item={article} />
               </Grid>
             ))}

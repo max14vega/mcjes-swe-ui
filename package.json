@@ -13,6 +13,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.7.9",
+    "axios-mock-adapter": "^2.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.3",
@@ -70,19 +71,22 @@
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
     },
-    "collectCoverage":true,
-     "coverageThreshold": {
-       "global": {
-         "branches":0,
-         "functions":0,
-         "lines":0,
-         "statements":-300
-       }
-     },
-     "coverageReporters": [
-       "lcov","text"
-     ],
-     "coverageDirectory": "./output/code-coverage/",
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": -300
+      }
+    },
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
+    "coverageDirectory": "./output/code-coverage/",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
   }
 }
