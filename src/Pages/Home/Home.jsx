@@ -203,8 +203,8 @@ const HomePage = () => {
             Current and Relevant Work
           </Typography>
           <Grid container spacing={2}>
-            {currentWorks.map((work, index) => (
-              <Grid item xs={12} md={6} key={index}>
+            {currentWorks.map((work) => (
+              <Grid item xs={12} md={6} key={work}>
                 <SectionCard item={work} />
               </Grid>
             ))}
@@ -216,8 +216,8 @@ const HomePage = () => {
             Understanding Bug Behavior
           </Typography>
           <Grid container spacing={2}>
-            {primarySources.map((source, index) => (
-              <Grid item xs={12} md={6} key={index}>
+            {primarySources.map((source) => (
+              <Grid item xs={12} md={6} key={source}>
                 <SectionCard item={source} />
               </Grid>
             ))}
@@ -229,8 +229,8 @@ const HomePage = () => {
             Research Articles
           </Typography>
           <Grid container spacing={2}>
-            {researchArticles.map((article, index) => (
-              <Grid item xs={12} md={6} key={index}>
+            {researchArticles.map((article) => (
+              <Grid item xs={12} md={6} key={article}>
                 <SectionCard item={article} />
               </Grid>
             ))}

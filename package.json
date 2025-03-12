@@ -70,7 +70,6 @@
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
     },
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
-    "verbose": false
+    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
   }
 }
