@@ -105,17 +105,17 @@ const Testing = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {headers[dataType]?.map((header, index) => (
-                <TableCell key={index}>{header}</TableCell>
+              {headers[dataType]?.map((header) => (
+                <TableCell key={header}>{header}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {Array.isArray(data) &&
-              data.map((item, index) => (
-                <TableRow key={index}>
-                  {headers[dataType].map((header, headerIndex) => (
-                    <TableCell key={headerIndex}>
+              data.map((item) => (
+                <TableRow key={item}>
+                  {headers[dataType].map((header) => (
+                    <TableCell key={header}>
                       {item[header.toLowerCase().replace(/ /g, "_")]}
                     </TableCell>
                   ))}

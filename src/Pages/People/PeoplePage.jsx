@@ -61,13 +61,13 @@ const PeoplePage = () => {
         setData(updatedData);
       })
       .catch((error) => {
-        setError("Error deleting person: " + error.message);
+        setError(`Error deleting person: ${error.message}`);
       });
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   return (
     <Container sx={{ my: 1 }}>

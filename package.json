@@ -70,6 +70,19 @@
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
     },
+    "collectCoverage":true,
+    "coverageThreshold": {
+      "global": {
+        "branches":0,
+        "functions":0,
+        "lines":0,
+        "statements":-300
+      }
+    },
+    "coverageReporters": [
+      "lcov","text"
+    ],
+    "coverageDirectory": "./output/code-coverage/",
     "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
   }
 }
