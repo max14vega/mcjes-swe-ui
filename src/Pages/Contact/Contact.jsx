@@ -1,7 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-const ContactPage = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +36,7 @@ const ContactPage = () => {
             Your Name
           </Typography>
           <TextField
+            placeholder="Name"
             variant="outlined"
             margin="normal"
             required
@@ -51,6 +52,7 @@ const ContactPage = () => {
             Email Address
           </Typography>
           <TextField
+            placeholder="Email"
             variant="outlined"
             margin="normal"
             required
@@ -65,6 +67,7 @@ const ContactPage = () => {
             Message
           </Typography>
           <TextField
+            placeholder="Message"
             variant="outlined"
             margin="normal"
             required
@@ -91,4 +94,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default Contact;
