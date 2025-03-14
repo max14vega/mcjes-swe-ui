@@ -1,7 +1,11 @@
 import AddReactionIcon from "@mui/icons-material/AddReaction"; //Addedd the Icon for Register Page
-import { Button, TextField, Typography } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
+import PasswordIcon from "@mui/icons-material/Password";
+import PersonIcon from "@mui/icons-material/Person";
+import PhoneIcon from "@mui/icons-material/Phone";
+import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { Avatar } from "@mui/material"; //Avatar import
-import { Card, CardContent, CardMedia, Grid, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
+import { Card, CardContent, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
 import { useState } from "react";
 
 const Signup = () => {
@@ -184,6 +188,15 @@ const Signup = () => {
               <form style={formStyle} onSubmit={handleSignup}>
                 <TextField
                   id="name"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PersonIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   placeholder="Enter your name"
                   fullWidth
                   variant="outlined"
@@ -195,6 +208,15 @@ const Signup = () => {
                 />
                 <TextField
                   id="email"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   placeholder="Enter your email"
                   fullWidth
                   type="email"
@@ -207,6 +229,15 @@ const Signup = () => {
                 />
                 <TextField
                   id="phone"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PhoneIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   placeholder="Enter your phone number"
                   fullWidth
                   type="tel"
@@ -219,6 +250,15 @@ const Signup = () => {
                 />
                 <TextField
                   id="password"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PasswordIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   type="password"
                   placeholder="Enter your password"
                   fullWidth
@@ -231,6 +271,15 @@ const Signup = () => {
                 />
                 <TextField
                   id="confirm-password"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PasswordIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   type="password"
                   placeholder="Re-enter your password"
                   fullWidth

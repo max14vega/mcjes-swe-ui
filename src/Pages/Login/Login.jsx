@@ -1,9 +1,12 @@
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import EmailIcon from "@mui/icons-material/Email";
+import PasswordIcon from "@mui/icons-material/Password";
 import {
   Avatar,
   Button,
   Card,
   CardContent,
+  InputAdornment,
   Link,
   Paper,
   TextField,
@@ -160,6 +163,15 @@ export default function Login() {
                 <TextField
                   id="email"
                   value={email}
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   placeholder="Enter your email"
                   fullWidth
                   type="email"
@@ -173,6 +185,15 @@ export default function Login() {
                 <TextField
                   id="password"
                   type="password"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PasswordIcon />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   placeholder="Enter your password"
                   fullWidth
                   variant="outlined"
