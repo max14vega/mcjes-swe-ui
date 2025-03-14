@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardContent,
+  Link,
   Paper,
   TextField,
   Typography,
@@ -181,7 +182,9 @@ export default function Login() {
                   error={!!passwordError} // Display error if there's a password error
                   helperText={passwordError} // Show password error message
                 />
-
+                <Link href="#" underline="none" sx={{ textAlign: "right" }}>
+                  Forgot Password?
+                </Link>
                 <Button
                   type="button" // Changed from "submit" to "button"
                   variant="contained"
@@ -192,6 +195,13 @@ export default function Login() {
                 >
                   Log In
                 </Button>
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  Not a Member?{" "}
+                  <Link href="/register" underline="none">
+                    {" "}
+                    Register{" "}
+                  </Link>
+                </Typography>
               </form>
             </Paper>
           </CardContent>
