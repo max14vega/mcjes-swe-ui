@@ -140,7 +140,7 @@ const Signup = () => {
               alt="Logo"
               style={{
                 width: "80%", // Limits the image width to 80% of the card
-                height: "50%", // Limits the image height to 60% of the card
+                height: "auto",
                 borderRadius: "10px", // Rounds the image corners slightly
                 objectFit: "cover", // Ensures the image scales properly without distortion
               }}

@@ -1,10 +1,13 @@
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { Card, CardContent, Paper } from "@mui/material";
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Avatar } from "@mui/material"; //Avatar import
-import { Alert, AlertTitle } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 
 export default function Login() {
@@ -29,12 +32,12 @@ export default function Login() {
   }; // Adjust avatar style
 
   const leftcolStyle = {
-    flex: 2, // Takes up 2 parts of the available space (more width than the right column)
+    flex: 2, // Take more space on larger screens
     height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: "20px", // Adjust margin to move it more left
+    marginBottom: "20px",
   };
 
   const rigthcolStyle = {
@@ -85,8 +88,8 @@ export default function Login() {
         sx={{
           flex: 1,
           display: "flex",
-          width: "90vw", //90% of the viewport width
-          height: "80vh", // 80% of viewport height
+          width: "90vw",
+          height: "80vh",
           padding: "32px",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
           borderRadius: "40px",
@@ -116,7 +119,7 @@ export default function Login() {
               alt="Logo"
               style={{
                 width: "80%", // Limits the image width to 80% of the card
-                height: "50%", // Limits the image height to 60% of the card
+                height: "auto", // Limits the image height to 60% of the card
                 borderRadius: "10px", // Rounds the image corners slightly
                 objectFit: "cover", // Ensures the image scales properly without distortion
               }}
