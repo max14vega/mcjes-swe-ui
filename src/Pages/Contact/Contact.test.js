@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import Contact from './Contact';
+import { render, screen } from "@testing-library/react";
+import React from "react"; // Ensure React is imported
+import Contact from "./Contact";
 
-describe('Contact page', () => {
-  test('renders the contact form', () => {
+describe("Contact page", () => {
+  test("renders the contact form", () => {
     render(<Contact />);
     expect(screen.getByText("Contact Us")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Your Name")).toBeInTheDocument();
@@ -10,7 +11,7 @@ describe('Contact page', () => {
     expect(screen.getByPlaceholderText("Message")).toBeInTheDocument();
   });
 
-  test('allows users to submit the form', () => {
+  test("allows users to submit the form", () => {
     render(<Contact />);
     const nameInput = screen.getByPlaceholderText("Your Name");
     const emailInput = screen.getByPlaceholderText("Email Address");
@@ -22,7 +23,7 @@ describe('Contact page', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  test('handles form validation errors', () => {
+  test("handles form validation errors", () => {
     render(<Contact />);
     const nameInput = screen.getByPlaceholderText("Your Name");
     const emailInput = screen.getByPlaceholderText("Email Address");

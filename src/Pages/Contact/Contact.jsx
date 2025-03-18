@@ -1,9 +1,17 @@
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useState } from "react";
-import { Box, Button, Container, TextField, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 const Contact = () => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,24 +35,35 @@ const Contact = () => {
   };
 
   return (
-    <Container component="main" maxWidth="sm" sx={{
-      mt: 4,
-      p: matches ? 2 : 4,
-      bgcolor: 'background.paper',
-      boxShadow: 3,
-      borderRadius: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    }}>
-      <Typography variant="h4" gutterBottom component="h1" color="primary.main" sx={{ mb: 1 }}>
+    <Container
+      component="main"
+      maxWidth="sm"
+      sx={{
+        mt: 4,
+        p: matches ? 2 : 4,
+        bgcolor: "background.paper",
+        boxShadow: 3,
+        borderRadius: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        component="h1"
+        color="primary.main"
+        sx={{ mb: 1 }}
+      >
         Contact Us
       </Typography>
-      <Typography variant="body1" sx={{ mb: 2, textAlign: 'center' }}>
-        We're here to help and answer any questions you might have. We look forward to hearing from you!
+      <Typography variant="body1" sx={{ mb: 2, textAlign: "center" }}>
+        We're here to help and answer any questions you might have. We look
+        forward to hearing from you!
       </Typography>
-      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-        <Box sx={{ width: '100%', '& .MuiTextField-root': { my: 1 } }}>
+      <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+        <Box sx={{ width: "100%", "& .MuiTextField-root": { my: 1 } }}>
           <TextField
             placeholder="Your Name"
             variant="filled"
@@ -56,7 +75,7 @@ const Contact = () => {
             autoFocus
             value={formData.name}
             onChange={handleChange}
-            sx={{ input: { color: 'text.primary' } }}
+            sx={{ input: { color: "text.primary" } }}
           />
           <TextField
             placeholder="Email Address"
@@ -68,7 +87,7 @@ const Contact = () => {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
-            sx={{ input: { color: 'text.primary' } }}
+            sx={{ input: { color: "text.primary" } }}
           />
           <TextField
             placeholder="Message"
@@ -81,7 +100,7 @@ const Contact = () => {
             rows={4}
             value={formData.message}
             onChange={handleChange}
-            sx={{ input: { color: 'text.primary' } }}
+            sx={{ input: { color: "text.primary" } }}
           />
           <Button
             type="submit"
