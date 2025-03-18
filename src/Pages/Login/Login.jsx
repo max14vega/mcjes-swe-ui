@@ -203,7 +203,11 @@ export default function Login() {
                   error={!!passwordError} // Display error if there's a password error
                   helperText={passwordError} // Show password error message
                 />
-                <Link href="#" underline="none" sx={{ textAlign: "left", ml:2}}>
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{ textAlign: "left", ml: 2 }}
+                >
                   Forgot Password?
                 </Link>
                 <Button
@@ -216,7 +220,7 @@ export default function Login() {
                 >
                   Log In
                 </Button>
-                <Typography variant="body2" sx={{mt:1}}>
+                <Typography variant="body2" sx={{ mt: 1 }}>
                   Not a Member?{" "}
                   <Link href="/register" underline="none">
                     {" "}
