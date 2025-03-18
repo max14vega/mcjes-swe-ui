@@ -1,7 +1,10 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Box, Button, Container, TextField, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 const Contact = () => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,27 +21,33 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process form data here (e.g., send to an API)
     console.log(formData);
     alert("Thank you for your message! We will get back to you soon.");
-    // Optionally clear the form
     setFormData({ name: "", email: "", message: "" });
   };
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Container component="main" maxWidth="sm" sx={{
+      mt: 4,
+      p: matches ? 2 : 4,
+      bgcolor: 'background.paper',
+      boxShadow: 3,
+      borderRadius: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+      <Typography variant="h4" gutterBottom component="h1" color="primary.main" sx={{ mb: 1 }}>
         Contact Us
       </Typography>
-      <form onSubmit={handleSubmit}>
-        <Box sx={{ mt: 1 }}>
-          <Typography component="p" variant="body1" gutterBottom>
-            Your Name
-          </Typography>
+      <Typography variant="body1" sx={{ mb: 2, textAlign: 'center' }}>
+        We're here to help and answer any questions you might have. We look forward to hearing from you!
+      </Typography>
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <Box sx={{ width: '100%', '& .MuiTextField-root': { my: 1 } }}>
           <TextField
-            placeholder="Name"
-            variant="outlined"
-            margin="normal"
+            placeholder="Your Name"
+            variant="filled"
             required
             fullWidth
             id="name"
@@ -47,14 +56,11 @@ const Contact = () => {
             autoFocus
             value={formData.name}
             onChange={handleChange}
+            sx={{ input: { color: 'text.primary' } }}
           />
-          <Typography component="p" variant="body1" gutterBottom>
-            Email Address
-          </Typography>
           <TextField
-            placeholder="Email"
-            variant="outlined"
-            margin="normal"
+            placeholder="Email Address"
+            variant="filled"
             required
             fullWidth
             id="email"
@@ -62,14 +68,11 @@ const Contact = () => {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
+            sx={{ input: { color: 'text.primary' } }}
           />
-          <Typography component="p" variant="body1" gutterBottom>
-            Message
-          </Typography>
           <TextField
             placeholder="Message"
-            variant="outlined"
-            margin="normal"
+            variant="filled"
             required
             fullWidth
             id="message"
@@ -78,13 +81,14 @@ const Contact = () => {
             rows={4}
             value={formData.message}
             onChange={handleChange}
+            sx={{ input: { color: 'text.primary' } }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 2, py: 1.5 }}
           >
             Send Message
           </Button>
