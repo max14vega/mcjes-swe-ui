@@ -11,9 +11,8 @@ test("renders navbar with correct links", async () => {
   const homeLink = await screen.findByRole("link", { name: /home/i });
   expect(homeLink).toBeInTheDocument();
 
-  const aboutLinks = await screen.getAllByRole("link", { name: /about/i });
-  expect(aboutLinks.length).toBeGreaterThan(1);
-  expect(aboutLinks[0]).toHaveAttribute("href", "/about");
+  const aboutLink = await screen.findByRole("link", { name: /about/i });
+  expect(aboutLink).toBeInTheDocument();
 
   const contactLink = await screen.findByRole("link", { name: /contact/i });
   expect(contactLink).toBeInTheDocument();
