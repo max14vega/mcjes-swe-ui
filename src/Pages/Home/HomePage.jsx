@@ -17,20 +17,20 @@ import Slideshow from "../../Components/Slideshow";
 // Sample data for top journals, current works, primary sources, and research articles
 const topJournals = [
   {
-    title: "Global Insect Ecology",
     id: 1,
+    title: "Global Insect Ecology",
     description:
       "This journal provides a comprehensive look at the ecological roles of insects across the globe, exploring their interactions within ecosystems, effects on plant and animal populations, and responses to environmental changes.",
   },
   {
-    title: "Arthropod Conservation Quarterly",
     id: 2,
+    title: "Arthropod Conservation Quarterly",
     description:
       "Focused on the conservation of arthropods, this journal publishes research on habitat preservation, species sustainability, and the impacts of human activity on arthropod populations, offering insights and solutions for conservation efforts.",
   },
   {
-    title: "Parasitology and Vector Research",
     id: 3,
+    title: "Parasitology and Vector Research",
     description:
       "Dedicated to studying parasites and their vectors, this journal covers all aspects of parasitology and vector-borne diseases, including pathogen biology, vector ecology, and the development of control methods and treatments.",
   },
@@ -38,6 +38,7 @@ const topJournals = [
 
 const currentWorks = [
   {
+    id: 1,
     title: "Latest in Climate Change",
     description:
       "Cutting-edge research and discussions about climate change impacts.",
@@ -45,6 +46,7 @@ const currentWorks = [
     link: "/current/climate-change",
   },
   {
+    id: 2,
     title: "Innovations in Entomology",
     description:
       "Explore the forefront of entomology techniques and discoveries.",
@@ -55,6 +57,7 @@ const currentWorks = [
 
 const primarySources = [
   {
+    id: 1,
     title: "Classical Texts on Insect Taxonomy",
     imageUrl: "/Images/Previews/blue-ahh-bug.jpg",
     link: "/sources/insect-taxonomy",
@@ -62,6 +65,7 @@ const primarySources = [
       "Explore the seminal works that shaped the way we classify and understand insect species around the world.",
   },
   {
+    id: 2,
     title: "Foundational Papers on Pollinator Ecology",
     imageUrl: "/Images/Previews/yellow-little-guy.jpg",
     link: "/sources/pollinator-ecology",
@@ -72,6 +76,7 @@ const primarySources = [
 
 const researchArticles = [
   {
+    id: 1,
     title: "Latest Trends in Pest Control Technologies",
     description:
       "A comprehensive review of modern methods and innovations in managing pest populations effectively.",
@@ -79,6 +84,7 @@ const researchArticles = [
     link: "/articles/pest-control",
   },
   {
+    id: 2,
     title: "Advancements in Insect Studies",
     description:
       "A detailed examination of recent breakthroughs in understanding the complex behaviors of insects.",

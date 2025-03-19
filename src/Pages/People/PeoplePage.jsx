@@ -1,3 +1,5 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Button,
@@ -13,7 +15,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
 import { PeopleAPI } from "../../Client/API";
 import AddPerson from "../../Components/AddPerson/AddPerson";
 
