@@ -1,5 +1,5 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Register from "./Register";
 
 describe("Register Page", () => {
@@ -8,9 +8,15 @@ describe("Register Page", () => {
     // Check if all form fields are rendered
     expect(screen.getByPlaceholderText("Enter your name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter your email")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Enter your phone number")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Enter your password")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Re-enter your password")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Enter your phone number"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Enter your password"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Re-enter your password"),
+    ).toBeInTheDocument();
   });
 
   test("validates required fields", async () => {
@@ -22,7 +28,9 @@ describe("Register Page", () => {
       expect(screen.getByText("Email is required.")).toBeInTheDocument();
       expect(screen.getByText("Phone number is required.")).toBeInTheDocument();
       expect(screen.getByText("Password is required.")).toBeInTheDocument();
-      expect(screen.getByText("Please confirm your password.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Please confirm your password."),
+      ).toBeInTheDocument();
     });
   });
 
@@ -32,34 +40,38 @@ describe("Register Page", () => {
   test("validates phone number format", async () => {
     render(<Register />);
     fireEvent.change(screen.getByPlaceholderText("Enter your phone number"), {
-      target: { value: "12345" }
+      target: { value: "12345" },
     });
     fireEvent.click(screen.getByText("Register"));
     // Check for phone number format validation
     await waitFor(() => {
-      expect(screen.getByText("Invalid phone number. Use 10 digits.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Invalid phone number. Use 10 digits."),
+      ).toBeInTheDocument();
     });
   });
 
   test("validates password length", async () => {
     render(<Register />);
     fireEvent.change(screen.getByPlaceholderText("Enter your password"), {
-      target: { value: "123" }
+      target: { value: "123" },
     });
     fireEvent.click(screen.getByText("Register"));
     // Check for password length validation
     await waitFor(() => {
-      expect(screen.getByText("Password must be at least 6 characters long.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Password must be at least 6 characters long."),
+      ).toBeInTheDocument();
     });
   });
 
   test("validates password confirmation", async () => {
     render(<Register />);
     fireEvent.change(screen.getByPlaceholderText("Enter your password"), {
-      target: { value: "password123" }
+      target: { value: "password123" },
     });
     fireEvent.change(screen.getByPlaceholderText("Re-enter your password"), {
-      target: { value: "differentpassword123" }
+      target: { value: "differentpassword123" },
     });
     fireEvent.click(screen.getByText("Register"));
     // Check for password match validation

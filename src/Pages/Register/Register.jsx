@@ -1,4 +1,3 @@
-import React from "react";
 import AddReactionIcon from "@mui/icons-material/AddReaction"; //Addedd the Icon for Register Page
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
@@ -7,6 +6,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { Avatar } from "@mui/material"; //Avatar import
 import { Card, CardContent, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
+import React from "react";
 import { useState } from "react";
 
 const Register = () => {

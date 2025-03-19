@@ -34,7 +34,7 @@ const Contact = () => {
             Your Name
           </Typography>
           <TextField
-            placeholder="Your Name"  // Changed to match the test
+            placeholder="Your Name" // Changed to match the test
             variant="outlined"
             margin="normal"
             required
@@ -50,7 +50,7 @@ const Contact = () => {
             Email Address
           </Typography>
           <TextField
-            placeholder="Email Address"  // Changed to match the test
+            placeholder="Email Address" // Changed to match the test
             variant="outlined"
             margin="normal"
             required
@@ -65,7 +65,7 @@ const Contact = () => {
             Message
           </Typography>
           <TextField
-            placeholder="Message"  // Already matches the test
+            placeholder="Message" // Already matches the test
             variant="outlined"
             margin="normal"
             required
