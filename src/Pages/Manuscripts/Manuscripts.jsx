@@ -7,17 +7,22 @@ import {
   CircularProgress,
   Container,
   Grid,
+  IconButton,
+  Modal,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { ManuscriptsAPI } from "../../Client/API";
+import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
 
 const Manuscript = () => {
   const [manuscripts, setManuscripts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedManuscript, setSelectedManuscript] = useState(null); // State to store the selected manuscript
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
   // Fetch manuscripts
   useEffect(() => {
@@ -37,6 +42,18 @@ const Manuscript = () => {
 
     fetchManuscripts();
   }, []);
+
+  // Function to open the modal with manuscript details
+  const handleViewDetails = (book) => {
+    setSelectedManuscript(book);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedManuscript(null);
+  };
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
@@ -109,11 +126,7 @@ const Manuscript = () => {
                         variant="contained"
                         color="primary"
                         style={{ marginTop: "1rem" }}
-                        onClick={() =>
-                          alert(
-                            `You clicked ${book.title || "this manuscript"}`,
-                          )
-                        }
+                        onClick={() => handleViewDetails(book)} // Open modal on click
                       >
                         View Details
                       </Button>
@@ -125,6 +138,61 @@ const Manuscript = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      {/* Modal for Manuscript Details */}
+      <Modal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="manuscript-details-modal"
+        aria-describedby="manuscript-details-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 600,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          {/* Close Button (X icon) */}
+          <IconButton
+            aria-label="close"
+            onClick={handleCloseModal}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: "text.secondary",
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          {/* Modal Content */}
+          {selectedManuscript && (
+            <>
+              <Typography variant="h5" component="h2" gutterBottom>
+                {selectedManuscript.title || "No Title"}
+              </Typography>
+              <Typography variant="subtitle1" component="p" gutterBottom>
+                <strong>Author:</strong>{" "}
+                {`${selectedManuscript.author_first_name || ""} ${
+                  selectedManuscript.author_last_name || ""
+                }`.trim() || "Unknown Author"}
+              </Typography>
+              <Typography variant="body1" component="p">
+                <strong>Abstract:</strong>{" "}
+                {selectedManuscript.abstract || "No abstract available"}
+              </Typography>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Container>
   );
 };
