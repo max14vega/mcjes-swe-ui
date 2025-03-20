@@ -16,6 +16,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { ManuscriptsAPI } from "../../Client/API";
 import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Manuscript = () => {
   const [manuscripts, setManuscripts] = useState([]);
@@ -76,14 +77,38 @@ const Manuscript = () => {
 
         {/* Main Content */}
         <Grid item xs={12} md={9}>
-          {/* Static Search Bar */}
-          <TextField
-            fullWidth
-            label="Search by title or author"
-            variant="outlined"
-            style={{ marginBottom: "2rem" }}
-            disabled // Disabled the search box to make it clear it's non-functional
-          />
+          {/* Search Bar and Submit Manuscript Button */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              marginBottom: "2rem",
+            }}
+          >
+            {/* Static Search Bar */}
+            <TextField
+              fullWidth
+              label="Search by title or author"
+              variant="outlined"
+              disabled // Disabled the search box to make it clear it's non-functional
+            />
+
+            {/* Submit Manuscript Button */}
+            <Button
+              variant="contained"
+              color="action" // Match the color used on the Home page
+              component={Link}
+              to="/Submissions"
+              sx={{
+                minWidth: "200px", // Set a minimum width for the button
+                whiteSpace: "nowrap", // Prevent text wrapping
+                padding: "10px 20px", // Add padding for better appearance
+              }}
+            >
+              Submit Manuscript
+            </Button>
+          </Box>
 
           {/* Loading and Error Handling */}
           {loading && (
