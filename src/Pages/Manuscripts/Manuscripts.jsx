@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
 import {
   Alert,
   Box,
@@ -14,9 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { ManuscriptsAPI } from "../../Client/API";
-import CloseIcon from "@mui/icons-material/Close"; // Import the close icon
 import { Link } from "react-router-dom"; // Import Link for navigation
+import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
   const [manuscripts, setManuscripts] = useState([]);

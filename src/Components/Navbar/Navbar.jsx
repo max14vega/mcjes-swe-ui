@@ -143,6 +143,15 @@ const Navbar = () => {
             variant="contained"
             color="secondary"
             component={Link}
+            to="/profile"
+            sx={{ fontWeight: "bold" }}
+          >
+            Profile
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
             to="/register"
             sx={{ marginRight: 1, fontWeight: "bold" }}
           >

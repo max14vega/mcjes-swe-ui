@@ -3,8 +3,6 @@ import AppleIcon from "@mui/icons-material/Apple";
 import EmailIcon from "@mui/icons-material/Email";
 import GoogleIcon from "@mui/icons-material/Google";
 import PasswordIcon from "@mui/icons-material/Password";
-import { useState } from "react";
-//import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -17,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useGoogleLogin } from "@react-oauth/google"; // Import GoogleLogin component
+import { useState } from "react";
 import AppleLogin from "react-apple-login"; // For Apple login
 
 export default function Login({ setUser }) {
@@ -226,7 +225,11 @@ export default function Login({ setUser }) {
                   error={!!passwordError} // Display error if there's a password error
                   helperText={passwordError} // Show password error message
                 />
-                <Link href="#" underline="none" sx={{ textAlign: "left", ml:2}}>
+                <Link
+                  href="#"
+                  underline="none"
+                  sx={{ textAlign: "left", ml: 2 }}
+                >
                   Forgot Password?
                 </Link>
 
@@ -243,58 +246,58 @@ export default function Login({ setUser }) {
 
                 {/* Google Login Button */}
                 <Button
-                   variant="outlined"
-                   fullWidth
-                   style={{
-                     marginTop: "10px",
-                     padding: "10px",
-                     fontSize: "12px",
-                     backgroundColor: "white",
-                     color: "black",
-                     border: "1px solid black",
-                     borderRadius: "5px",
-                     display: "flex",
-                     alignItems: "center",
-                     justifyContent: "center",
-                     gap: "8px", // Adds space between icon and text
-                   }}
-                   onClick={login} // Calls Google login on button click
-                 >
-                   <GoogleIcon sx={{}} />
-                   <Typography variant="body2">Continue with Google</Typography>
-                 </Button>
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    marginTop: "10px",
+                    padding: "10px",
+                    fontSize: "12px",
+                    backgroundColor: "white",
+                    color: "black",
+                    border: "1px solid black",
+                    borderRadius: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px", // Adds space between icon and text
+                  }}
+                  onClick={login} // Calls Google login on button click
+                >
+                  <GoogleIcon sx={{}} />
+                  <Typography variant="body2">Continue with Google</Typography>
+                </Button>
 
-                 {/* Apple Login Button */}
-                 <AppleLogin
-                   clientId="com.yourapp.web"
-                   redirectURI="https://your-redirect-uri.com"
-                   onSuccess={handleAppleSuccess}
-                   onFailure={handleAppleFailure}
-                   render={(props) => (
-                     <Button
-                       variant="outlined" // Change to "outlined" to have a border
-                       fullWidth
-                       style={{
-                         marginTop: "10px",
-                         padding: "10px",
-                         fontSize: "12px",
-                         backgroundColor: "white", // White background
-                         color: "black", // Black text
-                         border: "1px solid black", // Black border
-                         borderRadius: "5px", // Optional: Rounded corners
-                         gap: "8px", // Adds space between icon and text
-                       }}
-                       onClick={props.onClick}
-                     >
-                       <AppleIcon sx={{}} />
-                       <Typography variant="body2">
-                         Continue with Apple
-                       </Typography>
-                     </Button>
-                   )}
-                 />
+                {/* Apple Login Button */}
+                <AppleLogin
+                  clientId="com.yourapp.web"
+                  redirectURI="https://your-redirect-uri.com"
+                  onSuccess={handleAppleSuccess}
+                  onFailure={handleAppleFailure}
+                  render={(props) => (
+                    <Button
+                      variant="outlined" // Change to "outlined" to have a border
+                      fullWidth
+                      style={{
+                        marginTop: "10px",
+                        padding: "10px",
+                        fontSize: "12px",
+                        backgroundColor: "white", // White background
+                        color: "black", // Black text
+                        border: "1px solid black", // Black border
+                        borderRadius: "5px", // Optional: Rounded corners
+                        gap: "8px", // Adds space between icon and text
+                      }}
+                      onClick={props.onClick}
+                    >
+                      <AppleIcon sx={{}} />
+                      <Typography variant="body2">
+                        Continue with Apple
+                      </Typography>
+                    </Button>
+                  )}
+                />
 
-                <Typography variant="body2" sx={{mt:1}}>
+                <Typography variant="body2" sx={{ mt: 1 }}>
                   Not a Member?{" "}
                   <Link href="/register" underline="none">
                     {" "}
