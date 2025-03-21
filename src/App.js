@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google"; // Import GoogleOAuthProvider
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import theme from "./Theme";
 
 import "./App.css";
@@ -17,6 +17,7 @@ import PeoplePage from "./Pages/People/PeoplePage";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import Testing from "./Pages/Testing";
+
 
 function App() {
   return (
