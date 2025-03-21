@@ -18,10 +18,8 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process form data here (e.g., send to an API)
     console.log(formData);
     alert("Thank you for your message! We will get back to you soon.");
-    // Optionally clear the form
     setFormData({ name: "", email: "", message: "" });
   };
 
@@ -36,7 +34,7 @@ const Contact = () => {
             Your Name
           </Typography>
           <TextField
-            placeholder="Name"
+            placeholder="Your Name" // Changed to match the test
             variant="outlined"
             margin="normal"
             required
@@ -52,7 +50,7 @@ const Contact = () => {
             Email Address
           </Typography>
           <TextField
-            placeholder="Email"
+            placeholder="Email Address" // Changed to match the test
             variant="outlined"
             margin="normal"
             required
@@ -67,7 +65,7 @@ const Contact = () => {
             Message
           </Typography>
           <TextField
-            placeholder="Message"
+            placeholder="Message" // Already matches the test
             variant="outlined"
             margin="normal"
             required

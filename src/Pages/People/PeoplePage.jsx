@@ -13,7 +13,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import { PeopleAPI } from "../../Client/API";
 import AddPerson from "../../Components/AddPerson/AddPerson";
 

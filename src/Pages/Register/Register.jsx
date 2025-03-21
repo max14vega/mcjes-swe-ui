@@ -6,9 +6,10 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { Avatar } from "@mui/material"; //Avatar import
 import { Card, CardContent, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
+import React from "react";
 import { useState } from "react";
 
-const Signup = () => {
+const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,7 +25,7 @@ const Signup = () => {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
-  const handleSignup = (event) => {
+  const handleRegister = (event) => {
     event.preventDefault(); // Prevent default form submission
 
     setNameError("");
@@ -185,7 +186,7 @@ const Signup = () => {
               </Typography>
 
               {/* Form */}
-              <form style={formStyle} onSubmit={handleSignup}>
+              <form style={formStyle} onSubmit={handleRegister}>
                 <TextField
                   id="name"
                   slotProps={{
@@ -308,4 +309,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;
