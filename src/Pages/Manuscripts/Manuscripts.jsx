@@ -23,6 +23,7 @@ const Manuscript = () => {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -51,6 +52,11 @@ const Manuscript = () => {
     setSelectedManuscript(null);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    console.log("Searching for:", e.target.value);
+  };
+
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Grid container spacing={3}>
@@ -65,18 +71,19 @@ const Manuscript = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={9}>
-          <TextField fullWidth label="Search by title or author" variant="outlined" style={{ marginBottom: "2rem" }} disabled />
-
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ marginBottom: "1.5rem" }}
-            onClick={() => {
-              console.log("Submit Manuscript clicked");
-            }}
-          >
-            Submit Manuscript
-          </Button>
+          <Box display="flex" justifyContent="space-between" alignItems="center" style={{ marginBottom: "2rem" }}>
+            <TextField
+              fullWidth
+              label="Search by title or author"
+              variant="outlined"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              style={{ marginRight: "1rem" }}
+            />
+            <Button variant="contained" color="secondary" style={{ minWidth: "180px" }} onClick={() => console.log("Submit Manuscript clicked")}>
+              Submit Manuscript
+            </Button>
+          </Box>
 
           {loading && (
             <Box display="flex" justifyContent="center" my={4}>
