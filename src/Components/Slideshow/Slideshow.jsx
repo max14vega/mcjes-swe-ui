@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Typography } from "@mui/material";
+import '../../App.css'
+
 
 const Slideshow = () => {
   const settings = {
@@ -13,6 +15,7 @@ const Slideshow = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 8000,
+    arrows: true, // Ensure this is set to true to show navigation arrows
   };
 
   const captionStyle = {
@@ -35,8 +38,19 @@ const Slideshow = () => {
     margin: '8px 0' 
   };
 
+  const boxStyle = {
+    position: "relative",
+    maxWidth: "100%",
+    mt: 5,
+    padding: "20px 2%",
+    borderRadius: "0",
+    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+    overflow: "visible",
+    backgroundColor: "white"
+  };
+
   return (
-    <Box sx={{ maxWidth: "100%", mt: 5, padding: "0 0%" }}>
+    <Box sx={boxStyle}>
       <Slider {...settings}>
         <div>
           <img
@@ -46,7 +60,7 @@ const Slideshow = () => {
               width: "100%",
               height: "400px",
               objectFit: "cover",
-              borderRadius: "0",
+              borderRadius: "2px",
             }}
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
@@ -69,7 +83,7 @@ const Slideshow = () => {
               width: "100%",
               height: "400px",
               objectFit: "cover",
-              borderRadius: "0",
+              borderRadius: "2",
             }}
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
@@ -94,7 +108,7 @@ const Slideshow = () => {
               width: "100%",
               height: "400px",
               objectFit: "cover",
-              borderRadius: "0",
+              borderRadius: "2",
             }}
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
@@ -118,7 +132,7 @@ const Slideshow = () => {
               width: "100%",
               height: "400px",
               objectFit: "cover",
-              borderRadius: "0",
+              borderRadius: "2px",
             }}
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
@@ -144,7 +158,7 @@ const Slideshow = () => {
               width: "100%",
               height: "400px",
               objectFit: "cover",
-              borderRadius: "0",
+              borderRadius: "2px",
             }}
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
