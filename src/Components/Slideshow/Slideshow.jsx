@@ -17,12 +17,22 @@ const Slideshow = () => {
 
   const captionStyle = {
     mt: 1,
-    ml: 1,
+    ml: 0,
     color: "gray",
     position: "relative",
     left: 0,
     width: "100%",
     display: "block",
+    maxHeight: '200px',
+    overflow: 'auto'
+  };
+
+  const separatorStyle = {
+    border: '0', 
+    height: '2px',
+    backgroundColor: 'gray', 
+    width: '99.9%', 
+    margin: '8px 0' 
   };
 
   return (
@@ -41,7 +51,7 @@ const Slideshow = () => {
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
             <strong>Weevil with Mites | Scientific Name: Phyllobius sp.</strong>
-            <br />
+            <hr style={separatorStyle} />
             This macro photograph captures a green weevil, identifiable by its
             elongated snout and compact, metallic green body. The weevil is
             infested with bright red mites, known as Trombidium holosericeum,
@@ -66,7 +76,7 @@ const Slideshow = () => {
             <strong>
               Red Lily Beetle | Scientific Name: Lilioceris lilii.
             </strong>
-            <br />
+            <hr style={separatorStyle} />
             The image features a striking red lily beetle perched delicately on
             a leaf. Its glossy, bright red carapace contrasts with its black
             legs and antennae against a green background.
@@ -89,7 +99,7 @@ const Slideshow = () => {
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
             <strong>Honeybee on Twig | Scientific Name: Apis mellifera.</strong>
-            <br />
+            <hr style={separatorStyle} />
             Displayed is a close-up of a honeybee clasping onto the jagged edge
             of a twig. The bee's intricate wings shimmer with a subtle
             iridescence, and its body is covered with fine hairs that collect
@@ -115,7 +125,7 @@ const Slideshow = () => {
             <strong>
               Grasshopper on Branch | Scientific Name: Caelifera sp.
             </strong>
-            <br />
+            <hr style={separatorStyle} />
             The grasshopper's detailed exoskeleton, displaying hues of green and
             textures that mimic leaf veins, blends seamlessly with its
             environment. Its long antennae and powerful hind legs illustrate its
@@ -139,7 +149,7 @@ const Slideshow = () => {
           />
           <Typography variant="body2" align="left" sx={captionStyle}>
             <strong>Wasp on Leaf | Scientific Name: Vespula germanica.</strong>
-            <br />
+            <hr style={separatorStyle} />
             This close-up shows a wasp on a leaf, highlighting its yellow and
             black body and formidable appearance.
             <br />
