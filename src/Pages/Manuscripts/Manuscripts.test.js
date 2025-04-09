@@ -1,9 +1,9 @@
-import { fireEvent, render, waitFor, act } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
+import { ManuscriptsAPI } from "../../Client/API"; // Update this path to the correct location
 import Manuscript from "./Manuscripts";
-import { ManuscriptsAPI } from "../../Client/API";  // Update this path to the correct location
 
-jest.mock('./ManuscriptsAPI');  // Mock the API calls
+jest.mock("./ManuscriptsAPI"); // Mock the API calls
 
 describe("Manuscript component", () => {
   it("renders correctly", () => {
@@ -28,8 +28,8 @@ describe("Manuscript component", () => {
 
   it("handles successful manuscript fetch", async () => {
     // Mock a successful API response
-    ManuscriptsAPI.getManuscripts.mockImplementationOnce(() => 
-      Promise.resolve([{ title: "Manuscript 1", author: "Author 1" }])
+    ManuscriptsAPI.getManuscripts.mockImplementationOnce(() =>
+      Promise.resolve([{ title: "Manuscript 1", author: "Author 1" }]),
     );
 
     const { getByText } = render(<Manuscript />);
