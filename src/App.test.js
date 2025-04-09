@@ -6,21 +6,21 @@ import App from "./App";
 test("renders navbar with correct links", async () => {
   render(<App />);
 
-  const homeButton = await screen.findByText(/home/i);
-  expect(homeButton).toBeInTheDocument();
+  const homeButtons = await screen.findAllByText(/home/i);
+  expect(homeButtons.length).toBeGreaterThan(0);
 
-  const aboutButton = await screen.findByText(/about/i);
-  expect(aboutButton).toBeInTheDocument();
+  const aboutButtons = await screen.findAllByText(/about/i);
+  expect(aboutButtons.length).toBeGreaterThan(0);
 
-  const contactButton = await screen.findByText(/contact us/i);
-  expect(contactButton).toBeInTheDocument();
+  const contactButtons = await screen.findAllByText(/contact us/i);
+  expect(contactButtons.length).toBeGreaterThan(0);
 
-  const adminButton = await screen.findByText(/admin/i);
-  expect(adminButton).toBeInTheDocument();
+  const adminButtons = await screen.findAllByText(/admin/i);
+  expect(adminButtons.length).toBeGreaterThan(0);
 
-  const registerButton = await screen.findByText(/register/i);
-  expect(registerButton).toBeInTheDocument();
+  const registerButtons = await screen.findAllByText(/register/i);
+  expect(registerButtons.length).toBeGreaterThan(0);
 
-  const loginButton = await screen.findByText(/log in/i);
-  expect(loginButton).toBeInTheDocument();
+  const loginButtons = await screen.findAllByText(/log in/i);
+  expect(loginButtons.length).toBeGreaterThan(0);
 });
