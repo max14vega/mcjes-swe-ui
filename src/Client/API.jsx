@@ -29,6 +29,15 @@ export const PeopleAPI = {
       throw error;
     }
   },
+  updatePeople: async (person) => {
+    try {
+      const response = await client.put(`/people/${person.email}`, person); // Assuming email is unique
+      return response.data;
+    } catch (error) {
+      console.error("Error updating person:", error);
+      throw error;
+    }
+  },
 };
 
 // Manuscripts REST Endpoints

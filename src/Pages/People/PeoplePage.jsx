@@ -1,4 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Button,
   Container,
@@ -13,35 +14,17 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PeopleAPI } from "../../Client/API";
-import AddPerson from "../../Components/AddPerson/AddPerson";
+import AddPerson from "../../Components/AddPerson/AddPerson"; // Make sure the import path is correct
+import EditPerson from "../../Components/EditPerson/EditPerson"; // Make sure the import path is correct
 
 const PeoplePage = () => {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    console.log("Before setting open to false:", open);
-    setOpen(false);
-    console.log("After setting open to false:", open);
-  };
-
-  const handleSubmit = (data) => {
-    PeopleAPI.addPeople(data)
-      .then(() => {
-        console.log("Before setting open to false:", open);
-        setOpen(false);
-        console.log("After setting open to false:", open);
-        // Refresh the data
-        fetchData();
-      })
-      .catch((error) => {
-        console.error("Error adding person:", error);
-      });
-  };
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [personToEdit, setPersonToEdit] = useState(null);
+  const [openAddDialog, setOpenAddDialog] = useState(false); // State for Add Person dialog
 
   const fetchData = () => {
     PeopleAPI.getPeople()
@@ -66,9 +49,37 @@ const PeoplePage = () => {
       });
   };
 
+  const handleEditClick = (person) => {
+    console.log("Selected person for editing:", person);
+    setPersonToEdit(person);
+    setOpenEditDialog(true);
+  };
+
+  const handleUpdatePerson = (updatedPerson) => {
+    PeopleAPI.updatePeople(updatedPerson)
+      .then(() => {
+        fetchData(); // Refresh data after update
+        setOpenEditDialog(false); // Close the dialog
+      })
+      .catch((error) => {
+        console.error("Error updating person:", error);
+      });
+  };
+
+  const handleAddPerson = (person) => {
+    PeopleAPI.addPeople(person)
+      .then(() => {
+        fetchData(); // Refresh data after adding
+        setOpenAddDialog(false); // Close the add person dialog
+      })
+      .catch((error) => {
+        console.error("Error adding person:", error);
+      });
+  };
+
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   return (
     <Container sx={{ my: 1 }}>
@@ -77,10 +88,8 @@ const PeoplePage = () => {
         sx={{ display: "flex", justifyContent: "left", alignItems: "center" }}
       >
         <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
-          {" "}
-          People{" "}
+          People
         </Typography>
-        {/* <Button variant="contained" onClick={() => fetchData("people")}> Add Person</Button> */}
       </Grid2>
       <hr />
       <Grid2
@@ -120,6 +129,13 @@ const PeoplePage = () => {
                     <TableCell align="center">
                       <IconButton
                         variant="contained"
+                        color="primary"
+                        onClick={() => handleEditClick(data[email])} // Pass the selected person for editing
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        variant="contained"
                         color="error"
                         onClick={() => handleDelete(email)}
                       >
@@ -139,8 +155,8 @@ const PeoplePage = () => {
                 <TableCell colSpan={5} align="center">
                   <Button
                     variant="contained"
-                    onClick={() => setOpen(true)}
-                    sx={{ width: "100%", my: 1, borderRadius: 0.25 }}
+                    onClick={() => setOpenAddDialog(true)} // This opens the AddPerson dialog
+                    sx={{ width: "100%", my: 1, borderRadius: 0.5 }}
                   >
                     Add New Person
                   </Button>
@@ -150,12 +166,20 @@ const PeoplePage = () => {
           </Table>
         </TableContainer>
       </Grid2>
+
+      {/* Add Person Dialog */}
       <AddPerson
-        open={open}
-        onClose={handleClose}
-        onSubmit={(data) => {
-          handleSubmit(data);
-        }}
+        open={openAddDialog}
+        onClose={() => setOpenAddDialog(false)}
+        onSubmit={handleAddPerson}
+      />
+
+      {/* Edit Person Dialog */}
+      <EditPerson
+        open={openEditDialog}
+        onClose={() => setOpenEditDialog(false)}
+        personData={personToEdit}
+        onSubmit={handleUpdatePerson}
       />
     </Container>
   );
