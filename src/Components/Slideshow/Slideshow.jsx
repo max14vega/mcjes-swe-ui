@@ -3,7 +3,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Typography } from "@mui/material";
-import "../../App.css";
+import '../../App.css'
+
 
 const Slideshow = () => {
   const settings = {
@@ -25,16 +26,16 @@ const Slideshow = () => {
     left: 0,
     width: "100%",
     display: "block",
-    maxHeight: "200px",
-    overflow: "auto",
+    maxHeight: '200px',
+    overflow: 'auto'
   };
 
   const separatorStyle = {
-    border: "0",
-    height: "2px",
-    backgroundColor: "gray",
-    width: "99.9%",
-    margin: "8px 0",
+    border: '0', 
+    height: '2px',
+    backgroundColor: 'gray', 
+    width: '99.9%', 
+    margin: '8px 0' 
   };
 
   const boxStyle = {
@@ -45,7 +46,7 @@ const Slideshow = () => {
     borderRadius: "0",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     overflow: "visible",
-    backgroundColor: "white",
+    backgroundColor: "white"
   };
 
   return (

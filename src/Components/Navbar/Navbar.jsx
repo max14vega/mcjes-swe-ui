@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery("(max-width:1120px)");
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -92,7 +92,7 @@ const Navbar = () => {
         <Box
           sx={{
             flexGrow: 1,
-            display: isMobile ? "none" : "flex",
+            display: { xs: "none", md: "flex" },
             alignItems: "center",
           }}
         >

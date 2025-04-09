@@ -155,7 +155,7 @@ nav a:focus {
 
 /* Custom styles for slick dots */
 div.slick-slider .slick-dots {
-  bottom: -58.5px;
+  bottom: -58.5px; 
   position: absolute;
   width: 100%;
   padding: 0;
@@ -165,14 +165,14 @@ div.slick-slider .slick-dots {
 }
 
 div.slick-slider .slick-dots li button:before {
-  font-size: 8px;
-  color: grey;
-  opacity: 0.75;
+  font-size: 8px; 
+  color: grey; 
+  opacity: 0.75; 
 }
 
 div.slick-slider .slick-dots li.slick-active button:before {
-  opacity: 1.0;
-  color: black;
+  opacity: 1.0; 
+  color: black; 
 }
 
 .game-container {
