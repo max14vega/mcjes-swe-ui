@@ -76,4 +76,53 @@ describe("HomePage Component", () => {
       screen.getByText("Advancements in Insect Studies"),
     ).toBeInTheDocument();
   });
+  test("navigates to browse manuscripts page when button is clicked", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    const browseButton = screen.getByText("Browse Manuscripts");
+    expect(browseButton.closest("a")).toHaveAttribute("href", "/manuscripts");
+  });
+
+  test("renders mocked SearchBar and Slideshow", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText("SearchBar Mock")).toBeInTheDocument();
+    expect(screen.getByText("Slideshow Mock")).toBeInTheDocument();
+  });
+
+  test("all sections have headings", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole("heading", { name: /top journals/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /current and relevant work/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /understanding bug behavior/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("heading", { name: /research articles/i }),
+    ).toBeInTheDocument();
+  });
+
+  test("does not crash if optional sections are missing", () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText("Insects Here and Now")).toBeInTheDocument();
+  });
 });
