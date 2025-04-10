@@ -18,7 +18,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { PeopleAPI } from "../../Client/API";
 import AddPerson from "../../Components/AddPerson/AddPerson";
-import EditPerson from "../../Components/EditPerson/EditPerson"; 
+import EditPerson from "../../Components/EditPerson/EditPerson";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const PeoplePage = () => {
@@ -51,7 +51,7 @@ const PeoplePage = () => {
         setError(null);
       })
       .catch((error) => {
-        setError("Error fetching people:" + error.message);
+        setError(`Error·fetching·people:${error.message}`);
       });
   };
 
@@ -63,7 +63,7 @@ const PeoplePage = () => {
         setData(updatedData);
       })
       .catch((error) => {
-        setError("Error deleting person:" + error.message);
+        setError(`Error·deleting·person:${error.message}`);
       });
   };
 
@@ -188,7 +188,7 @@ const PeoplePage = () => {
                 <TableCell colSpan={5} align="center">
                   <Button
                     variant="contained"
-                    onClick={() => setOpenAddDialog(true)} 
+                    onClick={() => setOpenAddDialog(true)}
                     sx={{ width: "100%", my: 1, borderRadius: 0.5 }}
                   >
                     Add New Person
