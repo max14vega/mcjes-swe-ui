@@ -66,10 +66,34 @@ const Manuscript = () => {
             <Typography variant="h6" component="h2" gutterBottom>
               Filter
             </Typography>
-            <Typography variant="body2" color="textSecondary">
-              (Filter options will go here)
-            </Typography>
-          </Paper>
+            <Box component="form" sx={{ mt: 2 }}>
+  <Typography variant="body1" gutterBottom>
+    Categories
+  </Typography>
+  <Box display="flex" flexDirection="column" gap={1}>
+    <Box display="flex" alignItems="center">
+      <input type="checkbox" style={{ marginRight: '0.5rem' }} />
+      <Typography variant="body2">Ecology</Typography>
+    </Box>
+    <Box display="flex" alignItems="center">
+      <input type="checkbox" style={{ marginRight: '0.5rem' }} />
+      <Typography variant="body2">Conservation</Typography>
+    </Box>
+    <Box display="flex" alignItems="center">
+      <input type="checkbox" style={{ marginRight: '0.5rem' }} />
+      <Typography variant="body2">Parasitology</Typography>
+    </Box>
+    <Box display="flex" alignItems="center">
+      <input type="checkbox" style={{ marginRight: '0.5rem' }} />
+      <Typography variant="body2">Genetics</Typography>
+    </Box>
+    <Box display="flex" alignItems="center">
+      <input type="checkbox" style={{ marginRight: '0.5rem' }} />
+      <Typography variant="body2">Taxonomy</Typography>
+    </Box>
+  </Box>
+</Box>
+</Paper>
         </Grid>
         <Grid item xs={12} md={9}>
           <Box display="flex" justifyContent="space-between" alignItems="center" style={{ marginBottom: "2rem" }}>
