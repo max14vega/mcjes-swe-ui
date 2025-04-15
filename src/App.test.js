@@ -3,26 +3,24 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-// Test that the navbar is rendered with the correct links
 test("renders navbar with correct links", async () => {
   render(<App />);
 
-  // Check that the links appear by their text content
-  const homeLink = await screen.findByRole("link", { name: /home/i });
-  expect(homeLink).toBeInTheDocument();
+  const homeButtons = await screen.findAllByText(/home/i);
+  expect(homeButtons.length).toBeGreaterThan(0);
 
-  const aboutLink = await screen.findByRole("link", { name: /about/i });
-  expect(aboutLink).toBeInTheDocument();
+  const aboutButtons = await screen.findAllByText(/about/i);
+  expect(aboutButtons.length).toBeGreaterThan(0);
 
-  const contactLink = await screen.findByRole("link", { name: /contact/i });
-  expect(contactLink).toBeInTheDocument();
+  const contactButtons = await screen.findAllByText(/contact us/i);
+  expect(contactButtons.length).toBeGreaterThan(0);
 
-  const adminLink = await screen.findByRole("link", { name: /admin/i });
-  expect(adminLink).toBeInTheDocument();
+  const adminButtons = await screen.findAllByText(/admin/i);
+  expect(adminButtons.length).toBeGreaterThan(0);
 
-  const registerLink = await screen.findByRole("link", { name: /register/i });
-  expect(registerLink).toBeInTheDocument();
+  const registerButtons = await screen.findAllByText(/register/i);
+  expect(registerButtons.length).toBeGreaterThan(0);
 
-  const loginLink = await screen.findByRole("link", { name: /log in/i });
-  expect(loginLink).toBeInTheDocument();
+  const loginButtons = await screen.findAllByText(/log in/i);
+  expect(loginButtons.length).toBeGreaterThan(0);
 });

@@ -4,7 +4,6 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import MenuIcon from "@mui/icons-material/Menu";
-import ScienceIcon from "@mui/icons-material/Science";
 import {
   AppBar,
   Box,
@@ -17,15 +16,13 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery("(max-width:1175px)");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -92,7 +89,7 @@ const Navbar = () => {
         <Box
           sx={{
             flexGrow: 1,
-            display: { xs: "none", md: "flex" },
+            display: isMobile ? "none" : "flex",
             alignItems: "center",
           }}
         >

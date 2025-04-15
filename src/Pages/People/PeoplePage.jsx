@@ -1,4 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import TuneIcon from "@mui/icons-material/Tune";
 import {
   Button,
   Container,
@@ -13,35 +15,34 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PeopleAPI } from "../../Client/API";
 import AddPerson from "../../Components/AddPerson/AddPerson";
+import EditPerson from "../../Components/EditPerson/EditPerson";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const PeoplePage = () => {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [personToEdit, setPersonToEdit] = useState(null);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleClose = () => {
-    console.log("Before setting open to false:", open);
-    setOpen(false);
-    console.log("After setting open to false:", open);
-  };
+  const filteredPeople = Object.keys(data).filter((email) => {
+    const person = data[email];
+    const fullName = `${person.first_name} ${person.last_name}`.toLowerCase();
+    const affiliation = person.affiliation?.toLowerCase() || "";
+    const roles = person.roles?.join(" ").toLowerCase() || "";
+    const query = searchQuery.toLowerCase();
 
-  const handleSubmit = (data) => {
-    PeopleAPI.addPeople(data)
-      .then(() => {
-        console.log("Before setting open to false:", open);
-        setOpen(false);
-        console.log("After setting open to false:", open);
-        // Refresh the data
-        fetchData();
-      })
-      .catch((error) => {
-        console.error("Error adding person:", error);
-      });
-  };
+    return (
+      fullName.includes(query) ||
+      email.toLowerCase().includes(query) ||
+      affiliation.includes(query) ||
+      roles.includes(query)
+    );
+  });
 
   const fetchData = () => {
     PeopleAPI.getPeople()
@@ -50,7 +51,7 @@ const PeoplePage = () => {
         setError(null);
       })
       .catch((error) => {
-        setError("Error fetching people: ${error.message}");
+        setError(`Error·fetching·people:${error.message}`);
       });
   };
 
@@ -62,7 +63,35 @@ const PeoplePage = () => {
         setData(updatedData);
       })
       .catch((error) => {
-        setError(`Error deleting person: ${error.message}`);
+        setError(`Error·deleting·person:${error.message}`);
+      });
+  };
+
+  const handleEditClick = (person) => {
+    console.log("Selected person for editing:", person);
+    setPersonToEdit(person);
+    setOpenEditDialog(true);
+  };
+
+  const handleUpdatePerson = (updatedPerson) => {
+    PeopleAPI.updatePeople(updatedPerson)
+      .then(() => {
+        fetchData();
+        setOpenEditDialog(false);
+      })
+      .catch((error) => {
+        console.error("Error updating person:", error);
+      });
+  };
+
+  const handleAddPerson = (person) => {
+    PeopleAPI.addPeople(person)
+      .then(() => {
+        fetchData();
+        setOpenAddDialog(false);
+      })
+      .catch((error) => {
+        console.error("Error adding person:", error);
       });
   };
 
@@ -73,14 +102,27 @@ const PeoplePage = () => {
   return (
     <Container sx={{ my: 1 }}>
       <Grid2
+        container
         xs={12}
-        sx={{ display: "flex", justifyContent: "left", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
       >
-        <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
-          {" "}
-          People{" "}
-        </Typography>
-        {/* <Button variant="contained" onClick={() => fetchData("people")}> Add Person</Button> */}
+        <Grid2 item>
+          <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
+            People
+          </Typography>
+        </Grid2>
+        <Grid2
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        >
+          <SearchBar onSearch={(query) => setSearchQuery(query)} />
+          <IconButton variant="contained" color="primary">
+            <TuneIcon />
+          </IconButton>
+        </Grid2>
       </Grid2>
       <hr />
       <Grid2
@@ -104,8 +146,8 @@ const PeoplePage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(data).length > 0 ? (
-                Object.keys(data).map((email) => (
+              {filteredPeople.length > 0 ? (
+                filteredPeople.map((email) => (
                   <TableRow key={email}>
                     <TableCell scope="row">
                       {data[email].first_name} {data[email].last_name}
@@ -118,6 +160,13 @@ const PeoplePage = () => {
                       {data[email].roles.join(", ")}
                     </TableCell>
                     <TableCell align="center">
+                      <IconButton
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleEditClick(data[email])}
+                      >
+                        <EditIcon />
+                      </IconButton>
                       <IconButton
                         variant="contained"
                         color="error"
@@ -139,8 +188,8 @@ const PeoplePage = () => {
                 <TableCell colSpan={5} align="center">
                   <Button
                     variant="contained"
-                    onClick={() => setOpen(true)}
-                    sx={{ width: "100%", my: 1, borderRadius: 0.25 }}
+                    onClick={() => setOpenAddDialog(true)}
+                    sx={{ width: "100%", my: 1, borderRadius: 0.5 }}
                   >
                     Add New Person
                   </Button>
@@ -151,11 +200,15 @@ const PeoplePage = () => {
         </TableContainer>
       </Grid2>
       <AddPerson
-        open={open}
-        onClose={handleClose}
-        onSubmit={(data) => {
-          handleSubmit(data);
-        }}
+        open={openAddDialog}
+        onClose={() => setOpenAddDialog(false)}
+        onSubmit={handleAddPerson}
+      />
+      <EditPerson
+        open={openEditDialog}
+        onClose={() => setOpenEditDialog(false)}
+        personData={personToEdit}
+        onSubmit={handleUpdatePerson}
       />
     </Container>
   );
