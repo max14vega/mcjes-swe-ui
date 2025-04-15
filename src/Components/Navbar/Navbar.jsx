@@ -144,7 +144,7 @@ const Navbar = () => {
             color="secondary"
             component={Link}
             to="/profile"
-            sx={{ fontWeight: "bold" }}
+            sx={{ marginRight: 1,fontWeight: "bold" }}
           >
             Profile
           </Button>
