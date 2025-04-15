@@ -1,5 +1,5 @@
-import { Box, Typography, Link, Grid, IconButton } from "@mui/material";
-import { Facebook, Twitter, Instagram, Email } from "@mui/icons-material";
+import { Email, Facebook, Instagram, Twitter } from "@mui/icons-material";
+import { Box, Grid, IconButton, Link, Typography } from "@mui/material";
 import React from "react";
 
 const Footer = () => {
@@ -28,9 +28,30 @@ const Footer = () => {
             Quick Links
           </Typography>
           <Box>
-            <Link href="/about" color="inherit" underline="hover" display="block">About Us</Link>
-            <Link href="/submissions" color="inherit" underline="hover" display="block">Submit Article</Link>
-            <Link href="/contact" color="inherit" underline="hover" display="block">Contact</Link>
+            <Link
+              href="/about"
+              color="inherit"
+              underline="hover"
+              display="block"
+            >
+              About Us
+            </Link>
+            <Link
+              href="/submissions"
+              color="inherit"
+              underline="hover"
+              display="block"
+            >
+              Submit Article
+            </Link>
+            <Link
+              href="/contact"
+              color="inherit"
+              underline="hover"
+              display="block"
+            >
+              Contact
+            </Link>
           </Box>
         </Grid>
 
@@ -42,13 +63,25 @@ const Footer = () => {
             <IconButton href="mailto:info@mcjes.org" color="inherit">
               <Email />
             </IconButton>
-            <IconButton href="https://facebook.com" target="_blank" color="inherit">
+            <IconButton
+              href="https://facebook.com"
+              target="_blank"
+              color="inherit"
+            >
               <Facebook />
             </IconButton>
-            <IconButton href="https://twitter.com" target="_blank" color="inherit">
+            <IconButton
+              href="https://twitter.com"
+              target="_blank"
+              color="inherit"
+            >
               <Twitter />
             </IconButton>
-            <IconButton href="https://instagram.com" target="_blank" color="inherit">
+            <IconButton
+              href="https://instagram.com"
+              target="_blank"
+              color="inherit"
+            >
               <Instagram />
             </IconButton>
           </Box>
