@@ -141,6 +141,7 @@ const Navbar = () => {
             color="secondary"
             component={Link}
             to="/profile"
+
             sx={{ marginRight: 1, fontWeight: "bold" }}
           >
             Profile

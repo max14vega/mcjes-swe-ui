@@ -20,6 +20,8 @@ import Submissions from "./Pages/Submissions";
 import Testing from "./Pages/Testing";
 
 function App() {
+  //const [token, setToken] = useState();
+
   return (
     <ThemeProvider theme={theme}>
       <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
