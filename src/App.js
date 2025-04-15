@@ -8,7 +8,7 @@ import "./App.css";
 
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
-import Mastheads from "./Pages/AboutPage";
+import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import HomePage from "./Pages/Home/HomePage";
 import Login from "./Pages/Login";
@@ -30,7 +30,7 @@ function App() {
             <Route path="peoplepage" element={<PeoplePage />} />
             <Route path="contact" element={<Contact />} />
             <Route path="submissions" element={<Submissions />} />
-            <Route path="about" element={<Mastheads />} />
+            <Route path="about" element={<About />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="testing" element={<Testing />} />
