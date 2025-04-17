@@ -20,7 +20,7 @@ const Submissions = () => {
   const [title, setTitle] = React.useState("");
   const [abstract, setAbstract] = React.useState("");
   const [genre, setGenre] = React.useState("");
-  const [file, setFile] = React.useState(null);
+  const [text, setText] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,7 +32,7 @@ const Submissions = () => {
       title,
       abstract,
       genre,
-      // file upload can be handled separately if backend supports it
+      text
     };
 
     try {
@@ -45,7 +45,7 @@ const Submissions = () => {
       setTitle("");
       setAbstract("");
       setGenre("");
-      setFile(null);
+      setText("");
     } catch (error) {
       alert("Failed to submit manuscript.");
     }
@@ -142,16 +142,13 @@ const Submissions = () => {
           />
           <TextField
             fullWidth
-            type="file"
+            multiline
+            rows={8}
             margin="normal"
             variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              accept: ".pdf,.doc,.docx",
-            }}
-            onChange={(e) => setFile(e.target.files[0])}
+            placeholder="Enter Manuscript Text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
           <Box display="flex" justifyContent="center" mt={2}>
             <Button type="submit" variant="contained" color="primary">
