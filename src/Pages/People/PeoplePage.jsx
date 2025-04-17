@@ -23,7 +23,6 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const PeoplePage = () => {
   const [data, setData] = useState({});
-  const [error, setError] = useState(null);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [personToEdit, setPersonToEdit] = useState(null);
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -48,10 +47,9 @@ const PeoplePage = () => {
     PeopleAPI.getPeople()
       .then((jsonData) => {
         setData(jsonData);
-        setError(null);
       })
       .catch((error) => {
-        setError(`Error·fetching·people:${error.message}`);
+        console.error(`Error·fetching·people:${error.message}`);
       });
   };
 
@@ -63,7 +61,7 @@ const PeoplePage = () => {
         setData(updatedData);
       })
       .catch((error) => {
-        setError(`Error·deleting·person:${error.message}`);
+        console.error(`Error·deleting·person:${error.message}`);
       });
   };
 
