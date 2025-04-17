@@ -97,7 +97,7 @@ const PeoplePage = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   return (
     <Container sx={{ my: 1 }}>

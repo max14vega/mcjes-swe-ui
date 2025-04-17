@@ -11,19 +11,49 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { ManuscriptsAPI } from "../../Client/API";
 
 const Submissions = () => {
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [abstract, setAbstract] = React.useState("");
   const [genre, setGenre] = React.useState("");
+  const [file, setFile] = React.useState(null);
 
-  const handleChange = (event) => {
-    setGenre(event.target.value);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const manuscriptData = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      title,
+      abstract,
+      genre,
+      // file upload can be handled separately if backend supports it
+    };
+
+    try {
+      await ManuscriptsAPI.addManuscript(manuscriptData);
+      alert("Manuscript submitted successfully!");
+      // Reset form
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setTitle("");
+      setAbstract("");
+      setGenre("");
+      setFile(null);
+    } catch (error) {
+      alert("Failed to submit manuscript.");
+    }
   };
 
   return (
     <Container maxWidth="md" sx={{ pb: 10 }}>
       <Paper elevation={3} sx={{ p: 4, mt: 4, mb: 4 }}>
-        {" "}
-        {/* Added mb for spacing from the container to the footer */}
         <Typography variant="h5" gutterBottom>
           Welcome to Our Manuscript Submissions!
         </Typography>
@@ -44,42 +74,38 @@ const Submissions = () => {
           forward to reading your manuscript and potentially welcoming you to
           our community of authors.
         </Typography>
-        <Box component="form" noValidate autoComplete="off">
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
           <TextField
             fullWidth
             margin="normal"
             variant="outlined"
             placeholder="Enter Your First Name"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <TextField
             fullWidth
             margin="normal"
             variant="outlined"
             placeholder="Enter Your Last Name"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <TextField
             fullWidth
             margin="normal"
             variant="outlined"
             placeholder="example@email.com"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             fullWidth
             margin="normal"
             variant="outlined"
             placeholder="Title of Your Manuscript"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <FormControl fullWidth margin="normal" variant="outlined">
             <InputLabel id="genre-label">Genre</InputLabel>
@@ -87,8 +113,7 @@ const Submissions = () => {
               labelId="genre-label"
               id="genre-select"
               value={genre}
-              displayEmpty
-              onChange={handleChange}
+              onChange={(e) => setGenre(e.target.value)}
               renderValue={
                 genre !== ""
                   ? undefined
@@ -101,9 +126,7 @@ const Submissions = () => {
               <MenuItem value="Case Studies">Case Studies</MenuItem>
               <MenuItem value="Original Research">Original Research</MenuItem>
               <MenuItem value="Review Articles">Review Articles</MenuItem>
-              <MenuItem value="Rapid Communications">
-                Rapid Communications
-              </MenuItem>
+              <MenuItem value="Rapid Communications">Rapid Communications</MenuItem>
             </Select>
           </FormControl>
 
@@ -114,9 +137,8 @@ const Submissions = () => {
             margin="normal"
             variant="outlined"
             placeholder="Enter Manuscript Abstract"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            value={abstract}
+            onChange={(e) => setAbstract(e.target.value)}
           />
           <TextField
             fullWidth
@@ -129,6 +151,7 @@ const Submissions = () => {
             inputProps={{
               accept: ".pdf,.doc,.docx",
             }}
+            onChange={(e) => setFile(e.target.files[0])}
           />
           <Box display="flex" justifyContent="center" mt={2}>
             <Button type="submit" variant="contained" color="primary">
