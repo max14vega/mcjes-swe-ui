@@ -10,35 +10,38 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { ManuscriptsAPI } from "../../Client/API";
 
 const Submissions = () => {
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [abstract, setAbstract] = React.useState("");
-  const [genre, setGenre] = React.useState("");
-  const [text, setText] = React.useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
+  const [abstract, setAbstract] = useState("");
+  const [genre, setGenre] = useState("");
+  const [text, setText] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const token = localStorage.getItem("token");
+
     const manuscriptData = {
-      first_name: firstName,
-      last_name: lastName,
-      email,
       title,
+      display_name: genre,
       abstract,
-      genre,
-      text
+      text,
+      author_first_name: firstName,
+      author_last_name: lastName,
+      author_email: email,
+      action: "submit",
     };
 
     try {
-      await ManuscriptsAPI.addManuscript(manuscriptData);
+      const response = await ManuscriptsAPI.addManuscript(manuscriptData, token);
+      console.log("Success:", response);
       alert("Manuscript submitted successfully!");
-      // Reset form
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -47,7 +50,9 @@ const Submissions = () => {
       setGenre("");
       setText("");
     } catch (error) {
-      alert("Failed to submit manuscript.");
+      const msg = error.response?.data || error.message;
+      console.error("Submit error:", msg);
+      alert("Failed to submit manuscript: " + JSON.stringify(msg, null, 2));
     }
   };
 
@@ -74,6 +79,7 @@ const Submissions = () => {
           forward to reading your manuscript and potentially welcoming you to
           our community of authors.
         </Typography>
+
         <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
           <TextField
             fullWidth
@@ -129,7 +135,6 @@ const Submissions = () => {
               <MenuItem value="Rapid Communications">Rapid Communications</MenuItem>
             </Select>
           </FormControl>
-
           <TextField
             fullWidth
             multiline

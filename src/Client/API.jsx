@@ -62,7 +62,7 @@ export const ManuscriptsAPI = {
   },
   addManuscript: async (manuscript) => {
     try {
-      const response = await client.post("/manuscripts/create", manuscript);
+      const response = await client.post("/manuscripts", manuscript);
       return response.data;
     } catch (error) {
       console.error("Error adding manuscript:", error);
