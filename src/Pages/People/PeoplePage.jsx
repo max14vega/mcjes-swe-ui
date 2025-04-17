@@ -108,7 +108,7 @@ const PeoplePage = () => {
           justifyContent: "space-between",
         }}
       >
-        <Grid2 item>
+        <Grid2 item="true">
           <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
             People
           </Typography>

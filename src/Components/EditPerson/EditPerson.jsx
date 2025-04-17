@@ -20,7 +20,6 @@ const EditPerson = ({ open, onClose, personData, onSubmit }) => {
 
   // Log the personData when it changes
   useEffect(() => {
-    console.log("Received personData:", personData); // Log to see if personData is correct
     if (personData) {
       setFirstName(personData.first_name);
       setLastName(personData.last_name);
@@ -34,7 +33,6 @@ const EditPerson = ({ open, onClose, personData, onSubmit }) => {
     // Fetch roles only once
     RolesAPI.getRolesConversion()
       .then((fetchedRoles) => {
-        console.log("Fetched roles:", fetchedRoles); // Log fetched roles to check if they're correct
         setRoles(fetchedRoles);
       })
       .catch(console.error);

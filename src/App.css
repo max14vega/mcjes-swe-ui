@@ -4,19 +4,6 @@
   box-sizing: border-box;
 }
 
-html {
-  --poppy: hsla(356, 74%, 52%, 1);
-  --cambridge-blue: hsla(132, 27%, 63%, 1);
-  --lemon-chiffon: hsla(58, 74%, 85%, 1);
-  --buff: hsla(27, 64%, 65%, 1);
-  --bistre: hsla(10, 31%, 19%, 1);
-  --off-white: hsla(45, 29%, 97%, 1);
-
-  --background-color: var(--off-white);
-  --accent-color: var(--cambridge-blue);
-  background-color: var(--background-color);
-}
-
 .wrapper {
   display: flex;
   justify-content: center; /* Center the buttons horizontally */
