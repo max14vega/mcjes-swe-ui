@@ -27,6 +27,9 @@ jobs:
 
       - name: Run Jest tests
         run: yarn test
+      
+      - name: Build React app
+        run: yarn build
 
   deploy-heroku:
     needs: build
@@ -47,4 +50,4 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
-          REACT_APP_BACKEND_URL: "https:jaylanwu.pythonanywhere.com"
+          REACT_APP_BACKEND_URL: "https://jaylanwu.pythonanywhere.com"
