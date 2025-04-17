@@ -1,16 +1,16 @@
+import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Avatar,
-  Stack,
+  Box,
   Button,
   Card,
   CardContent,
   Container,
-  Typography,
   Divider,
   Grid,
-  Box,
+  Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ export default function Profile({
     phone: "N/A",
     role: "Visitor",
     Total_articles: "35",
-    Average_views_per_article:"85",
+    Average_views_per_article: "85",
     Time_spent_on_page: "10 minutes",
     Bounce_rate: "15",
     Most_popular_articles: "Monarchs",
@@ -50,7 +50,14 @@ export default function Profile({
     >
       <Stack spacing={4} alignItems="center" width="100%">
         {/* 🧑 Top Profile Header */}
-        <Card sx={{ width: "100%", padding: 3, boxShadow: 3, height: "calc(100% - 50px)" }}>
+        <Card
+          sx={{
+            width: "100%",
+            padding: 3,
+            boxShadow: 3,
+            height: "calc(100% - 50px)",
+          }}
+        >
           <Stack direction="row" alignItems="center" spacing={3}>
             {/* Left: Avatar */}
             <Avatar
@@ -88,109 +95,156 @@ export default function Profile({
 
         {/* 📇 Personal Information */}
         <Card sx={{ width: "100%", padding: 3, boxShadow: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Typography variant="h6" gutterBottom>
-                Personal Information
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<EditIcon />}
-                sx={{
-                  minWidth: 36,
-                  height: 25,
-                  px: 1.5, // reduce horizontal padding
-                  borderRadius: 0.2, // makes it more square
-                }}
-              >
-                Edit
-              </Button>
-            </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Personal Information
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<EditIcon />}
+              sx={{
+                minWidth: 36,
+                height: 25,
+                px: 1.5, // reduce horizontal padding
+                borderRadius: 0.2, // makes it more square
+              }}
+            >
+              Edit
+            </Button>
+          </Box>
           <Divider sx={{ marginBottom: 2 }} />
-          <Stack direction="row" spacing={3} flexWrap="wrap" justifyContent="space-between">
-          <Grid container spacing={2}>
-                {/* Row 1 */}
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">First Name</Typography>
-                  <Typography variant="body1">{user.firstName}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Last Name</Typography>
-                  <Typography variant="body1">{user.lastName}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">DOB</Typography>
-                  <Typography variant="body1">{user.DOB}</Typography>
-                </Grid>
-
-                {/* Row 2 */}
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Phone</Typography>
-                  <Typography variant="body1">{user.phone}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Role</Typography>
-                  <Typography variant="body1">{user.role}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Email</Typography>
-                  <Typography variant="body1">{user.email}</Typography>
-                </Grid>
+          <Stack
+            direction="row"
+            spacing={3}
+            flexWrap="wrap"
+            justifyContent="space-between"
+          >
+            <Grid container spacing={2}>
+              {/* Row 1 */}
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  First Name
+                </Typography>
+                <Typography variant="body1">{user.firstName}</Typography>
               </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Last Name
+                </Typography>
+                <Typography variant="body1">{user.lastName}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  DOB
+                </Typography>
+                <Typography variant="body1">{user.DOB}</Typography>
+              </Grid>
+
+              {/* Row 2 */}
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Phone
+                </Typography>
+                <Typography variant="body1">{user.phone}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Role
+                </Typography>
+                <Typography variant="body1">{user.role}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Email
+                </Typography>
+                <Typography variant="body1">{user.email}</Typography>
+              </Grid>
+            </Grid>
           </Stack>
         </Card>
 
         {/* 📊 Stats Section */}
         <Card sx={{ width: "100%", padding: 3, boxShadow: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Typography variant="h6" gutterBottom>
-                Stats
-              </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<EditIcon/>}
-                sx={{
-                  minWidth: 36,
-                  height: 25,
-                  px: 1.5, // reduce horizontal padding
-                  borderRadius: 0.2, // makes it more square
-                }}
-              >
-                Edit
-              </Button>
-            </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Stats
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<EditIcon />}
+              sx={{
+                minWidth: 36,
+                height: 25,
+                px: 1.5, // reduce horizontal padding
+                borderRadius: 0.2, // makes it more square
+              }}
+            >
+              Edit
+            </Button>
+          </Box>
           <Divider sx={{ marginBottom: 2 }} />
           {/* You can customize this further based on real stats */}
-            <Grid container spacing={2}>
-                {/* Row 1 */}
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Total article count</Typography>
-                  <Typography variant="body1">{user.Total_articles}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Average views per article</Typography>
-                  <Typography variant="body1">{user.Average_views_per_article}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Time spent on page</Typography>
-                  <Typography variant="body1">{user.Time_spent_on_page}</Typography>
-                </Grid>
+          <Grid container spacing={2}>
+            {/* Row 1 */}
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Total article count
+              </Typography>
+              <Typography variant="body1">{user.Total_articles}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Average views per article
+              </Typography>
+              <Typography variant="body1">
+                {user.Average_views_per_article}
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Time spent on page
+              </Typography>
+              <Typography variant="body1">{user.Time_spent_on_page}</Typography>
+            </Grid>
 
-                {/* Row 2 */}
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Bounce rate</Typography>
-                  <Typography variant="body1">{user.Bounce_rate}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Most popular articles</Typography>
-                  <Typography variant="body1">{user.Most_popular_articles}</Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="subtitle2" color="textSecondary">Revenue per article </Typography>
-                  <Typography variant="body1">{user.Revenue_per_article}</Typography>
-                </Grid>
-              </Grid>
+            {/* Row 2 */}
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Bounce rate
+              </Typography>
+              <Typography variant="body1">{user.Bounce_rate}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Most popular articles
+              </Typography>
+              <Typography variant="body1">
+                {user.Most_popular_articles}
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" color="textSecondary">
+                Revenue per article{" "}
+              </Typography>
+              <Typography variant="body1">
+                {user.Revenue_per_article}
+              </Typography>
+            </Grid>
+          </Grid>
         </Card>
       </Stack>
     </Container>
