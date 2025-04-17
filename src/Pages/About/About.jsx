@@ -42,16 +42,13 @@ const About = () => {
       return roleOrder[a.role_code] - roleOrder[b.role_code];
     });
   
-    console.log('Sorted Roles:', sortedRoles);
-    console.log('People:', people);
-  
     return (
       <Grid2 container spacing={2} direction="column">
         {sortedRoles.map((role) => (
-          <Grid2 item key={role.role_code}>
+          <Grid2 item="true" key={role.role_code}>
             <Typography variant="h5">{role.role}</Typography>
-            {Object.values(people).filter((person) => person.roles.includes(role.role_code)).map((person) => (
-              <Typography key={person.id} variant="body1">
+            {Object.values(people).filter((person) => person.roles.includes(role.role_code)).map((person, index) => (
+              <Typography key={index} variant="body1">
                 {person.first_name} {person.last_name}, <em>{person.affiliation}</em>
               </Typography>
             ))}
