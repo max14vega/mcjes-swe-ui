@@ -34,7 +34,6 @@ const Manuscript = () => {
         setManuscripts(Object.values(data));
         setError(null);
       } catch (error) {
-        console.error("Failed to fetch manuscripts:", error);
         setError("Failed to fetch manuscripts.");
       } finally {
         setLoading(false);

@@ -1,4 +1,4 @@
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import CodeIcon from '@mui/icons-material/Code';
 import ArticleIcon from "@mui/icons-material/Article";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import HomeIcon from "@mui/icons-material/Home";
@@ -51,7 +51,7 @@ const Navbar = () => {
         </ListItem>
         <ListItem component={Link} to="/peoplepage">
           <ListItemIcon>
-            <AdminPanelSettingsIcon />
+            <CodeIcon/>
           </ListItemIcon>
           <ListItemText primary="Admin" />
         </ListItem>
@@ -95,19 +95,19 @@ const Navbar = () => {
         >
           <Button
             variant="contained"
-            startIcon={<HomeIcon />}
-            component={Link}
-            to="/"
-          >
-            Home
-          </Button>
-          <Button
-            variant="contained"
             startIcon={<InfoIcon />}
             component={Link}
             to="/about"
           >
-            About
+            Masthead
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<ArticleIcon />}
+            component={Link}
+            to="/manuscripts"
+          >
+            Manuscripts
           </Button>
           <Button
             variant="contained"
@@ -120,19 +120,11 @@ const Navbar = () => {
           <Button
             variant="contained"
             //color="inherit"
-            startIcon={<AdminPanelSettingsIcon />}
+            startIcon={<CodeIcon/>}
             component={Link}
             to="/peoplepage"
           >
-            Admin
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<ArticleIcon />}
-            component={Link}
-            to="/manuscripts"
-          >
-            Browse Manuscripts
+            Dev
           </Button>
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>

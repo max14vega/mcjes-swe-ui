@@ -19,7 +19,7 @@ const Submissions = () => {
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState("");
-  const [genre, setGenre] = useState("");
+  const [articleType, setArticleType] = useState("");
   const [text, setText] = useState("");
 
   const handleSubmit = async (event) => {
@@ -29,7 +29,7 @@ const Submissions = () => {
 
     const manuscriptData = {
       title,
-      display_name: genre,
+      display_name: articleType,
       abstract,
       text,
       author_first_name: firstName,
@@ -47,7 +47,7 @@ const Submissions = () => {
       setEmail("");
       setTitle("");
       setAbstract("");
-      setGenre("");
+      setArticleType("");
       setText("");
     } catch (error) {
       const msg = error.response?.data || error.message;
@@ -118,21 +118,20 @@ const Submissions = () => {
             <Select
               labelId="genre-label"
               id="genre-select"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
+              value={articleType}
+              onChange={(e) => setArticleType(e.target.value)}
               renderValue={
-                genre !== ""
+                articleType !== ""
                   ? undefined
-                  : () => <span style={{ color: "gray" }}>Select Genre</span>
+                  : () => <span style={{ color: "gray" }}>Select Article Type</span>
               }
             >
               <MenuItem value="" disabled style={{ color: "gray" }}>
-                Select Genre
+                Article Type
               </MenuItem>
               <MenuItem value="Case Studies">Case Studies</MenuItem>
               <MenuItem value="Original Research">Original Research</MenuItem>
-              <MenuItem value="Review Articles">Review Articles</MenuItem>
-              <MenuItem value="Rapid Communications">Rapid Communications</MenuItem>
+              <MenuItem value="Literature Review">Literature Review</MenuItem>
             </Select>
           </FormControl>
           <TextField

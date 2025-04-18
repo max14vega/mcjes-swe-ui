@@ -69,6 +69,7 @@ const About = () => {
       <Typography variant="body1" paragraph>
         Our journal serves as a platform for entomologists, researchers, and students to share innovative findings, theoretical insights, and practical applications related to the world of insects.
       </Typography>
+      <hr></hr>
       {renderPeople()}
     </Container>
   );
