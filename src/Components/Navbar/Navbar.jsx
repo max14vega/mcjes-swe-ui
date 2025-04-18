@@ -49,7 +49,7 @@ const Navbar = () => {
           </ListItemIcon>
           <ListItemText primary="Contact Us" />
         </ListItem>
-        <ListItem component={Link} to="/peoplepage">
+        <ListItem component={Link} to="/admin">
           <ListItemIcon>
             <CodeIcon/>
           </ListItemIcon>
@@ -119,12 +119,11 @@ const Navbar = () => {
           </Button>
           <Button
             variant="contained"
-            //color="inherit"
             startIcon={<CodeIcon/>}
             component={Link}
-            to="/peoplepage"
+            to="/admin"
           >
-            Dev
+            Admin
           </Button>
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
