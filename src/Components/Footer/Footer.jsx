@@ -10,7 +10,7 @@ const Footer = () => {
         bgcolor: "primary.dark",
         color: "white",
         p: 4,
-        mt: 25,
+        mt: 4,
       }}
     >
       <Grid container spacing={4} justifyContent="center">

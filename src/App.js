@@ -1,13 +1,13 @@
 import { ThemeProvider } from "@mui/material";
-import { GoogleOAuthProvider } from "@react-oauth/google"; // Import GoogleOAuthProvider
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import theme from "./Theme";
 
 import "./App.css";
 
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
+import Layout from "./Components/Layout";
+
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import HomePage from "./Pages/Home/HomePage";
@@ -19,24 +19,85 @@ import Submissions from "./Pages/Submissions";
 import AdminPage from "./Pages/Admin/AdminPage";
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
         <BrowserRouter>
-          <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="admin" element={<AdminPage />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="submissions" element={<Submissions />} />
-            <Route path="about" element={<About />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="Profile" element={<Profile />} />
-            <Route path="manuscripts" element={<Manuscripts />} />
+            {/* Routes wrapped in layout */}
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  <HomePage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <Layout>
+                  <AdminPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Layout>
+                  <Contact />
+                </Layout>
+              }
+            />
+            <Route
+              path="/submissions"
+              element={
+                <Layout>
+                  <Submissions />
+                </Layout>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Layout>
+                  <About />
+                </Layout>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <Layout>
+                  <Login />
+                </Layout>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Layout>
+                  <Register />
+                </Layout>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Layout>
+                  <Profile />
+                </Layout>
+              }
+            />
+            <Route
+              path="/manuscripts"
+              element={
+                <Layout>
+                  <Manuscripts />
+                </Layout>
+              }
+            />
           </Routes>
-          <Footer />
         </BrowserRouter>
       </GoogleOAuthProvider>
     </ThemeProvider>
