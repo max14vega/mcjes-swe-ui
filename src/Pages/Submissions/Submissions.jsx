@@ -25,7 +25,7 @@ const Submissions = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem("token"); // Only needed if your API requires it
+    const token = localStorage.getItem("token"); 
 
     const manuscriptData = {
       title,
