@@ -9,7 +9,6 @@ import {
     FormControl,
     InputLabel,
     Select,
-    Box,
   } from "@mui/material";
   import React, { useState } from "react";
   
@@ -117,7 +116,9 @@ import {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
           <Button onClick={handleSubmit} variant="contained" color="primary">
             Submit
           </Button>
