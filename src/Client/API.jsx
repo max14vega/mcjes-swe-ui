@@ -31,7 +31,7 @@ export const PeopleAPI = {
   },
   updatePeople: async (person) => {
     try {
-      const response = await client.put(`/people/${person.email}`, person); // Assuming email is unique
+      const response = await client.put(`/people/${person.email}`, person);
       return response.data;
     } catch (error) {
       console.error("Error updating person:", error);
@@ -66,6 +66,16 @@ export const ManuscriptsAPI = {
       return response.data;
     } catch (error) {
       console.error("Error adding manuscript:", error);
+      throw error;
+    }
+  },
+  updateManuscript: async (manuscript) => {
+    try {
+      const { manuscript_key, ...rest } = manuscript;
+      const response = await client.put(`/manuscripts/${manuscript_key}`, rest);
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating manuscript with ID ${manuscript.manuscript_key}:`, error);
       throw error;
     }
   },
@@ -117,16 +127,15 @@ export const RolesAPI = {
     try {
       const response = await client.get("/roles");
       if (response && typeof response === "object") {
-        // Convert the object into an array of roles with the correct order: role_code, role, is_masthead
         const transformedRoles = Object.keys(response.data).map((roleCode) => ({
-          role_code: roleCode, // role code (e.g., 'AU')
-          role: response.data[roleCode].role, // role name (e.g., 'Author')
-          is_masthead: response.data[roleCode].is_masthead, // is_masthead flag
+          role_code: roleCode,
+          role: response.data[roleCode].role,
+          is_masthead: response.data[roleCode].is_masthead,
         }));
         return transformedRoles;
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error transforming roles:", error);
       return [];
     }
   },

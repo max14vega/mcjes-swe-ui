@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { PeopleAPI } from '../../Client/API';
+import DataTable from '../../Components/DataTable/DataTable';
 import AddPerson from '../../Components/AddPerson/AddPerson';
 import EditPerson from '../../Components/EditPerson/EditPerson';
-import SearchBar from '../../Components/SearchBar/SearchBar';
-import DataTable from '../../Components/DataTable/DataTable';
-import TuneIcon from '@mui/icons-material/Tune';
-import {
-  Container,
-  Grid2,
-  IconButton,
-  Typography,
-} from '@mui/material';
 
-const PeoplePage = () => {
+const PeopleTab = () => {
   const [data, setData] = useState({});
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [personToEdit, setPersonToEdit] = useState(null);
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const columns = [
-    { field: 'first_name', label: 'Full Name' },
+    { field: 'name', label: 'Full Name' },
     { field: 'email', label: 'Email' },
     { field: 'affiliation', label: 'Affiliation' },
     { field: 'roles', label: 'Roles' },
@@ -35,7 +26,7 @@ const PeoplePage = () => {
         setData(updatedData);
       })
       .catch((error) => {
-        console.error(`Error·deleting·person:${error.message}`);
+        console.error(`Error deleting person: ${error.message}`);
       });
   };
 
@@ -73,7 +64,11 @@ const PeoplePage = () => {
   const fetchData = () => {
     PeopleAPI.getPeople()
       .then((jsonData) => {
-        setData(jsonData);
+        const people = Object.values(jsonData).map((person) => ({
+          ...person,
+          name: `${person.first_name} ${person.last_name}`,
+        }));
+        setData(people);
       })
       .catch((error) => {
         console.error(`Error fetching people: ${error.message}`);
@@ -85,50 +80,15 @@ const PeoplePage = () => {
   }, []);
 
   return (
-    <Container sx={{ my: 1 }}>
-      <Grid2
-        container
-        xs={12}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Grid2 item="true">
-          <Typography variant="h4" gutterBottom sx={{ my: 2 }}>
-            People
-          </Typography>
-        </Grid2>
-        <Grid2
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <SearchBar onSearch={(query) => setSearchQuery(query)} />
-          <IconButton variant="contained" color="primary">
-            <TuneIcon />
-          </IconButton>
-        </Grid2>
-      </Grid2>
-      <hr />
-      <Grid2
-        xs={12}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          paddingLeft: 2,
-          paddingRight: 2,
-        }}
-      >
-        <DataTable
-          data={Object.values(data)}
-          columns={columns}
-          onDelete={(email) => handleDelete(email)}
-          onEdit={(person) => handleEditClick(person)}
-          onAdd={() => setOpenAddDialog(true)}
-          addButtonLabel="Add New Person"
-          searchQuery={searchQuery}
-        />
-      </Grid2>
+    <div>
+      <DataTable
+        data={Object.values(data)}
+        columns={columns}
+        onDelete={(email) => handleDelete(email)}
+        onEdit={(person) => handleEditClick(person)}
+        onAdd={() => setOpenAddDialog(true)}
+        addButtonLabel="Add New Person"
+      />
       <AddPerson
         open={openAddDialog}
         onClose={() => setOpenAddDialog(false)}
@@ -140,8 +100,8 @@ const PeoplePage = () => {
         personData={personToEdit}
         onSubmit={handleUpdatePerson}
       />
-    </Container>
+    </div>
   );
 };
 
-export default PeoplePage;
+export default PeopleTab;
