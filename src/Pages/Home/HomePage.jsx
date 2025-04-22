@@ -8,102 +8,59 @@ import {
   Container,
   Grid,
   Typography,
+  Modal,
+  Fade,
+  Backdrop,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar";
 import Slideshow from "../../Components/Slideshow";
+import { ManuscriptsAPI } from "../../Client/API";
 
-// Sample data for top journals, current works, primary sources, and research articles
+// Static top journals
 const topJournals = [
   {
     id: 1,
     title: "Global Insect Ecology",
     description:
-      "This journal provides a comprehensive look at the ecological roles of insects across the globe, exploring their interactions within ecosystems, effects on plant and animal populations, and responses to environmental changes.",
+      "This journal provides a comprehensive look at the ecological roles of insects across the globe...",
   },
   {
     id: 2,
     title: "Arthropod Conservation Quarterly",
     description:
-      "Focused on the conservation of arthropods, this journal publishes research on habitat preservation, species sustainability, and the impacts of human activity on arthropod populations, offering insights and solutions for conservation efforts.",
+      "Focused on the conservation of arthropods... offering insights and solutions for conservation efforts.",
   },
   {
     id: 3,
     title: "Parasitology and Vector Research",
     description:
-      "Dedicated to studying parasites and their vectors, this journal covers all aspects of parasitology and vector-borne diseases, including pathogen biology, vector ecology, and the development of control methods and treatments.",
+      "Dedicated to studying parasites and their vectors... including pathogen biology and vector ecology.",
   },
 ];
 
-const currentWorks = [
-  {
-    id: 1,
-    title: "Latest in Climate Change",
-    description:
-      "Cutting-edge research and discussions about climate change impacts.",
-    imageUrl: "Images/Previews/long-ahh-bug.jpg",
-    link: "/current/climate-change",
-  },
-  {
-    id: 2,
-    title: "Innovations in Entomology",
-    description:
-      "Explore the forefront of entomology techniques and discoveries.",
-    imageUrl: "/Images/Previews/yellow-little-guy-dots.jpg",
-    link: "/current/entomology",
-  },
+const previewImages = [
+  "/Images/Previews/long-ahh-bug.jpg",
+  "/Images/Previews/yellow-little-guy-dots.jpg",
+  "/Images/Previews/blue-ahh-bug.jpg",
+  "/Images/Previews/green-little-guy.jpg",
+  "/Images/Previews/yellow-little-guy.jpg",
+  "/Images/Previews/long-ahh-bug-winged.jpg",
 ];
 
-const primarySources = [
-  {
-    id: 1,
-    title: "Classical Texts on Insect Taxonomy",
-    imageUrl: "/Images/Previews/blue-ahh-bug.jpg",
-    link: "/sources/insect-taxonomy",
-    description:
-      "Explore the seminal works that shaped the way we classify and understand insect species around the world.",
-  },
-  {
-    id: 2,
-    title: "Foundational Papers on Pollinator Ecology",
-    imageUrl: "/Images/Previews/yellow-little-guy.jpg",
-    link: "/sources/pollinator-ecology",
-    description:
-      "Key research papers that delve into the ecology of pollinators and their critical roles in ecosystems.",
-  },
-];
-
-const researchArticles = [
-  {
-    id: 1,
-    title: "Latest Trends in Pest Control Technologies",
-    description:
-      "A comprehensive review of modern methods and innovations in managing pest populations effectively.",
-    imageUrl: "/Images/Previews/long-ahh-bug-winged.jpg",
-    link: "/articles/pest-control",
-  },
-  {
-    id: 2,
-    title: "Advancements in Insect Studies",
-    description:
-      "A detailed examination of recent breakthroughs in understanding the complex behaviors of insects.",
-    imageUrl: "/Images/Previews/green-little-guy.jpg",
-    link: "/articles/insect-behavior",
-  },
-];
-
-// Component for displaying cards in various sections
-const SectionCard = ({ item }) => (
+// Shared card
+const SectionCard = ({ item, onClick }) => (
   <Card
     raised
-    sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+    sx={{ height: "100%", display: "flex", flexDirection: "column", cursor: "pointer" }}
+    onClick={() => onClick(item)}
   >
     <CardMedia
       component="img"
       alt={item.title}
       height="140"
-      image={item.imageUrl}
+      image={item.imageUrl || "/Images/Previews/placeholder.jpg"}
       sx={{ width: "100%" }}
     />
     <CardContent sx={{ flexGrow: 1 }}>
@@ -113,17 +70,50 @@ const SectionCard = ({ item }) => (
       </Typography>
     </CardContent>
     <CardActions>
-      <Button size="small" component={Link} to={item.link}>
-        Learn More
-      </Button>
+    <Button size="small" variant="outlined" color ="info">
+    Learn More
+    </Button>
     </CardActions>
   </Card>
 );
 
 const HomePage = () => {
+  const [manuscripts, setManuscripts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedManuscript, setSelectedManuscript] = useState(null);
+
+  useEffect(() => {
+    const fetchManuscripts = async () => {
+      try {
+        const data = await ManuscriptsAPI.getManuscripts();
+        const list = Object.values(data).slice(0, 6);
+        const enriched = list.map((item, index) => ({
+          ...item,
+          title: item.title || "Untitled Manuscript",
+          description: item.abstract || "No abstract provided.",
+          imageUrl: previewImages[index % previewImages.length],
+        }));
+        setManuscripts(enriched);
+      } catch (error) {
+        console.error("Failed to load manuscripts:", error);
+      }
+    };
+
+    fetchManuscripts();
+  }, []);
+
+  const handleOpen = (manuscript) => {
+    setSelectedManuscript(manuscript);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setSelectedManuscript(null);
+    setOpen(false);
+  };
+
   const handleSearch = (query) => {
     console.log("Searching for:", query);
-    // Implement your search logic here
   };
 
   return (
@@ -133,7 +123,6 @@ const HomePage = () => {
           <Typography variant="h2" gutterBottom sx={{ fontWeight: 400 }}>
             Insects Here and Now
           </Typography>
-
           <Typography variant="h6" color="textSecondary">
             A Platform to Share Authored Works in the Insect World
           </Typography>
@@ -144,10 +133,7 @@ const HomePage = () => {
             />
           </Box>
           <Slideshow />
-          <Box
-            mt={10}
-            sx={{ display: "flex", justifyContent: "center", gap: 4 }}
-          >
+          <Box mt={10} sx={{ display: "flex", justifyContent: "center", gap: 4 }}>
             <Button
               variant="contained"
               color="action"
@@ -169,6 +155,7 @@ const HomePage = () => {
           </Box>
         </Box>
 
+        {/* Top Journals */}
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             Top Journals
@@ -176,14 +163,9 @@ const HomePage = () => {
           <Grid container spacing={2}>
             {topJournals.map((journal) => (
               <Grid item xs={12} md={4} key={journal.id}>
-                <Card
-                  elevation={3}
-                  sx={{ padding: 2, display: "flex", flexDirection: "column" }}
-                >
+                <Card elevation={3} sx={{ padding: 2, display: "flex", flexDirection: "column" }}>
                   <CardContent>
-                    <Typography variant="h6" component="div">
-                      {journal.title}
-                    </Typography>
+                    <Typography variant="h6">{journal.title}</Typography>
                     <Typography variant="body2" color="text.secondary">
                       {journal.description}
                     </Typography>
@@ -204,45 +186,69 @@ const HomePage = () => {
           </Grid>
         </Container>
 
+        {/* Current and Relevant Work */}
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             Current and Relevant Work
           </Typography>
           <Grid container spacing={2}>
-            {currentWorks.map((work) => (
-              <Grid item xs={12} md={6} key={work.id}>
-                <SectionCard item={work} />
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
-          <Typography variant="h4" gutterBottom>
-            Understanding Bug Behavior
-          </Typography>
-          <Grid container spacing={2}>
-            {primarySources.map((source) => (
-              <Grid item xs={12} md={6} key={source.id}>
-                <SectionCard item={source} />
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
-          <Typography variant="h4" gutterBottom>
-            Research Articles
-          </Typography>
-          <Grid container spacing={2}>
-            {researchArticles.map((article) => (
-              <Grid item xs={12} md={6} key={article.id}>
-                <SectionCard item={article} />
+            {manuscripts.map((manu, index) => (
+              <Grid item xs={12} md={6} key={index}>
+                <SectionCard item={manu} onClick={handleOpen} />
               </Grid>
             ))}
           </Grid>
         </Container>
       </Container>
+
+      {/* 🧠 Manuscript Modal */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={open}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            {selectedManuscript && (
+              <>
+                <Typography variant="h4" gutterBottom>
+                  {selectedManuscript.title}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  <strong>Author:</strong>{" "}
+                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() ||
+                    "Unknown Author"}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Abstract:</strong>{" "}
+                  {selectedManuscript.abstract || "No abstract available"}
+                </Typography>
+              </>
+            )}
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="secondary"
+              sx={{ mt: 2 }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
     </>
   );
 };
