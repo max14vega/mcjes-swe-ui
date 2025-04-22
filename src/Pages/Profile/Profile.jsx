@@ -207,7 +207,7 @@ export default function Profile({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="textSecondary">
-                Average views per article
+                Average views per articles
               </Typography>
               <Typography variant="body1">
                 {user.Average_views_per_article}
@@ -229,7 +229,7 @@ export default function Profile({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="textSecondary">
-                Most popular articles
+                Most popular article
               </Typography>
               <Typography variant="body1">
                 {user.Most_popular_articles}
@@ -237,7 +237,7 @@ export default function Profile({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="textSecondary">
-                Revenue per article{" "}
+                Revenue per articles{" "}
               </Typography>
               <Typography variant="body1">
                 {user.Revenue_per_article}
