@@ -158,3 +158,15 @@ export const RolesAPI = {
     }
   },
 };
+
+export const RegisterAPI = {
+  register: async (userData) => {
+    try {
+      const response = await client.post("/register", userData);
+      return response.data;
+    } catch (error) {
+      console.error("Error registering user:", error);
+      throw error;
+    }
+  },
+};
