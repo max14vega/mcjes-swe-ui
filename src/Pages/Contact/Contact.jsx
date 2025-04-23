@@ -1,8 +1,7 @@
-import { Box, Button, Container, TextField, Typography, Paper,InputAdornment, IconButton} from "@mui/material";
+import { Box, Button, Container, TextField, Typography, Paper,InputAdornment} from "@mui/material";
 import RoomServiceIcon from '@mui/icons-material/RoomService';
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
-import SendIcon from '@mui/icons-material/Send';
 import React, { useState } from "react";
 
 const Contact = () => {
@@ -12,6 +11,14 @@ const Contact = () => {
     message: "",
   });
 
+  // const [nameError, setNameError] = useState("");
+  // const [emailError, setEmailError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -20,14 +27,23 @@ const Contact = () => {
     }));
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true); // track form submission
+
+    const nameValid = formData.name.trim() !== "";
+    const emailValid = validateEmail(formData.email);
+
+    if (!nameValid || !emailValid) return;
+
+    // if everything valid
     console.log(formData);
     alert("Thank you for your message! We will get back to you soon.");
     setFormData({ name: "", email: "", message: "" });
+    setSubmitted(false); // reset for next time
   };
 
-  //const PaperStyle = { padding: "30px 20px", width: 800, margin: "auto" }; //Adjust Paper Style
 
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 4 }}>
@@ -61,6 +77,8 @@ const Contact = () => {
             }}
             value={formData.name}
             onChange={handleChange}
+            error={submitted && formData.name.trim() === ""}
+            helperText={submitted && formData.name.trim() === "" ? "Name is required." : ""}
           />
           <Typography variant="body1" sx={{ mt: 2, mb: 0.1 }}>
             Email Address
@@ -85,6 +103,14 @@ const Contact = () => {
             }}
             value={formData.email}
             onChange={handleChange}
+            error={ submitted && (formData.email.trim() === "" || !validateEmail(formData.email))}
+            helperText={
+              submitted && formData.email.trim() === ""
+                ? "Email is required."
+                : submitted && !validateEmail(formData.email)
+                ? "Invalid email format."
+                : ""
+            }
           />
           <Typography variant="body1" sx={{ mt: 2, mb: 0.1 }}>
             Message

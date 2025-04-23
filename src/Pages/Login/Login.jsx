@@ -89,8 +89,6 @@ export default function Login({ setUser }) {
         };
         setUser(dummyUser);
         localStorage.setItem("user", JSON.stringify(dummyUser));
-        //window.location.href = "/profile";
-        //setUser({ email }); // Store user info
         navigate("/profile"); // Redirect to Profile Page
       }else{
         console.log("Successfully logged in!");
