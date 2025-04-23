@@ -1,4 +1,4 @@
-import EditProfile from "../../Components/EditProfile/EditProfile"; 
+import EditProfile from "../../Components/EditProfile/EditProfile";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {

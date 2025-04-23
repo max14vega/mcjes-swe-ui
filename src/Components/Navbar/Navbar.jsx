@@ -142,7 +142,7 @@ const Navbar = ({ user, setUser }) => {
             to="/profile"
             sx={{ marginRight: 1, fontWeight: "bold" }}
           >
-            {user.firstName}
+            {user.firstName} {user.lastName}
           </Button>
             </>
             ) : (

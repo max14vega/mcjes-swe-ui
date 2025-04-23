@@ -1,4 +1,8 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography, Paper,InputAdornment, IconButton} from "@mui/material";
+import RoomServiceIcon from '@mui/icons-material/RoomService';
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import SendIcon from '@mui/icons-material/Send';
 import React, { useState } from "react";
 
 const Contact = () => {
@@ -23,14 +27,17 @@ const Contact = () => {
     setFormData({ name: "", email: "", message: "" });
   };
 
+  //const PaperStyle = { padding: "30px 20px", width: 800, margin: "auto" }; //Adjust Paper Style
+
   return (
     <Container component="main" maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Contact Us
+       <Paper elevation={1} sx={{ p: 8, borderRadius: 2 }}>
+      <Typography variant="h4" gutterBottom sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+        Contact Us {<RoomServiceIcon sx={{ fontSize: 45 }} />}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Box sx={{ mt: 1 }}>
-          <Typography component="p" variant="body1" gutterBottom>
+          <Typography variant="body1" sx={{ mb: 0.1 }}>
             Your Name
           </Typography>
           <TextField
@@ -43,10 +50,19 @@ const Contact = () => {
             name="name"
             autoComplete="name"
             autoFocus
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                ),
+              },
+            }}
             value={formData.name}
             onChange={handleChange}
           />
-          <Typography component="p" variant="body1" gutterBottom>
+          <Typography variant="body1" sx={{ mt: 2, mb: 0.1 }}>
             Email Address
           </Typography>
           <TextField
@@ -58,10 +74,19 @@ const Contact = () => {
             id="email"
             name="email"
             autoComplete="email"
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              },
+            }}
             value={formData.email}
             onChange={handleChange}
           />
-          <Typography component="p" variant="body1" gutterBottom>
+          <Typography variant="body1" sx={{ mt: 2, mb: 0.1 }}>
             Message
           </Typography>
           <TextField
@@ -76,7 +101,9 @@ const Contact = () => {
             rows={4}
             value={formData.message}
             onChange={handleChange}
+
           />
+
           <Button
             type="submit"
             fullWidth
@@ -88,6 +115,7 @@ const Contact = () => {
           </Button>
         </Box>
       </form>
+     </Paper>
     </Container>
   );
 };
