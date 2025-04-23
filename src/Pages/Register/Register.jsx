@@ -1,4 +1,4 @@
-import AddReactionIcon from "@mui/icons-material/AddReaction"; //Addedd the Icon for Register Page
+import HowToRegIcon from '@mui/icons-material/HowToReg'; //Addedd the Icon for Register Page
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import PersonIcon from "@mui/icons-material/Person";
@@ -174,7 +174,7 @@ const Register = () => {
                 }}
               >
                 <Avatar style={avatarStyle}>
-                  <AddReactionIcon />
+                  <HowToRegIcon />
                 </Avatar>
               </div>
               <Typography variant="h5" gutterBottom>

@@ -4,6 +4,9 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import MenuIcon from "@mui/icons-material/Menu";
+import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {
   AppBar,
   Box,
@@ -133,19 +136,21 @@ const Navbar = ({ user, setUser }) => {
             <>
           <Button
             variant="contained"
-            color="secondary"
+            color="Primary"
+            startIcon={<ManageAccountsIcon />}
             component={Link}
             to="/profile"
             sx={{ marginRight: 1, fontWeight: "bold" }}
           >
-            Profile
+            {user.firstName}
           </Button>
             </>
             ) : (
             <>
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
+            startIcon={<HowToRegIcon />}
             component={Link}
             to="/register"
             sx={{ marginRight: 1, fontWeight: "bold" }}
@@ -155,6 +160,7 @@ const Navbar = ({ user, setUser }) => {
           <Button
             variant="contained"
             color="secondary"
+            startIcon={<LoginIcon />}
             component={Link}
             to="/login"
             sx={{ fontWeight: "bold" }}

@@ -78,13 +78,14 @@ export default function Login({ setUser }) {
       !emailError &&
       !passwordError
     ) {
-      if (email === "dummy@demo.com" && password === "demo123") {
+      if (email === "JohnSnow@gmail.com" && password === "John123") {
         const dummyUser = {
-          firstName: "Demo",
-          lastName:"User",
-          email: "dummy@demo.com",
+          firstName: "John",
+          lastName:"Snow",
+          email: "JohnSnow@gmail.com",
           phone: "123-456-7890",
-          role: "Demo",
+          role: "Editor",
+          DOB: "8-17-1995"
         };
         setUser(dummyUser);
         localStorage.setItem("user", JSON.stringify(dummyUser));
