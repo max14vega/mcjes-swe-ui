@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user, setUser }) => {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         minHeight: "100vh",
       }}
     >
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <main style={{ flex: 1 }}>{children}</main>
       <Footer />
     </div>

@@ -16,14 +16,17 @@ import {
 } from "@mui/material";
 import { useGoogleLogin } from "@react-oauth/google"; // Import GoogleLogin component
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppleLogin from "react-apple-login"; // For Apple login
 
+
 export default function Login({ setUser }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  //const navigate = useNavigate();
+
 
   const PaperStyle = { padding: "30px 20px", width: 400, margin: "auto" }; //Adjust Paper Style
   const formStyle = {
@@ -73,13 +76,24 @@ export default function Login({ setUser }) {
 
     if (
       !emailError &&
-      !passwordError &&
-      email === "user@example.com" &&
-      password === "password123"
+      !passwordError
     ) {
-      console.log("Successfully logged in!");
-      //setUser({ email }); // Store user info
-      //navigate("/profile"); // Redirect to Profile Page
+      if (email === "dummy@demo.com" && password === "demo123") {
+        const dummyUser = {
+          firstName: "Demo",
+          lastName:"User",
+          email: "dummy@demo.com",
+          phone: "123-456-7890",
+          role: "Demo",
+        };
+        setUser(dummyUser);
+        localStorage.setItem("user", JSON.stringify(dummyUser));
+        //window.location.href = "/profile";
+        //setUser({ email }); // Store user info
+        navigate("/profile"); // Redirect to Profile Page
+      }else{
+        console.log("Successfully logged in!");
+      }
     }
   };
 

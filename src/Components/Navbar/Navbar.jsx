@@ -20,7 +20,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
+
+  console.log("Navbar user:", user);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:1175px)");
 
@@ -127,6 +129,8 @@ const Navbar = () => {
           </Button>
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
+        {user ? (
+            <>
           <Button
             variant="contained"
             color="secondary"
@@ -136,6 +140,9 @@ const Navbar = () => {
           >
             Profile
           </Button>
+            </>
+            ) : (
+            <>
           <Button
             variant="contained"
             color="secondary"
@@ -154,6 +161,8 @@ const Navbar = () => {
           >
             Log In
           </Button>
+          </>
+          )}
         </Box>
         <Drawer
           anchor="left"

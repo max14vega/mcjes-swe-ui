@@ -1,13 +1,12 @@
 import { ThemeProvider } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import theme from "./Theme";
 
 import "./App.css";
 
 import Layout from "./Components/Layout";
-
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import HomePage from "./Pages/Home/HomePage";
@@ -19,7 +18,12 @@ import Submissions from "./Pages/Submissions";
 import AdminPage from "./Pages/Admin/AdminPage";
 
 function App() {
-  //const [token, setToken] = useState();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) setUser(JSON.parse(savedUser));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -30,7 +34,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <HomePage />
                 </Layout>
               }
@@ -38,7 +42,7 @@ function App() {
             <Route
               path="/admin"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <AdminPage />
                 </Layout>
               }
@@ -46,7 +50,7 @@ function App() {
             <Route
               path="/contact"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <Contact />
                 </Layout>
               }
@@ -54,7 +58,7 @@ function App() {
             <Route
               path="/submissions"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <Submissions />
                 </Layout>
               }
@@ -62,7 +66,7 @@ function App() {
             <Route
               path="/about"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <About />
                 </Layout>
               }
@@ -70,15 +74,15 @@ function App() {
             <Route
               path="/login"
               element={
-                <Layout>
-                  <Login />
+                <Layout user={user} setUser={setUser}>
+                  <Login setUser={setUser}/>
                 </Layout>
               }
             />
             <Route
               path="/register"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser}>
                   <Register />
                 </Layout>
               }
@@ -86,15 +90,15 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Layout>
-                  <Profile />
+                <Layout user={user} setUser={setUser}>
+                  <Profile user={user} setUser={setUser}/>
                 </Layout>
               }
             />
             <Route
               path="/manuscripts"
               element={
-                <Layout>
+                <Layout user={user} setUser={setUser} >
                   <Manuscripts />
                 </Layout>
               }
