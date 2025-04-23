@@ -1,3 +1,4 @@
+import EditProfile from "../../Components/EditProfile/EditProfile"; 
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
@@ -13,12 +14,21 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Profile({user, setUser }) {
-
+  const [openEditModal, setOpenEditModal] = useState(false);
   const navigate = useNavigate();
 
 
+  const handleEdit = () => {
+    setOpenEditModal(true);
+  };
+
+  const handleSaveProfile = (updatedUser) => {
+    setUser((prevUser) => ({ ...prevUser, ...updatedUser }));
+    localStorage.setItem("user", JSON.stringify({ ...user, ...updatedUser }));
+  };
 
   const handleLogout = () => {
     setUser(null); // Clear app state
@@ -32,6 +42,7 @@ export default function Profile({user, setUser }) {
 
 
     return (
+      <>
       <Container
         maxWidth="md"
         sx={{
@@ -109,6 +120,7 @@ export default function Profile({user, setUser }) {
                   px: 1.5, // reduce horizontal padding
                   borderRadius: 0.2, // makes it more square
                 }}
+                onClick={handleEdit}
               >
                 Edit
               </Button>
@@ -176,19 +188,6 @@ export default function Profile({user, setUser }) {
               <Typography variant="h6" gutterBottom>
                 Stats
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<EditIcon />}
-                sx={{
-                  minWidth: 36,
-                  height: 25,
-                  px: 1.5, // reduce horizontal padding
-                  borderRadius: 0.2, // makes it more square
-                }}
-              >
-                Edit
-              </Button>
             </Box>
             <Divider sx={{ marginBottom: 2 }} />
             {/* You can customize this further based on real stats */}
@@ -242,6 +241,13 @@ export default function Profile({user, setUser }) {
           </Card>
         </Stack>
       </Container>
-    );
+      <EditProfile
+        open={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        userData={user}
+        onSubmit={handleSaveProfile}
+      />
+    </>
+  );
 
 }
