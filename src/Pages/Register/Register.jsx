@@ -24,7 +24,7 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  
+
   const handleRegister = async (event) => {
     event.preventDefault(); // Prevent default form submission
 
@@ -76,7 +76,7 @@ const Register = () => {
       };
 
       try {
-        const response = await AccountAPI.register(newUser);
+        await AccountAPI.register(newUser);
         alert("User registered successfully!");
         // Redirect or reset form if needed
       } catch (error) {
