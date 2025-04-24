@@ -18,6 +18,7 @@ import { useGoogleLogin } from "@react-oauth/google"; // Import GoogleLogin comp
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppleLogin from "react-apple-login"; // For Apple login
+import { AccountAPI } from "../../Client/API";
 
 
 export default function Login({ setUser }) {
@@ -63,35 +64,82 @@ export default function Login({ setUser }) {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setEmailError("");
     setPasswordError("");
 
-    if (!email) setEmailError("Email is required.");
-    else if (!validateEmail(email)) setEmailError("Invalid email format.");
+    let isValid = true;
 
-    if (!password) setPasswordError("Password is required.");
-    else if (password.length < 6)
+    if (!email) {
+      setEmailError("Email is required.");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Invalid email format.");
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required.");
+      isValid = false;
+    } else if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long.");
+      isValid = false;
+    }
 
-    if (
-      !emailError &&
-      !passwordError
-    ) {
-      if (email === "JohnSnow@gmail.com" && password === "John123") {
-        const dummyUser = {
-          firstName: "John",
-          lastName:"Snow",
-          email: "JohnSnow@gmail.com",
-          phone: "123-456-7890",
-          role: "Editor",
-          DOB: "8-17-1995"
+    // if (
+    //   !emailError &&
+    //   !passwordError
+    // ) {
+    //   if (email === "JohnSnow@gmail.com" && password === "John123") {
+    //     const dummyUser = {
+    //       firstName: "John",
+    //       lastName:"Snow",
+    //       email: "JohnSnow@gmail.com",
+    //       phone: "123-456-7890",
+    //       role: "Editor",
+    //       DOB: "8-17-1995"
+    //     };
+    //     setUser(dummyUser);
+    //     localStorage.setItem("user", JSON.stringify(dummyUser));
+    //     navigate("/profile"); // Redirect to Profile Page
+    //   }else{
+    //     console.log("Successfully logged in!");
+    //   }
+    // }
+
+    if (isValid) {
+      try {
+        const response = await AccountAPI.login({ email, password });
+
+        // Save access token
+        localStorage.setItem("access_token", response.access_token);
+
+        // Save user info (what backend now returns!)
+        localStorage.setItem("user", JSON.stringify(response.user));
+        const backendUser = response.user;
+
+        // Normalize field names
+        const transformedUser = {
+          firstName: backendUser.first_name,
+          lastName: backendUser.last_name,
+          email: backendUser.email,
+          affiliation: backendUser.affiliation,
+          role: backendUser.role || "Viewer", // default if missing
+          phone: backendUser.phone || "N/A",
+          DOB: backendUser.DOB || "N/A",
+          Total_articles: backendUser.Total_articles || 0,
+          Average_views_per_article: backendUser.Average_views_per_article || 0,
+          Time_spent_on_page: backendUser.Time_spent_on_page || "0 min",
+          Bounce_rate: backendUser.Bounce_rate || "0%",
+          Most_popular_articles: backendUser.Most_popular_articles || "None",
+          Revenue_per_article: backendUser.Revenue_per_article || "$0.00",
         };
-        setUser(dummyUser);
-        localStorage.setItem("user", JSON.stringify(dummyUser));
-        navigate("/profile"); // Redirect to Profile Page
-      }else{
-        console.log("Successfully logged in!");
+        setUser(transformedUser);
+
+        navigate("/profile"); // Redirect
+      } catch (error) {
+        console.error("Login failed:", error);
+        alert("Login failed. Please check your credentials.");
       }
     }
   };

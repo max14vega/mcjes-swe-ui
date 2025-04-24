@@ -73,7 +73,7 @@ export default function Profile({user, setUser }) {
                   fontSize: 36,
                 }}
               >
-                {user.firstName.charAt(0).toUpperCase()}
+                {(user?.firstName?.charAt(0) || "").toUpperCase()}
               </Avatar>
 
               {/* Right: Info + Logout */}

@@ -2,35 +2,36 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'; //Addedd the Icon for R
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import PersonIcon from "@mui/icons-material/Person";
-import PhoneIcon from "@mui/icons-material/Phone";
+import WorkIcon from "@mui/icons-material/Work";
 import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { Avatar } from "@mui/material"; //Avatar import
 import { Card, CardContent, Paper } from "@mui/material"; // Added Card, CardMedia, and CardContent imports
 import React from "react";
 import { useState } from "react";
+import { AccountAPI } from "../../Client/API";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [affiliation, setAffiliation] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
+  const [affiliationError, setAffiliationError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const validatePhone = (phone) => /^\d{10}$/.test(phone);
+  //const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault(); // Prevent default form submission
 
     setNameError("");
     setEmailError("");
-    setPhoneError("");
+    setAffiliationError("");
     setPasswordError("");
     setConfirmPasswordError("");
 
@@ -47,13 +48,16 @@ const Register = () => {
       setEmailError("Invalid email format.");
       isValid = false;
     }
-    if (!phone) {
-      setPhoneError("Phone number is required.");
+    if (!affiliation) {
+      setAffiliationError("Affiliation is required.");
       isValid = false;
-    } else if (!validatePhone(phone)) {
+    }
+    /*
+    else if (!validatePhone(phone)) {
       setPhoneError("Invalid phone number. Use 10 digits.");
       isValid = false;
     }
+    */
     if (!password) {
       setPasswordError("Password is required.");
       isValid = false;
@@ -70,7 +74,22 @@ const Register = () => {
     }
 
     if (isValid) {
-      console.log("User registered successfully:", { name, email, phone });
+      const newUser = {
+        first_name: name.split(" ")[0],
+        last_name: name.split(" ")[1] || "",
+        email: email,
+        password: password,
+        affiliation: affiliation, // Or you can add a real affiliation field
+      };
+
+      try {
+        const response = await AccountAPI.register(newUser);
+        alert("User registered successfully!");
+        // Redirect or reset form if needed
+      } catch (error) {
+        console.error("Registration error:", error);
+        alert("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -229,25 +248,24 @@ const Register = () => {
                   helperText={emailError}
                 />
                 <TextField
-                  id="phone"
+                  id="affiliation"
                   slotProps={{
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <PhoneIcon />
+                          <WorkIcon />
                         </InputAdornment>
                       ),
                     },
                   }}
-                  placeholder="Enter your phone number"
+                  placeholder="Enter your affiliation"
                   fullWidth
-                  type="tel"
                   variant="outlined"
                   size="medium"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  error={!!phoneError}
-                  helperText={phoneError}
+                  value={affiliation}
+                  onChange={(e) => setAffiliation(e.target.value)}
+                  error={!!affiliationError}
+                  helperText={affiliationError}
                 />
                 <TextField
                   id="password"

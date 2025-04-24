@@ -159,13 +159,25 @@ export const RolesAPI = {
   },
 };
 
-export const RegisterAPI = {
+export const AccountAPI = {
   register: async (userData) => {
     try {
       const response = await client.post("/register", userData);
       return response.data;
     } catch (error) {
-      console.error("Error registering user:", error);
+      console.error("Error registering user:", error.response?.data || error);
+      throw error;
+    }
+  },
+  login: async (credentials) => {
+    try {
+      const response = await client.post("/login", credentials);
+      const token = response.data.access_token;
+      // store token locally for use in protected requests
+      localStorage.setItem("access_token", token);
+      return response.data;
+    } catch (error) {
+      console.error("Error logging in:", error.response?.data || error);
       throw error;
     }
   },
