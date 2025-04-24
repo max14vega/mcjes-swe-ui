@@ -23,7 +23,8 @@ const PeopleTab = () => {
       .then(() => {
         const updatedData = { ...data };
         delete updatedData[email];
-        setData(updatedData);
+        setData(updatedData);  
+        fetchData();
       })
       .catch((error) => {
         console.error(`Error deleting person: ${error.message}`);
@@ -40,6 +41,7 @@ const PeopleTab = () => {
       .then(() => {
         PeopleAPI.getPeople().then((jsonData) => {
           setData(jsonData);
+          fetchData();
         });
         setOpenEditDialog(false);
       })
@@ -53,6 +55,7 @@ const PeopleTab = () => {
       .then(() => {
         PeopleAPI.getPeople().then((jsonData) => {
           setData(jsonData);
+          fetchData();
         });
         setOpenAddDialog(false);
       })

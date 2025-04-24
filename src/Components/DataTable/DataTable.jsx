@@ -23,12 +23,12 @@ const DataTable = ({
     searchQuery,
   }) => {
     const filteredData = data.filter((item) => {
-        const query = searchQuery && searchQuery.toLowerCase();
-        return columns.some((column) => {
-          const value = item[column.field].toString().toLowerCase();
-          return query ? value.includes(query) : true;
-        });
+      const query = searchQuery && searchQuery.toLowerCase();
+      return columns.some((column) => {
+        const value = item[column.field];
+        return query ? (value !== undefined && value !== null && value.toString().toLowerCase().includes(query)) : true;
       });
+    });
   
     return (
       <TableContainer>
@@ -47,7 +47,7 @@ const DataTable = ({
                 <TableRow key={item.id || index}>
                   {columns.map((column) => (
                     <TableCell key={column.field} sx={{maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
-                      {column.field === 'roles' ? item[column.field].join(', ') : item[column.field]}
+                      {column.field === 'roles' ? item[column.field]?.join(', ') : item[column.field]}
                     </TableCell>
                   ))}
                   <TableCell align="center">
