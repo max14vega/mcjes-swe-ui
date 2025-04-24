@@ -24,8 +24,7 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  //const validatePhone = (phone) => /^\d{10}$/.test(phone);
-
+  
   const handleRegister = async (event) => {
     event.preventDefault(); // Prevent default form submission
 
@@ -52,12 +51,6 @@ const Register = () => {
       setAffiliationError("Affiliation is required.");
       isValid = false;
     }
-    /*
-    else if (!validatePhone(phone)) {
-      setPhoneError("Invalid phone number. Use 10 digits.");
-      isValid = false;
-    }
-    */
     if (!password) {
       setPasswordError("Password is required.");
       isValid = false;
