@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
@@ -25,6 +25,7 @@ const Manuscript = () => {
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -112,15 +113,24 @@ const Manuscript = () => {
               onChange={handleSearchChange}
               style={{ marginRight: "1rem" }}
             />
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ minWidth: "180px" }}
-              component={Link}
-              to="/Submissions"
-            >
-              Submit Manuscript
-            </Button>
+            <Box display="flex" flexDirection="column" gap={1}>
+              <Button
+                variant="contained"
+                color="secondary"
+                style={{ minWidth: "180px" }}
+                component={Link}
+                to="/Submissions"
+              >
+                Submit Manuscript
+              </Button>
+              <Button
+                variant="contained"
+                style={{ minWidth: "180px", backgroundColor: "#fff3cd", color: "#000" }}
+                onClick={() => navigate("/update-manuscripts")}
+              >
+                Update Manuscripts
+              </Button>
+            </Box>
           </Box>
 
           {loading && (
