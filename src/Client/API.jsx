@@ -159,6 +159,8 @@ export const RolesAPI = {
   },
 };
 
+
+// Account REST Endpoints
 export const AccountAPI = {
   register: async (userData) => {
     try {
