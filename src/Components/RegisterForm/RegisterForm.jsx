@@ -6,6 +6,7 @@ import {
     TextField,
     InputAdornment,
   } from "@mui/material";
+  import React from "react";
   import HowToRegIcon from "@mui/icons-material/HowToReg";
   import EmailIcon from "@mui/icons-material/Email";
   import PasswordIcon from "@mui/icons-material/Password";

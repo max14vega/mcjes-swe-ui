@@ -3,7 +3,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { AccountAPI } from "../../Client/API";
 import RegisterForm from "../../Components/RegisterForm/RegisterForm";
 

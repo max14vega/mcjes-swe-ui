@@ -49,34 +49,6 @@ const previewImages = [
   "/Images/Previews/long-ahh-bug-winged.jpg",
 ];
 
-// Shared card
-const SectionCard = ({ item, onClick }) => (
-  <Card
-    raised
-    sx={{ height: "100%", display: "flex", flexDirection: "column", cursor: "pointer" }}
-    onClick={() => onClick(item)}
-  >
-    <CardMedia
-      component="img"
-      alt={item.title}
-      height="140"
-      image={item.imageUrl || "/Images/Previews/placeholder.jpg"}
-      sx={{ width: "100%" }}
-    />
-    <CardContent sx={{ flexGrow: 1 }}>
-      <Typography variant="h5">{item.title}</Typography>
-      <Typography variant="body2" color="text.secondary">
-        {item.description}
-      </Typography>
-    </CardContent>
-    <CardActions>
-    <Button size="small" variant="outlined" color ="info">
-    Learn More
-    </Button>
-    </CardActions>
-  </Card>
-);
-
 const HomePage = () => {
   const [manuscripts, setManuscripts] = useState([]);
   const [open, setOpen] = useState(false);
@@ -160,7 +132,7 @@ const HomePage = () => {
           <Typography variant="h4" gutterBottom>
             Top Journals
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             {topJournals.map((journal) => (
               <Grid item xs={12} md={4} key={journal.id}>
                 <Card elevation={3} sx={{ padding: 2, display: "flex", flexDirection: "column" }}>
@@ -187,18 +159,64 @@ const HomePage = () => {
         </Container>
 
         {/* Current and Relevant Work */}
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
-          <Typography variant="h4" gutterBottom>
-            Current and Relevant Work
-          </Typography>
-          <Grid container spacing={2}>
-            {manuscripts.map((manu, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <SectionCard item={manu} onClick={handleOpen} />
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <Box sx={{ backgroundColor: "#f9fafb", py: 6, mt: 5 }}>
+          <Container maxWidth="lg">
+            <Typography
+              variant="h4"
+              gutterBottom
+              sx={{
+                textAlign: "center",
+                display: "inline-block",
+                px: 2,
+                mb: 4,
+              }}
+            >
+              Current and Relevant Work
+            </Typography>
+            <Grid container spacing={4}>
+              {manuscripts.map((manu, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Card
+                    raised
+                    onClick={() => handleOpen(manu)}
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                      borderRadius: 3,
+                      cursor: "pointer",
+                      "&:hover": {
+                        transform: "scale(1.03)",
+                        boxShadow: 6,
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={manu.imageUrl || "/Images/Previews/placeholder.jpg"}
+                      height="180"
+                      alt={manu.title}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography variant="h6" gutterBottom>
+                        {manu.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {manu.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions sx={{ justifyContent: "flex-end", px: 5, pb: 2 }}>
+                      <Button variant="outlined" color="info">
+                        Learn More
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
       </Container>
 
       {/* 🧠 Manuscript Modal */}
@@ -220,6 +238,7 @@ const HomePage = () => {
               bgcolor: "background.paper",
               boxShadow: 24,
               p: 4,
+              borderRadius: 2,
             }}
           >
             {selectedManuscript && (
@@ -229,8 +248,7 @@ const HomePage = () => {
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
                   <strong>Author:</strong>{" "}
-                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() ||
-                    "Unknown Author"}
+                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() || "Unknown Author"}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Abstract:</strong>{" "}
