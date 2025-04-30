@@ -7,10 +7,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   AppBar,
   Box,
   Button,
+  Menu,
+  MenuItem,
   Drawer,
   IconButton,
   List,
@@ -20,10 +23,12 @@ import {
   Toolbar,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Navbar = ({ user, setUser }) => {
+  const navigate = useNavigate();
 
   console.log("Navbar user:", user);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -32,6 +37,29 @@ const Navbar = ({ user, setUser }) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setUser(null); // Clear app state
+    localStorage.removeItem("user"); // Clear localStorage
+    navigate("/"); // Redirect to login page
+  };
+
+  useEffect(() => {
+    // Close menu when user logs in (or logs out)
+    setAnchorEl(null);
+  }, [user]);
+
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -138,13 +166,29 @@ const Navbar = ({ user, setUser }) => {
             variant="contained"
             color="Primary"
             startIcon={<ManageAccountsIcon />}
-            component={Link}
-            to="/profile"
+            //component={Link}
+            //to="/profile"
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={handleMenuClick}
             sx={{ marginRight: 1, fontWeight: "bold" }}
           >
             {user.firstName} {user.lastName}
           </Button>
-            </>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
+                  Profile
+            </MenuItem>
+            <MenuItem onClick={() => {handleLogout(); }}>
+              Logout
+            </MenuItem>
+          </Menu>
+          </>
             ) : (
             <>
           <Button

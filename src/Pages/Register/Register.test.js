@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import Register from "./Register";
+import Register from "../Register";
 
 describe("Register Page", () => {
   test("renders all form fields correctly", () => {
