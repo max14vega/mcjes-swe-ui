@@ -6,13 +6,14 @@ import InfoIcon from "@mui/icons-material/Info";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import {
   AppBar,
   Box,
   Button,
   Menu,
+  Tooltip,
   MenuItem,
   Drawer,
   IconButton,
@@ -21,6 +22,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Avatar
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useState, useEffect } from "react";
@@ -162,29 +164,64 @@ const Navbar = ({ user, setUser }) => {
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
         {user ? (
             <>
-          <Button
-            variant="contained"
-            color="Primary"
-            startIcon={<ManageAccountsIcon />}
-            //component={Link}
-            //to="/profile"
-            endIcon={<KeyboardArrowDownIcon />}
-            onClick={handleMenuClick}
-            sx={{ marginRight: 1, fontWeight: "bold" }}
-          >
-            {user.firstName} {user.lastName}
-          </Button>
+          <Tooltip title="Account settings">
+            <IconButton onClick={handleMenuClick}>
+              <Avatar sx={{
+                bgcolor: "#7180B9", // background color
+                color: 'white',// text/icon color
+                width: 40,
+                height: 40,
+                fontWeight: 'bold'}}
+              >
+                {user?.firstName?.[0] || 'U'}
+              </Avatar>
+            </IconButton>
+          </Tooltip>
           <Menu
             anchorEl={anchorEl}
             open={open}
             onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            slotProps={{
+              paper: {
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&::before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
-                  Profile
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+                Profile
             </MenuItem>
             <MenuItem onClick={() => {handleLogout(); }}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
               Logout
             </MenuItem>
           </Menu>
