@@ -10,24 +10,24 @@ import {
 import React from "react";
 import { useState, useEffect } from "react";
 
-const EditText = ({ open, onClose, textData, onSubmit }) => {
-  const [key, setKey] = useState(textData.key);
+const EditText = ({ open, onClose, textData, onSubmit }) => { 
+
   const [title, setTitle] = useState(textData.title);
   const [text, setText] = useState(textData.text);
 
   useEffect(() => {
-    setKey(textData.key);
     setTitle(textData.title);
     setText(textData.text);
   }, [textData]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log('Form submitted');
     const updatedTextData = {
-      key,
+      key: textData.key,
       title,
       text,
     };
+    console.log(updatedTextData);
     onSubmit(updatedTextData);
     onClose();
   };
@@ -39,8 +39,7 @@ const EditText = ({ open, onClose, textData, onSubmit }) => {
         <form onSubmit={handleSubmit}>
           <TextField
             placeholder="Key"
-            value={key}
-            onChange={(event) => setKey(event.target.value)}
+            value={textData.key}
             margin="normal"
             fullWidth
             disabled

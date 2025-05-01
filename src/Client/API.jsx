@@ -110,6 +110,16 @@ export const TextsAPI = {
       throw error;
     }
   },
+
+  updateText: async (text) => {
+    try {
+      const response = await client.put(`/texts/${text.key}`, text);
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating text with ID ${text.key}:`, error); 
+      throw error;
+    }
+  },
 };
 
 // Roles REST Endpoints
