@@ -1,6 +1,5 @@
 import EditProfile from "../../Components/EditProfile/EditProfile";
 import EditIcon from "@mui/icons-material/Edit";
-import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Avatar,
   Box,
@@ -13,13 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function Profile({user, setUser }) {
   const [openEditModal, setOpenEditModal] = useState(false);
-  const navigate = useNavigate();
-
 
   const handleEdit = () => {
     setOpenEditModal(true);
@@ -30,11 +26,6 @@ export default function Profile({user, setUser }) {
     localStorage.setItem("user", JSON.stringify({ ...user, ...updatedUser }));
   };
 
-  const handleLogout = () => {
-    setUser(null); // Clear app state
-    localStorage.removeItem("user"); // Clear localStorage
-    navigate("/"); // Redirect to login page
-  };
 
   if (!user || typeof user !== "object") {
     return null; // Or show a loader/message
@@ -73,7 +64,7 @@ export default function Profile({user, setUser }) {
                   fontSize: 36,
                 }}
               >
-                {user.firstName.charAt(0).toUpperCase()}
+                {(user?.firstName?.charAt(0) || "").toUpperCase()}
               </Avatar>
 
               {/* Right: Info + Logout */}
@@ -85,15 +76,7 @@ export default function Profile({user, setUser }) {
                   {user.role}
                 </Typography>
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<LogoutIcon />}
-                  onClick={handleLogout}
-                  sx={{ mt: 2 }}
-                >
-                  Logout
-                </Button>
+
               </Stack>
             </Stack>
           </Card>

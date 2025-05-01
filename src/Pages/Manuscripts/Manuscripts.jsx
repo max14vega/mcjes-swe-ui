@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
@@ -25,6 +25,7 @@ const Manuscript = () => {
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -61,10 +62,7 @@ const Manuscript = () => {
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={3}>
-          <Paper
-            elevation={3}
-            style={{ padding: "1rem", height: "fit-content" }}
-          >
+          <Paper elevation={3} style={{ padding: "1rem", height: "fit-content" }}>
             <Typography variant="h6" component="h2" gutterBottom>
               Filter
             </Typography>
@@ -73,54 +71,49 @@ const Manuscript = () => {
                 Categories
               </Typography>
               <Box display="flex" flexDirection="column" gap={1}>
-                <Box display="flex" alignItems="center">
-                  <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                  <Typography variant="body2">Ecology</Typography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                  <Typography variant="body2">Conservation</Typography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                  <Typography variant="body2">Parasitology</Typography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                  <Typography variant="body2">Genetics</Typography>
-                </Box>
-                <Box display="flex" alignItems="center">
-                  <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                  <Typography variant="body2">Taxonomy</Typography>
-                </Box>
+                {[
+                  "Ecology",
+                  "Conservation",
+                  "Parasitology",
+                  "Genetics",
+                  "Taxonomy",
+                ].map((cat) => (
+                  <Box key={cat} display="flex" alignItems="center">
+                    <input type="checkbox" style={{ marginRight: "0.5rem" }} />
+                    <Typography variant="body2">{cat}</Typography>
+                  </Box>
+                ))}
               </Box>
             </Box>
           </Paper>
         </Grid>
         <Grid item xs={12} md={9}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            style={{ marginBottom: "2rem" }}
-          >
+          <Box display="flex" gap={2} mb={2} alignItems="stretch">
             <TextField
               fullWidth
               label="Search by title or author"
               variant="outlined"
               value={searchQuery}
               onChange={handleSearchChange}
-              style={{ marginRight: "1rem" }}
             />
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ minWidth: "180px" }}
-              component={Link}
-              to="/Submissions"
-            >
-              Submit Manuscript
-            </Button>
+            <Box display="flex" flexDirection="column" justifyContent="space-evenly">
+              <Button
+                variant="contained"
+                color="secondary"
+                component={Link}
+                to="/Submissions"
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                Submit Manuscripts
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#fff3cd", color: "#000", whiteSpace: "nowrap" }}
+                onClick={() => navigate("/update-manuscripts")}
+              >
+                Update Manuscripts
+              </Button>
+            </Box>
           </Box>
 
           {loading && (
@@ -135,17 +128,12 @@ const Manuscript = () => {
           )}
           <Box display="flex" flexDirection="column" gap={3}>
             {manuscripts.map((book) => {
-              const author =
-                `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
+              const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
               return (
                 <Card
                   elevation={3}
                   key={book._id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    padding: "1rem",
-                  }}
+                  style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
                 >
                   <CardContent style={{ flex: 1 }}>
                     <Typography variant="h5" component="h2" gutterBottom>
@@ -155,8 +143,7 @@ const Manuscript = () => {
                       <strong>Author:</strong> {author || "Unknown Author"}
                     </Typography>
                     <Typography variant="body1" component="p">
-                      <strong>Abstract:</strong>{" "}
-                      {book.abstract || "No abstract available"}
+                      <strong>Abstract:</strong> {book.abstract || "No abstract available"}
                     </Typography>
                     <Button
                       variant="contained"
@@ -199,13 +186,10 @@ const Manuscript = () => {
                   {selectedManuscript.title || "No Title"}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  <strong>Author:</strong>{" "}
-                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() ||
-                    "Unknown Author"}
+                  <strong>Author:</strong> {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() || "Unknown Author"}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Abstract:</strong>{" "}
-                  {selectedManuscript.abstract || "No abstract available"}
+                  <strong>Abstract:</strong> {selectedManuscript.abstract || "No abstract available"}
                 </Typography>
               </>
             )}

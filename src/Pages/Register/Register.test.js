@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import Register from "./Register";
+import Register from "../Register";
 
 describe("Register Page", () => {
   test("renders all form fields correctly", () => {
@@ -9,7 +9,7 @@ describe("Register Page", () => {
     expect(screen.getByPlaceholderText("Enter your name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter your email")).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText("Enter your phone number"),
+      screen.getByPlaceholderText("Enter your affiliation"),
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText("Enter your password"),
@@ -26,7 +26,7 @@ describe("Register Page", () => {
     await waitFor(() => {
       expect(screen.getByText("Name is required.")).toBeInTheDocument();
       expect(screen.getByText("Email is required.")).toBeInTheDocument();
-      expect(screen.getByText("Phone number is required.")).toBeInTheDocument();
+      expect(screen.getByText("Affiliation is required.")).toBeInTheDocument();
       expect(screen.getByText("Password is required.")).toBeInTheDocument();
       expect(
         screen.getByText("Please confirm your password."),
@@ -36,20 +36,6 @@ describe("Register Page", () => {
 
   //TO DO
   // TEST FOR EMAIL VALIDATION
-
-  test("validates phone number format", async () => {
-    render(<Register />);
-    fireEvent.change(screen.getByPlaceholderText("Enter your phone number"), {
-      target: { value: "12345" },
-    });
-    fireEvent.click(screen.getByText("Register"));
-    // Check for phone number format validation
-    await waitFor(() => {
-      expect(
-        screen.getByText("Invalid phone number. Use 10 digits."),
-      ).toBeInTheDocument();
-    });
-  });
 
   test("validates password length", async () => {
     render(<Register />);

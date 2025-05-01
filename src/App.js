@@ -16,6 +16,7 @@ import Profile from "./Pages/Profile/Profile";
 import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import AdminPage from "./Pages/Admin/AdminPage";
+import UpdateManuscriptsPage from "./Pages/UpdateManuscripts/UpdateManuscripts";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -100,6 +101,14 @@ function App() {
               element={
                 <Layout user={user} setUser={setUser} >
                   <Manuscripts />
+                </Layout>
+              }
+            />
+            <Route
+              path="/update-manuscripts"
+              element={
+                <Layout user={user} setUser={setUser}>
+                  <UpdateManuscriptsPage />
                 </Layout>
               }
             />

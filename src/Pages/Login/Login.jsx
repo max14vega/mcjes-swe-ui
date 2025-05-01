@@ -1,23 +1,12 @@
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import AppleIcon from "@mui/icons-material/Apple";
-import EmailIcon from "@mui/icons-material/Email";
-import GoogleIcon from "@mui/icons-material/Google";
-import PasswordIcon from "@mui/icons-material/Password";
 import {
-  Avatar,
-  Button,
   Card,
   CardContent,
-  InputAdornment,
-  Link,
-  Paper,
-  TextField,
-  Typography,
 } from "@mui/material";
 import { useGoogleLogin } from "@react-oauth/google"; // Import GoogleLogin component
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppleLogin from "react-apple-login"; // For Apple login
+import { AccountAPI } from "../../Client/API";
+import LoginForm from "../../Components/LoginForm/LoginForm";
 
 
 export default function Login({ setUser }) {
@@ -28,28 +17,13 @@ export default function Login({ setUser }) {
   const [passwordError, setPasswordError] = useState("");
 
 
-  const PaperStyle = { padding: "30px 20px", width: 400, margin: "auto" }; //Adjust Paper Style
-  const formStyle = {
-    marginTop: 20,
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  }; // Adjuct Form Style
-  const buttonStyle = { marginTop: 10, padding: "10px", fontSize: "16px" }; // Adjuct button style
-  const avatarStyle = {
-    backgroundColor: "#171738",
-    marginBottom: 10,
-    width: 50,
-    height: 50,
-  }; // Adjust avatar style
-
   const leftcolStyle = {
     flex: 2, // Take more space on larger screens
     height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "20px",
+    marginRight: "20px",
   };
 
   const rigthcolStyle = {
@@ -63,35 +37,62 @@ export default function Login({ setUser }) {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setEmailError("");
     setPasswordError("");
 
-    if (!email) setEmailError("Email is required.");
-    else if (!validateEmail(email)) setEmailError("Invalid email format.");
+    let isValid = true;
 
-    if (!password) setPasswordError("Password is required.");
-    else if (password.length < 6)
+    if (!email) {
+      setEmailError("Email is required.");
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError("Invalid email format.");
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required.");
+      isValid = false;
+    } else if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long.");
+      isValid = false;
+    }
 
-    if (
-      !emailError &&
-      !passwordError
-    ) {
-      if (email === "JohnSnow@gmail.com" && password === "John123") {
-        const dummyUser = {
-          firstName: "John",
-          lastName:"Snow",
-          email: "JohnSnow@gmail.com",
-          phone: "123-456-7890",
-          role: "Editor",
-          DOB: "8-17-1995"
+
+    if (isValid) {
+      try {
+        const response = await AccountAPI.login({ email, password });
+
+        // Save access token
+        localStorage.setItem("access_token", response.access_token);
+
+        // Save user info (what backend now returns!)
+        localStorage.setItem("user", JSON.stringify(response.user));
+        const backendUser = response.user;
+
+        // Normalize field names
+        const transformedUser = {
+          firstName: backendUser.first_name,
+          lastName: backendUser.last_name,
+          email: backendUser.email,
+          affiliation: backendUser.affiliation,
+          role: backendUser.role || "Viewer", // default if missing
+          phone: backendUser.phone || "N/A",
+          DOB: backendUser.DOB || "N/A",
+          Total_articles: backendUser.Total_articles || 0,
+          Average_views_per_article: backendUser.Average_views_per_article || 0,
+          Time_spent_on_page: backendUser.Time_spent_on_page || "0 min",
+          Bounce_rate: backendUser.Bounce_rate || "0%",
+          Most_popular_articles: backendUser.Most_popular_articles || "None",
+          Revenue_per_article: backendUser.Revenue_per_article || "$0.00",
         };
-        setUser(dummyUser);
-        localStorage.setItem("user", JSON.stringify(dummyUser));
-        navigate("/profile"); // Redirect to Profile Page
-      }else{
-        console.log("Successfully logged in!");
+        setUser(transformedUser);
+
+        navigate("/profile"); // Redirect
+      } catch (error) {
+        console.error("Login failed:", error);
+        alert("Login failed. Please check your credentials.");
       }
     }
   };
@@ -177,148 +178,18 @@ export default function Login({ setUser }) {
               textAlign: "center",
             }}
           >
-            <Paper elevation={10} style={PaperStyle}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center", // Center avatar horizontally
-                  alignItems: "center", // Center avatar vertically
-                  marginBottom: 10, // Ensure spacing between avatar and form
-                }}
-              >
-                <Avatar style={avatarStyle}>
-                  <AccountBoxIcon />
-                </Avatar>
-              </div>
-              <Typography variant="h5" gutterBottom>
-                {" "}
-                Welcome Back!{" "}
-              </Typography>
-              <form style={formStyle}>
-                <TextField
-                  id="email"
-                  value={email}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  placeholder="Enter your email"
-                  fullWidth
-                  type="email"
-                  variant="outlined"
-                  size="medium"
-                  style={{ marginBottom: "10px" }}
-                  onChange={handleEmailChange} // Handle email input change
-                  error={!!emailError} // Display error if there's an email error
-                  helperText={emailError} // Show email error message
-                />
-                <TextField
-                  id="password"
-                  type="password"
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PasswordIcon />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  placeholder="Enter your password"
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
-                  style={{ marginBottom: "10px" }}
-                  onChange={handlePasswordChange} // Handle password input change
-                  error={!!passwordError} // Display error if there's a password error
-                  helperText={passwordError} // Show password error message
-                />
-                <Link
-                  href="#"
-                  underline="none"
-                  sx={{ textAlign: "left", ml: 2 }}
-                >
-                  Forgot Password?
-                </Link>
-
-                <Button
-                  type="button" // Changed from "submit" to "button"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  style={buttonStyle}
-                  onClick={handleLogin} // Trigger login on click
-                >
-                  Log In
-                </Button>
-
-                {/* Google Login Button */}
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    marginTop: "10px",
-                    padding: "10px",
-                    fontSize: "12px",
-                    backgroundColor: "white",
-                    color: "black",
-                    border: "1px solid black",
-                    borderRadius: "5px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px", // Adds space between icon and text
-                  }}
-                  onClick={login} // Calls Google login on button click
-                >
-                  <GoogleIcon sx={{}} />
-                  <Typography variant="body2">Continue with Google</Typography>
-                </Button>
-
-                {/* Apple Login Button */}
-                <AppleLogin
-                  clientId="com.yourapp.web"
-                  redirectURI="https://your-redirect-uri.com"
-                  onSuccess={handleAppleSuccess}
-                  onFailure={handleAppleFailure}
-                  render={(props) => (
-                    <Button
-                      variant="outlined" // Change to "outlined" to have a border
-                      fullWidth
-                      style={{
-                        marginTop: "10px",
-                        padding: "10px",
-                        fontSize: "12px",
-                        backgroundColor: "white", // White background
-                        color: "black", // Black text
-                        border: "1px solid black", // Black border
-                        borderRadius: "5px", // Optional: Rounded corners
-                        gap: "8px", // Adds space between icon and text
-                      }}
-                      onClick={props.onClick}
-                    >
-                      <AppleIcon sx={{}} />
-                      <Typography variant="body2">
-                        Continue with Apple
-                      </Typography>
-                    </Button>
-                  )}
-                />
-
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  Not a Member?{" "}
-                  <Link href="/register" underline="none">
-                    {" "}
-                    Register{" "}
-                  </Link>
-                </Typography>
-              </form>
-            </Paper>
+            <LoginForm
+              email={email}
+              password={password}
+              emailError={emailError}
+              passwordError={passwordError}
+              handleEmailChange={handleEmailChange}
+              handlePasswordChange={handlePasswordChange}
+              handleLogin={handleLogin}
+              handleAppleSuccess={handleAppleSuccess}
+              handleAppleFailure={handleAppleFailure}
+              login={login}
+            />
           </CardContent>
         </div>
       </Card>
