@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, Tab } from '@mui/material';
 import PeopleTab from '../../Components/AdminTabs/PeopleTab';
 import ManuscriptsTab from '../../Components/AdminTabs/ManuscriptsTab';
+import TextsTab from '../../Components/AdminTabs/TextsTab';
 //import SearchBar from '../../Components/SearchBar';
 
 import {
@@ -32,12 +33,14 @@ const AdminPage = () => {
             <Tabs value={value} onChange={handleTabChange}>
               <Tab label="People" />
               <Tab label="Manuscripts" />
+              <Tab label="Texts" />
             </Tabs>
           </Grid2>
         </Grid2>
         <hr />
         {value === 0 && <PeopleTab />}
         {value === 1 && <ManuscriptsTab />}
+        {value === 2 && <TextsTab />}
       </Container>
     );
   };
