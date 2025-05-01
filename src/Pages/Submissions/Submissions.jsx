@@ -10,8 +10,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { ManuscriptsAPI } from "../../Client/API";
+import React, { useState, useEffect } from "react";
+import { ManuscriptsAPI, TextsAPI } from "../../Client/API";
 
 const Submissions = () => {
   const [firstName, setFirstName] = useState("");
@@ -20,26 +20,56 @@ const Submissions = () => {
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState("");
   const [articleType, setArticleType] = useState("");
+  const [editingText, setEditingText] = useState(false);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    TextsAPI.getTexts()
+      .then((texts) => {
+        const textKey = "submission-text"; // Replace with the actual key
+        setText(texts[textKey]?.text || "");
+      })
+      .catch((error) => {
+        console.error("Error fetching text:", error);
+      });
+  }, []);
+  
+  const handleSaveText = (newText) => {
+    TextsAPI.addText({ key: "submission-text", text: newText })
+      .then((response) => {
+        setText(newText);
+        setEditingText(false);
+      })
+      .catch((error) => {
+        console.error("Error updating text:", error);
+      });
+  };
+  
+  const handleEditText = () => {
+    setEditingText(true);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem("token");
 
     const manuscriptData = {
       title,
-      display_name: articleType, 
+      display_name: articleType,
       abstract,
       text,
       author_first_name: firstName,
       author_last_name: lastName,
       author_email: email,
-      action: "submit", 
+      action: "submit",
     };
 
     try {
-      const response = await ManuscriptsAPI.addManuscript(manuscriptData, token);
+      const response = await ManuscriptsAPI.addManuscript(
+        manuscriptData,
+        token
+      );
       console.log("Success:", response);
       alert("Manuscript submitted successfully!");
 
@@ -64,20 +94,32 @@ const Submissions = () => {
         <Typography variant="h5" gutterBottom>
           Welcome to Our Manuscript Submissions!
         </Typography>
-        <Typography variant="body1" paragraph>
-          We are thrilled to have the opportunity to review new works from writers like you.
-          Whether you’re a seasoned author or a first-time writer, we are committed to providing
-          a platform for diverse voices and original stories.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Before submitting your manuscript, please take a moment to review our submission guidelines.
-          These ensure that your manuscript is processed smoothly and aligns with our publication standards.
-        </Typography>
-        <Typography variant="body1">
-          Thank you for considering us as the home for your work. We look forward to reading your manuscript.
-        </Typography>
+        {editingText ? (
+          <div>
+            <TextField
+              multiline
+              rows={10}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              fullWidth
+            />
+            <Button onClick={() => handleSaveText(text)}>Save</Button>
+          </div>
+        ) : (
+          <div>
+            <Typography variant="body1" paragraph>
+              {text}
+            </Typography>
+            <Button onClick={handleEditText}>Edit</Button>
+          </div>
+        )}
 
-        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
           <TextField
             fullWidth
             margin="normal"

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { PeopleAPI } from '../../Client/API';
-import DataTable from '../../Components/DataTable/DataTable';
-import AddPerson from '../../Components/AddPerson/AddPerson';
-import EditPerson from '../../Components/EditPerson/EditPerson';
+import DataTable from '../DataTable/DataTable';
+import AddPerson from '../AddPerson/AddPerson';
+import EditPerson from '../EditPerson/EditPerson';
 
 const PeopleTab = () => {
   const [data, setData] = useState({});

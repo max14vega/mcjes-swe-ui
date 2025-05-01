@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab } from '@mui/material';
-import PeopleTab from '../../Components/PeopleTab/PeopleTab';
-import ManuscriptsTab from '../../Components/ManuscriptsTab/ManuscriptsTab';
+import PeopleTab from '../../Components/AdminTabs/PeopleTab';
+import ManuscriptsTab from '../../Components/AdminTabs/ManuscriptsTab';
 //import SearchBar from '../../Components/SearchBar';
 
 import {
