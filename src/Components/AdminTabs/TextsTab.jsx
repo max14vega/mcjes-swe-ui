@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextsAPI } from "../../Client/API";
 import DataTable from "../../Components/DataTable/DataTable";
-import AddText from "../../Components/AddText/AddText";
-import EditText from "../../Components/EditText/EditText";
+import AddText from "../../Components/Texts/AddText";
+import EditText from "../../Components/Texts/EditText";
 
 const TextsTab = () => {
   const [data, setData] = useState([]);
@@ -33,9 +33,15 @@ const TextsTab = () => {
     }
   };
 
-  const handleEdit = (text) => {
-    setSelectedText(text);
-    setOpenEditDialog(true);
+  const handleEdit = (index) => {
+    const text = data[index];
+    console.log('Text object:', text);
+    if (text && text.key) {
+      setSelectedText({ ...text }); // Create a new object to avoid mutating the original data
+      setOpenEditDialog(true);
+    } else {
+      console.error("Invalid text object:", text);
+    }
   };
 
   const handleUpdateText = async (updatedText) => {
@@ -60,6 +66,7 @@ const TextsTab = () => {
 
   const columns = [
     { field: "key", label: "Key" },
+    { field: "title", label: "Title" },
     { field: "text", label: "Text" },
   ];
 
