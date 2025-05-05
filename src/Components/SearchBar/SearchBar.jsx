@@ -6,15 +6,12 @@ const SearchBar = ({ placeholder, onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
-    const value = event.target.value;
-    setSearchTerm(value);
-    onSearch(value);
+    setSearchTerm(event.target.value);
   };
 
   const handleKeyPress = (event) => {
-    // Trigger search when the user presses Enter
-    if (event.key === "Enter") {
-      onSearch(searchTerm);
+    if (event.key === "Enter" && searchTerm.trim()) {
+      onSearch(searchTerm.trim());
     }
   };
 

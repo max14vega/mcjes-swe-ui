@@ -13,7 +13,7 @@ import {
   Backdrop,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar";
 import Slideshow from "../../Components/Slideshow";
 import { ManuscriptsAPI } from "../../Client/API";
@@ -53,6 +53,7 @@ const HomePage = () => {
   const [manuscripts, setManuscripts] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -85,7 +86,9 @@ const HomePage = () => {
   };
 
   const handleSearch = (query) => {
-    console.log("Searching for:", query);
+    if (query.trim()) {
+      navigate(`/manuscripts?search=${encodeURIComponent(query.trim())}`);
+    }
   };
 
   return (
@@ -219,7 +222,7 @@ const HomePage = () => {
         </Box>
       </Container>
 
-      {/* 🧠 Manuscript Modal */}
+      {/* Manuscript Modal */}
       <Modal
         open={open}
         onClose={handleClose}

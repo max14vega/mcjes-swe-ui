@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
@@ -25,8 +25,11 @@ const Manuscript = () => {
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Fetch manuscripts
   useEffect(() => {
     const fetchManuscripts = async () => {
       setLoading(true);
@@ -43,6 +46,20 @@ const Manuscript = () => {
     fetchManuscripts();
   }, []);
 
+  // Extract search query from URL on load
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const search = params.get("search");
+    if (search) {
+      setSearchQuery(search);
+    }
+  }, [location.search]);
+
+  // Handle input typing
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const handleOpen = (manuscript) => {
     setSelectedManuscript(manuscript);
     setOpen(true);
@@ -53,10 +70,15 @@ const Manuscript = () => {
     setSelectedManuscript(null);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    console.log("Searching for:", e.target.value);
-  };
+  // Filter manuscripts by title or author
+  const filteredManuscripts = manuscripts.filter((m) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      m.title?.toLowerCase().includes(query) ||
+      m.abstract?.toLowerCase().includes(query) ||
+      `${m.author_first_name || ""} ${m.author_last_name || ""}`.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
@@ -87,6 +109,7 @@ const Manuscript = () => {
             </Box>
           </Paper>
         </Grid>
+
         <Grid item xs={12} md={9}>
           <Box display="flex" gap={2} mb={2} alignItems="stretch">
             <TextField
@@ -126,40 +149,46 @@ const Manuscript = () => {
               {error}
             </Alert>
           )}
+
           <Box display="flex" flexDirection="column" gap={3}>
-            {manuscripts.map((book) => {
-              const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
-              return (
-                <Card
-                  elevation={3}
-                  key={book._id}
-                  style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
-                >
-                  <CardContent style={{ flex: 1 }}>
-                    <Typography variant="h5" component="h2" gutterBottom>
-                      {book.title || "No Title"}
-                    </Typography>
-                    <Typography variant="subtitle1" component="p" gutterBottom>
-                      <strong>Author:</strong> {author || "Unknown Author"}
-                    </Typography>
-                    <Typography variant="body1" component="p">
-                      <strong>Abstract:</strong> {book.abstract || "No abstract available"}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ marginTop: "1rem" }}
-                      onClick={() => handleOpen(book)}
-                    >
-                      View Details
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
+            {filteredManuscripts.length === 0 ? (
+              <Typography variant="body1">No manuscripts match your search.</Typography>
+            ) : (
+              filteredManuscripts.map((book) => {
+                const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
+                return (
+                  <Card
+                    elevation={3}
+                    key={book._id}
+                    style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
+                  >
+                    <CardContent style={{ flex: 1 }}>
+                      <Typography variant="h5" component="h2" gutterBottom>
+                        {book.title || "No Title"}
+                      </Typography>
+                      <Typography variant="subtitle1" component="p" gutterBottom>
+                        <strong>Author:</strong> {author || "Unknown Author"}
+                      </Typography>
+                      <Typography variant="body1" component="p">
+                        <strong>Abstract:</strong> {book.abstract || "No abstract available"}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ marginTop: "1rem" }}
+                        onClick={() => handleOpen(book)}
+                      >
+                        View Details
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })
+            )}
           </Box>
         </Grid>
       </Grid>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -186,10 +215,12 @@ const Manuscript = () => {
                   {selectedManuscript.title || "No Title"}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  <strong>Author:</strong> {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() || "Unknown Author"}
+                  <strong>Author:</strong>{" "}
+                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() || "Unknown Author"}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Abstract:</strong> {selectedManuscript.abstract || "No abstract available"}
+                  <strong>Abstract:</strong>{" "}
+                  {selectedManuscript.abstract || "No abstract available"}
                 </Typography>
               </>
             )}
