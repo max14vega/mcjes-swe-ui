@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 import DataTable from "../../Components/DataTable/DataTable";
-import AddManuscript from "../../Components/AddManuscript/AddManuscript";
 import EditManuscript from "../../Components/EditManuscript/EditManuscript";
 
 const ManuscriptsTab = () => {
   const [data, setData] = useState([]);
-  const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -41,7 +42,10 @@ const ManuscriptsTab = () => {
 
   const handleUpdateManuscript = async (updatedManuscript) => {
     try {
-      await ManuscriptsAPI.updateManuscript(updatedManuscript);
+      await ManuscriptsAPI.updateManuscript(
+        updatedManuscript.manuscript_key,
+        updatedManuscript
+      );
       await fetchData();
       setOpenEditDialog(false);
     } catch (error) {
@@ -49,21 +53,12 @@ const ManuscriptsTab = () => {
     }
   };
 
-  const handleAddManuscript = async (newManuscript) => {
-    try {
-      await ManuscriptsAPI.addManuscript(newManuscript);
-      await fetchData();
-      setOpenAddDialog(false);
-    } catch (error) {
-      console.error("Error adding manuscript:", error);
-    }
-  };
-
   const columns = [
     { field: "manuscript_key", label: "Key" },
     { field: "title", label: "Title" },
-    { field: "editor", label: "Editor" },
-    { field: "referees", label: "Referees" },
+    { field: "author_first_name", label: "Author First Name" },
+    { field: "author_last_name", label: "Author Last Name" },
+    { field: "author_email", label: "Author Email" },
     { field: "state", label: "State" },
   ];
 
@@ -78,13 +73,8 @@ const ManuscriptsTab = () => {
         columns={columns}
         onDelete={handleDelete}
         onEdit={handleEdit}
-        onAdd={() => setOpenAddDialog(true)}
+        onAdd={() => navigate("/Submissions")}
         addButtonLabel="Add Manuscript"
-      />
-      <AddManuscript
-        open={openAddDialog}
-        onClose={() => setOpenAddDialog(false)}
-        onSubmit={handleAddManuscript}
       />
       <EditManuscript
         open={openEditDialog}

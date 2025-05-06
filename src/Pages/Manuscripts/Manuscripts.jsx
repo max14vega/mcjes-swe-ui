@@ -119,24 +119,6 @@ const Manuscript = () => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-            <Box display="flex" flexDirection="column" justifyContent="space-evenly">
-              <Button
-                variant="contained"
-                color="secondary"
-                component={Link}
-                to="/Submissions"
-                sx={{ whiteSpace: "nowrap" }}
-              >
-                Submit Manuscripts
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#fff3cd", color: "#000", whiteSpace: "nowrap" }}
-                onClick={() => navigate("/update-manuscripts")}
-              >
-                Update Manuscripts
-              </Button>
-            </Box>
           </Box>
 
           {loading && (
