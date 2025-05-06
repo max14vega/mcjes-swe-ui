@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 
 const Manuscript = () => {
@@ -26,10 +26,8 @@ const Manuscript = () => {
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const navigate = useNavigate();
   const location = useLocation();
 
-  // Fetch manuscripts
   useEffect(() => {
     const fetchManuscripts = async () => {
       setLoading(true);
@@ -46,7 +44,6 @@ const Manuscript = () => {
     fetchManuscripts();
   }, []);
 
-  // Extract search query from URL on load
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
@@ -55,7 +52,6 @@ const Manuscript = () => {
     }
   }, [location.search]);
 
-  // Handle input typing
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -70,7 +66,6 @@ const Manuscript = () => {
     setSelectedManuscript(null);
   };
 
-  // Filter manuscripts by title or author
   const filteredManuscripts = manuscripts.filter((m) => {
     const query = searchQuery.toLowerCase();
     return (
@@ -93,13 +88,7 @@ const Manuscript = () => {
                 Categories
               </Typography>
               <Box display="flex" flexDirection="column" gap={1}>
-                {[
-                  "Ecology",
-                  "Conservation",
-                  "Parasitology",
-                  "Genetics",
-                  "Taxonomy",
-                ].map((cat) => (
+                {["Ecology", "Conservation", "Parasitology", "Genetics", "Taxonomy"].map((cat) => (
                   <Box key={cat} display="flex" alignItems="center">
                     <input type="checkbox" style={{ marginRight: "0.5rem" }} />
                     <Typography variant="body2">{cat}</Typography>
@@ -198,7 +187,8 @@ const Manuscript = () => {
                 </Typography>
                 <Typography variant="h6" gutterBottom>
                   <strong>Author:</strong>{" "}
-                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() || "Unknown Author"}
+                  {`${selectedManuscript.author_first_name || ""} ${selectedManuscript.author_last_name || ""}`.trim() ||
+                    "Unknown Author"}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Abstract:</strong>{" "}
