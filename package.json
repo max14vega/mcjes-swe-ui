@@ -15,6 +15,8 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.7.9",
     "axios-mock-adapter": "^2.1.0",
+    "compression": "^1.8.0",
+    "express": "^5.1.0",
     "react": "^19.0.0",
     "react-apple-login": "^1.1.6",
     "react-dom": "^19.0.0",
@@ -25,10 +27,11 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "start:local": "exec ./local.sh",
     "start:cloud": "exec ./cloud.sh",
     "build": "react-scripts build",
+    "heroku-postbuild": "yarn build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "biome check --write ./public ./src"
