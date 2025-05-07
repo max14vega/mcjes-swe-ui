@@ -31,6 +31,12 @@ jobs:
       - name: Build React app
         run: yarn build
 
+      - name: Add serve
+        run: yarn global add serve
+      
+      - name: Serve the build
+        run: serve -s build
+
   deploy-heroku:
     needs: build
     runs-on: ubuntu-latest
