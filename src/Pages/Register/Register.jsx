@@ -69,7 +69,7 @@ const Register = () => {
         last_name: name.split(" ")[1] || "",
         email: email,
         password: password,
-        role: [role],
+        roles: [role],
       };
 
       try {
