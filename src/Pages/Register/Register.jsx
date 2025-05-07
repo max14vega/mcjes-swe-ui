@@ -134,7 +134,7 @@ const Register = () => {
             }}
           >
             <img
-              src="/Images/Logo/LogoUpdated.png"
+              src="/Logo/LogoUpdated.png"
               alt="Logo"
               style={{
                 width: "80%", // Limits the image width to 80% of the card

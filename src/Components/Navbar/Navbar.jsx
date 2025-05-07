@@ -116,7 +116,7 @@ const Navbar = ({ user, setUser }) => {
         )}
         <Link to="/" sx={{ display: "flex", alignItems: "center" }}>
           <img
-            src="/Images/Logo/LogoUpdated.png"
+            src="/Logo/LogoUpdated.png"
             alt="Logo"
             style={{ height: "70px", marginRight: "25px" }}
           />

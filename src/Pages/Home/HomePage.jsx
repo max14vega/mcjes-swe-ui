@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Container,
   Grid,
   Typography,
@@ -15,39 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar";
-import Slideshow from "../../Components/Slideshow";
 import { ManuscriptsAPI } from "../../Client/API";
-
-// Static top journals
-const topJournals = [
-  {
-    id: 1,
-    title: "Global Insect Ecology",
-    description:
-      "This journal provides a comprehensive look at the ecological roles of insects across the globe...",
-  },
-  {
-    id: 2,
-    title: "Arthropod Conservation Quarterly",
-    description:
-      "Focused on the conservation of arthropods... offering insights and solutions for conservation efforts.",
-  },
-  {
-    id: 3,
-    title: "Parasitology and Vector Research",
-    description:
-      "Dedicated to studying parasites and their vectors... including pathogen biology and vector ecology.",
-  },
-];
-
-const previewImages = [
-  "/Images/Previews/long-ahh-bug.jpg",
-  "/Images/Previews/yellow-little-guy-dots.jpg",
-  "/Images/Previews/blue-ahh-bug.jpg",
-  "/Images/Previews/green-little-guy.jpg",
-  "/Images/Previews/yellow-little-guy.jpg",
-  "/Images/Previews/long-ahh-bug-winged.jpg",
-];
 
 const HomePage = () => {
   const [manuscripts, setManuscripts] = useState([]);
@@ -60,11 +27,10 @@ const HomePage = () => {
       try {
         const data = await ManuscriptsAPI.getManuscripts();
         const list = Object.values(data).slice(0, 6);
-        const enriched = list.map((item, index) => ({
+        const enriched = list.map((item) => ({
           ...item,
           title: item.title || "Untitled Manuscript",
           description: item.abstract || "No abstract provided.",
-          imageUrl: previewImages[index % previewImages.length],
         }));
         setManuscripts(enriched);
       } catch (error) {
@@ -107,7 +73,6 @@ const HomePage = () => {
               placeholder="Search manuscripts, journals, articles..."
             />
           </Box>
-          <Slideshow />
           <Box mt={10} sx={{ display: "flex", justifyContent: "center", gap: 4 }}>
             <Button
               variant="contained"
@@ -130,29 +95,41 @@ const HomePage = () => {
           </Box>
         </Box>
 
-        {/* Top Journals */}
+        {/* Top Journals (Using First 3 Manuscripts) */}
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             Top Journals
           </Typography>
-          <Grid container spacing={3}>
-            {topJournals.map((journal) => (
-              <Grid item xs={12} md={4} key={journal.id}>
-                <Card elevation={3} sx={{ padding: 2, display: "flex", flexDirection: "column" }}>
-                  <CardContent>
-                    <Typography variant="h6">{journal.title}</Typography>
+          <Grid container spacing={4}>
+            {manuscripts.slice(0, 3).map((manu, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  raised
+                  onClick={() => handleOpen(manu)}
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    borderRadius: 3,
+                    cursor: "pointer",
+                    "&:hover": {
+                      transform: "scale(1.03)",
+                      boxShadow: 6,
+                    },
+                  }}
+                >
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      {manu.title}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {journal.description}
+                      {manu.description}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button
-                      component={Link}
-                      to={`/journals/${journal.id}`}
-                      variant="outlined"
-                      color="info"
-                    >
-                      View More
+                  <CardActions sx={{ justifyContent: "flex-end", px: 5, pb: 2 }}>
+                    <Button variant="outlined" color="info">
+                      Learn More
                     </Button>
                   </CardActions>
                 </Card>
@@ -161,8 +138,8 @@ const HomePage = () => {
           </Grid>
         </Container>
 
-        {/* Current and Relevant Work */}
-        <Box sx={{ backgroundColor: "#f9fafb", py: 6, mt: 5 }}>
+        {/* Current and Relevant Work (Remaining Manuscripts) */}
+        <Box sx={{ backgroundColor: "background.default", py: 6, mt: 5 }}>
           <Container maxWidth="lg">
             <Typography
               variant="h4"
@@ -189,18 +166,14 @@ const HomePage = () => {
                       transition: "transform 0.3s, box-shadow 0.3s",
                       borderRadius: 3,
                       cursor: "pointer",
+                      border: "2px solid",
+                      borderColor: "primary.main",
                       "&:hover": {
                         transform: "scale(1.03)",
                         boxShadow: 6,
                       },
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      image={manu.imageUrl || "/Images/Previews/placeholder.jpg"}
-                      height="180"
-                      alt={manu.title}
-                    />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography variant="h6" gutterBottom>
                         {manu.title}
