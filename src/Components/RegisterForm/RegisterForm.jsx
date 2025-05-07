@@ -5,6 +5,7 @@ import {
     Typography,
     TextField,
     InputAdornment,
+    MenuItem
   } from "@mui/material";
   import React from "react";
   import HowToRegIcon from "@mui/icons-material/HowToReg";
@@ -18,15 +19,15 @@ import {
     setName,
     email,
     setEmail,
-    affiliation,
-    setAffiliation,
+    role,
+    setRole,
     password,
     setPassword,
     confirmPassword,
     setConfirmPassword,
     nameError,
     emailError,
-    affiliationError,
+    roleError,
     passwordError,
     confirmPasswordError,
     handleRegister,
@@ -45,6 +46,14 @@ import {
       flexDirection: "column",
       gap: "15px",
     };
+
+    const roles = [
+      { role_code: "AU", role: "Author" },
+      { role_code: "ED", role: "Editor" },
+      { role_code: "CE", role: "Consulting Editor" },
+      { role_code: "ME", role: "Managing Editor" },
+      { role_code: "RE", role: "Referee" },
+    ];
 
     return (
       <Paper elevation={10} style={PaperStyle}>
@@ -98,7 +107,7 @@ import {
               ),
             }}
           />
-          <TextField
+          {/* <TextField
             id="affiliation"
             placeholder="Enter your affiliation"
             fullWidth
@@ -115,7 +124,34 @@ import {
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
+          <TextField
+            id="outlined-select-role"
+            select
+            label="Select role"
+            fullWidth
+            variant="outlined"
+            size="medium"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            error={!!roleError}
+            helperText={roleError || ""}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <WorkIcon />
+                </InputAdornment>
+              ),
+            }}
+          >
+            {roles.map((option) => (
+              <MenuItem key={option.role_code} value={option.role_code}>
+                {option.role}
+              </MenuItem>
+            ))}
+          </TextField>
+
           <TextField
             id="password"
             type="password"

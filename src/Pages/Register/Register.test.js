@@ -9,7 +9,7 @@ describe("Register Page", () => {
     expect(screen.getByPlaceholderText("Enter your name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter your email")).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText("Enter your affiliation"),
+      screen.getByLabelText("Select role"),
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText("Enter your password"),
@@ -26,7 +26,7 @@ describe("Register Page", () => {
     await waitFor(() => {
       expect(screen.getByText("Name is required.")).toBeInTheDocument();
       expect(screen.getByText("Email is required.")).toBeInTheDocument();
-      expect(screen.getByText("Affiliation is required.")).toBeInTheDocument();
+      expect(screen.getByText("Role is required.")).toBeInTheDocument();
       expect(screen.getByText("Password is required.")).toBeInTheDocument();
       expect(
         screen.getByText("Please confirm your password."),

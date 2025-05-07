@@ -10,13 +10,13 @@ import RegisterForm from "../../Components/RegisterForm/RegisterForm";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [affiliation, setAffiliation] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [affiliationError, setAffiliationError] = useState("");
+  const [roleError, setRoleError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
@@ -27,7 +27,7 @@ const Register = () => {
 
     setNameError("");
     setEmailError("");
-    setAffiliationError("");
+    setRoleError("");
     setPasswordError("");
     setConfirmPasswordError("");
 
@@ -44,8 +44,8 @@ const Register = () => {
       setEmailError("Invalid email format.");
       isValid = false;
     }
-    if (!affiliation) {
-      setAffiliationError("Affiliation is required.");
+    if (!role) {
+      setRoleError("Role is required.");
       isValid = false;
     }
     if (!password) {
@@ -69,7 +69,7 @@ const Register = () => {
         last_name: name.split(" ")[1] || "",
         email: email,
         password: password,
-        affiliation: affiliation,
+        role: [role],
       };
 
       try {
@@ -162,15 +162,15 @@ const Register = () => {
                 setName={setName}
                 email={email}
                 setEmail={setEmail}
-                affiliation={affiliation}
-                setAffiliation={setAffiliation}
+                role={role}
+                setRole={setRole}
                 password={password}
                 setPassword={setPassword}
                 confirmPassword={confirmPassword}
                 setConfirmPassword={setConfirmPassword}
                 nameError={nameError}
                 emailError={emailError}
-                affiliationError={affiliationError}
+                roleError={roleError}
                 passwordError={passwordError}
                 confirmPasswordError={confirmPasswordError}
                 handleRegister={handleRegister}
