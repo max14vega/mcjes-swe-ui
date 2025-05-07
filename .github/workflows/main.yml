@@ -27,9 +27,6 @@ jobs:
 
       - name: Run Jest tests
         run: yarn test
-      
-      - name: Build React app
-        run: yarn build
 
   deploy-heroku:
     needs: build
