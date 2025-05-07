@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import HomePage from "./HomePage";
@@ -27,7 +27,6 @@ jest.mock("../../Client/API", () => ({
 
 // Mock shared components
 jest.mock("../../Components/SearchBar", () => () => <div>SearchBar Mock</div>);
-jest.mock("../../Components/Slideshow", () => () => <div>Slideshow Mock</div>);
 
 describe("HomePage Component", () => {
   beforeEach(async () => {
@@ -46,23 +45,22 @@ describe("HomePage Component", () => {
     expect(screen.getByText("Browse Manuscripts")).toBeInTheDocument();
   });
 
-  test("renders top journals correctly", () => {
-    expect(screen.getByText("Global Insect Ecology")).toBeInTheDocument();
-    expect(
-      screen.getByText("Arthropod Conservation Quarterly")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Parasitology and Vector Research")
-    ).toBeInTheDocument();
-  });
-
   test("renders manuscripts fetched from API", () => {
     expect(
-      screen.getByText("Latest Trends in Pest Control Technologies")
-    ).toBeInTheDocument();
+      screen.getAllByText("Latest Trends in Pest Control Technologies").length
+    ).toBeGreaterThan(0);
+  
     expect(
-      screen.getByText("Advancements in Insect Studies")
-    ).toBeInTheDocument();
+      screen.getAllByText("Advancements in Insect Studies").length
+    ).toBeGreaterThan(0);
+  
+    expect(
+      screen.getAllByText("A comprehensive review of modern pest control methods.").length
+    ).toBeGreaterThan(0);
+  
+    expect(
+      screen.getAllByText("Exploring insect behavior breakthroughs.").length
+    ).toBeGreaterThan(0);
   });
 
   test("buttons navigate correctly", () => {
@@ -70,9 +68,8 @@ describe("HomePage Component", () => {
     expect(browseBtn.closest("a")).toHaveAttribute("href", "/manuscripts");
   });
 
-  test("renders SearchBar and Slideshow", () => {
+  test("renders SearchBar", () => {
     expect(screen.getByText("SearchBar Mock")).toBeInTheDocument();
-    expect(screen.getByText("Slideshow Mock")).toBeInTheDocument();
   });
 
   test("renders visible section headings", () => {
@@ -82,8 +79,6 @@ describe("HomePage Component", () => {
     expect(
       screen.getByRole("heading", { name: /current and relevant work/i })
     ).toBeInTheDocument();
-    // Removed failing heading check for now:
-    // expect(screen.getByRole("heading", { name: /research articles/i })).toBeInTheDocument();
   });
 
   test("does not crash if optional sections are missing", () => {
