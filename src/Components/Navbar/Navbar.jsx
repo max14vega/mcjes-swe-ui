@@ -152,14 +152,16 @@ const Navbar = ({ user, setUser }) => {
           >
             Contact Us
           </Button>
+          {user?.role === 'ED' && (
           <Button
             variant="contained"
-            startIcon={<CodeIcon/>}
+            startIcon={<CodeIcon />}
             component={Link}
             to="/admin"
-          >
-            Admin
+            >
+              Admin
           </Button>
+          )}
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
         {user ? (
@@ -226,6 +228,7 @@ const Navbar = ({ user, setUser }) => {
             </MenuItem>
           </Menu>
           </>
+
             ) : (
             <>
           <Button
