@@ -53,7 +53,7 @@ import {
       { role_code: "CE", role: "Consulting Editor" },
       { role_code: "ME", role: "Managing Editor" },
       { role_code: "RE", role: "Referee" },
-      { role_code: "DE", role: "Developer" },
+      { role_code: "DE", role: "Developer"},
     ];
 
     return (

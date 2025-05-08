@@ -68,7 +68,6 @@ export default function Login({ setUser }) {
         localStorage.setItem("access_token", response.access_token);
 
         // Save user info (what backend now returns!)
-        localStorage.setItem("user", JSON.stringify(response.user));
         const backendUser = response.user;
 
         // Normalize field names
@@ -87,6 +86,7 @@ export default function Login({ setUser }) {
           Most_popular_articles: backendUser.Most_popular_articles || "None",
           Revenue_per_article: backendUser.Revenue_per_article || "$0.00",
         };
+        localStorage.setItem("user", JSON.stringify(transformedUser));
         setUser(transformedUser);
 
         navigate("/profile"); // Redirect
