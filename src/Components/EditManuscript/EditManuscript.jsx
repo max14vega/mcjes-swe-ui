@@ -6,12 +6,13 @@ import {
   DialogTitle,
   MenuItem,
   TextField,
+  Box,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 const stateOptions = ["SUB", "ARF", "REJ", "WIT"];
 
-const EditManuscript = ({ open, onClose, manuscriptData, onSubmit }) => {
+const EditManuscript = ({ open, onClose, manuscriptData, onSubmit, onDelete }) => {
   const [form, setForm] = useState({
     manuscript_key: "",
     title: "",
@@ -47,15 +48,20 @@ const EditManuscript = ({ open, onClose, manuscriptData, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);  // Passes entire updated payload
-    onClose();
+    onSubmit(form);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this manuscript?")) {
+      onDelete(form.manuscript_key);
+    }
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Edit Manuscript</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmit}>
+        <form id="edit-manuscript-form" onSubmit={handleSubmit}>
           <TextField
             label="Title"
             name="title"
@@ -138,11 +144,18 @@ const EditManuscript = ({ open, onClose, manuscriptData, onSubmit }) => {
           </TextField>
         </form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained" color="primary">
-          Save
+      <DialogActions sx={{ display: "flex", justifyContent: "space-between", px: 3, pb: 2 }}>
+        <Button color="error" onClick={handleDelete}>
+          Delete
         </Button>
+        <Box>
+          <Button onClick={onClose} sx={{ mr: 1 }}>
+            Cancel
+          </Button>
+          <Button type="submit" form="edit-manuscript-form" variant="contained" color="primary">
+            Save
+          </Button>
+        </Box>
       </DialogActions>
     </Dialog>
   );
