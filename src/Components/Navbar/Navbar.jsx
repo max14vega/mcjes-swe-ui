@@ -152,7 +152,7 @@ const Navbar = ({ user, setUser }) => {
           >
             Contact Us
           </Button>
-          {user?.role === 'ED' && (
+          {user?.role === 'DE' && (
           <Button
             variant="contained"
             startIcon={<CodeIcon />}
