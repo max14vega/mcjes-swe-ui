@@ -24,12 +24,12 @@ const ManuscriptsTab = () => {
     }
   };
 
-  const handleDelete = async (manuscript) => {
-    const key = manuscript.manuscript_key;
+  const handleDelete = async (key) => {
     if (!key) return alert("Missing manuscript key.");
     try {
       await ManuscriptsAPI.deleteManuscript(key);
       await fetchData();
+      setOpenEditDialog(false);
     } catch (error) {
       console.error("Error deleting manuscript:", error);
     }
@@ -42,10 +42,7 @@ const ManuscriptsTab = () => {
 
   const handleUpdateManuscript = async (updatedManuscript) => {
     try {
-      await ManuscriptsAPI.updateManuscript(
-        updatedManuscript.manuscript_key,
-        updatedManuscript
-      );
+      await ManuscriptsAPI.updateManuscript(updatedManuscript);
       await fetchData();
       setOpenEditDialog(false);
     } catch (error) {
@@ -71,7 +68,7 @@ const ManuscriptsTab = () => {
       <DataTable
         data={data}
         columns={columns}
-        onDelete={handleDelete}
+        onDelete={(manuscript) => handleDelete(manuscript.manuscript_key)}
         onEdit={handleEdit}
         onAdd={() => navigate("/Submissions")}
         addButtonLabel="Add Manuscript"
@@ -81,6 +78,7 @@ const ManuscriptsTab = () => {
         onClose={() => setOpenEditDialog(false)}
         manuscriptData={selectedManuscript}
         onSubmit={handleUpdateManuscript}
+        onDelete={handleDelete}
       />
     </>
   );
