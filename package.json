@@ -21,6 +21,7 @@
     "react-router-dom": "^7.1.3",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
+    "serve": "^14.2.4",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.0"
   },
@@ -29,6 +30,7 @@
     "start:local": "exec ./local.sh",
     "start:cloud": "exec ./cloud.sh",
     "build": "react-scripts build",
+    "prod": "serve -s build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "biome check --write ./public ./src"
