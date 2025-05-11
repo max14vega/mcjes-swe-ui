@@ -83,13 +83,17 @@ const Navbar = ({ user, setUser }) => {
             <ContactSupportIcon />
           </ListItemIcon>
           <ListItemText primary="Contact Us" />
+
         </ListItem>
-        <ListItem component={Link} to="/admin">
+          {user?.roles?.includes('DE') && (
+          <ListItem component={Link} to="/admin">
           <ListItemIcon>
             <CodeIcon/>
           </ListItemIcon>
           <ListItemText primary="Admin" />
+
         </ListItem>
+          )}
         <ListItem component={Link} to="/manuscripts">
           <ListItemIcon>
             <ArticleIcon />
@@ -152,7 +156,7 @@ const Navbar = ({ user, setUser }) => {
           >
             Contact Us
           </Button>
-          {user?.role === 'DE' && (
+          {user?.roles?.includes('DE') && (
           <Button
             variant="contained"
             startIcon={<CodeIcon />}

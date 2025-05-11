@@ -69,16 +69,15 @@ export default function Login({ setUser }) {
 
         // Save user info (what backend now returns!)
         const backendUser = response.user;
-
+        console.log("backendUser:", backendUser); // <-- Add this
         // Normalize field names
         const transformedUser = {
           firstName: backendUser.first_name,
           lastName: backendUser.last_name,
           email: backendUser.email,
           affiliation: backendUser.affiliation,
-          role: backendUser.role || "Viewer", // default if missing
+          roles:  backendUser.roles,
           phone: backendUser.phone || "N/A",
-          DOB: backendUser.DOB || "N/A",
           Total_articles: backendUser.Total_articles || 0,
           Average_views_per_article: backendUser.Average_views_per_article || 0,
           Time_spent_on_page: backendUser.Time_spent_on_page || "0 min",
