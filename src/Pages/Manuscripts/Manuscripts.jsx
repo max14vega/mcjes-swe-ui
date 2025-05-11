@@ -18,31 +18,51 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
 
-const Manuscript = () => {
+const Manuscript = ({ user }) => {
   const [manuscripts, setManuscripts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [viewMineOnly, setViewMineOnly] = useState(false);
 
   const location = useLocation();
 
   useEffect(() => {
     const fetchManuscripts = async () => {
       setLoading(true);
+      setError(null);
       try {
-        const data = await ManuscriptsAPI.getManuscripts();
-        setManuscripts(Object.values(data));
-        setError(null);
+        let data = [];
+
+        if (viewMineOnly && user?.email) {
+          try {
+            const response = await ManuscriptsAPI.getManuscriptsByEmail(user.email);
+            data = Array.isArray(response) ? response : [];
+          } catch (err) {
+            if (err?.response?.status === 404) {
+              data = [];
+            } else {
+              throw err;
+            }
+          }
+        } else {
+          const response = await ManuscriptsAPI.getManuscripts();
+          data = Object.values(response || {});
+        }
+
+        setManuscripts(data);
       } catch (error) {
-        setError("Failed to fetch manuscripts.");
+        console.error("Fetch error:", error);
+        setError("An unexpected error occurred while fetching manuscripts.");
       } finally {
         setLoading(false);
       }
     };
+
     fetchManuscripts();
-  }, []);
+  }, [viewMineOnly, user?.email, location.search]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -66,6 +86,27 @@ const Manuscript = () => {
     setSelectedManuscript(null);
   };
 
+  const handleWithdraw = async (id) => {
+    if (!window.confirm("Are you sure you want to withdraw this manuscript?")) return;
+    try {
+      await ManuscriptsAPI.deleteManuscript(id);
+      setManuscripts((prev) => prev.filter((m) => m._id !== id));
+    } catch (error) {
+      alert("Failed to withdraw the manuscript.");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to permanently delete this manuscript?")) return;
+    try {
+      await ManuscriptsAPI.deleteManuscript(String(id));
+      setManuscripts((prev) => prev.filter((m) => m.manuscript_key !== id));
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Failed to delete the manuscript.");
+    }
+  };
+
   const filteredManuscripts = manuscripts.filter((m) => {
     const query = searchQuery.toLowerCase();
     return (
@@ -74,6 +115,10 @@ const Manuscript = () => {
       `${m.author_first_name || ""} ${m.author_last_name || ""}`.toLowerCase().includes(query)
     );
   });
+
+  const displayManuscripts = viewMineOnly && user?.email
+    ? filteredManuscripts.filter((m) => m.author_email === user.email)
+    : filteredManuscripts;
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
@@ -100,7 +145,7 @@ const Manuscript = () => {
         </Grid>
 
         <Grid item xs={12} md={9}>
-          <Box display="flex" gap={2} mb={2} alignItems="stretch">
+          <Box display="flex" gap={2} mb={2} alignItems="center">
             <TextField
               fullWidth
               label="Search by title or author"
@@ -108,6 +153,20 @@ const Manuscript = () => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
+            {user?.allRoles?.includes("AU") && !user?.allRoles?.includes("DE") && (
+              <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
+                {viewMineOnly
+                  ? "View All Manuscripts"
+                  : "View My Author Manuscripts"}
+              </Button>
+            )}
+            {!user?.allRoles?.includes("AU") && user?.allRoles?.includes("DE") && (
+              <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
+                {viewMineOnly
+                  ? "View All Manuscripts"
+                  : "View My Developer Manuscripts"}
+              </Button>
+            )}
           </Box>
 
           {loading && (
@@ -115,22 +174,46 @@ const Manuscript = () => {
               <CircularProgress />
             </Box>
           )}
-          {error && (
+          {error && manuscripts.length === 0 && (
             <Alert severity="error" style={{ marginBottom: "2rem" }}>
               {error}
             </Alert>
           )}
 
+          <Box mb={2}>
+            <Typography variant="body2" color="textSecondary">
+              Logged in as: {user?.firstName || "Unknown"} ({user?.email || "No email"})<br />
+              Role: {user?.role || "No role"} | Role Code: {user?.role_code || "No role code"}<br />
+              All Roles: {user?.allRoles?.join(", ") || "None"}
+            </Typography>
+          </Box>
+
           <Box display="flex" flexDirection="column" gap={3}>
-            {filteredManuscripts.length === 0 ? (
-              <Typography variant="body1">No manuscripts match your search.</Typography>
+            {displayManuscripts.length === 0 ? (
+              <>
+                <Typography variant="body1">
+                  {viewMineOnly
+                    ? "You have not submitted any manuscripts yet. Submit one to get started."
+                    : "No manuscripts match your search."}
+                </Typography>
+                {viewMineOnly && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => window.location.href = "/submissions"}
+                    style={{ marginTop: "1rem", width: "fit-content" }}
+                  >
+                    Submit Manuscript
+                  </Button>
+                )}
+              </>
             ) : (
-              filteredManuscripts.map((book) => {
+              displayManuscripts.map((book) => {
                 const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
                 return (
                   <Card
                     elevation={3}
-                    key={book._id}
+                    key={book.manuscript_key || book._id}
                     style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
                   >
                     <CardContent style={{ flex: 1 }}>
@@ -143,14 +226,35 @@ const Manuscript = () => {
                       <Typography variant="body1" component="p">
                         <strong>Abstract:</strong> {book.abstract || "No abstract available"}
                       </Typography>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ marginTop: "1rem" }}
-                        onClick={() => handleOpen(book)}
-                      >
-                        View Details
-                      </Button>
+                      <Box mt={2} display="flex" gap={2}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleOpen(book)}
+                        >
+                          View Details
+                        </Button>
+                        {user?.email === book.author_email &&
+                          book.state === "Submitted" &&
+                          !user?.allRoles?.includes("DE") && (
+                            <Button
+                              variant="outlined"
+                              color="error"
+                              onClick={() => handleWithdraw(book.manuscript_key)}
+                            >
+                              Withdraw
+                            </Button>
+                          )}
+                        {user?.allRoles?.includes("DE") && (
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={() => handleDelete(book.manuscript_key)}
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </Box>
                     </CardContent>
                   </Card>
                 );

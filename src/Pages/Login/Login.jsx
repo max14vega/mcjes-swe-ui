@@ -76,7 +76,9 @@ export default function Login({ setUser }) {
           lastName: backendUser.last_name,
           email: backendUser.email,
           affiliation: backendUser.affiliation,
-          role: backendUser.role || "Viewer", // default if missing
+          allRoles: backendUser.roles?.length ? backendUser.roles : ["Viewer"], // <- new field
+          role: backendUser.roles?.[0] || "Viewer", 
+          role_code: backendUser.roles?.[0] || "Viewer",
           phone: backendUser.phone || "N/A",
           DOB: backendUser.DOB || "N/A",
           Total_articles: backendUser.Total_articles || 0,

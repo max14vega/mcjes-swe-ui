@@ -72,8 +72,8 @@ export default function Profile({user, setUser }) {
                 <Typography variant="h5">
                   {user.firstName} {user.lastName}
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {user.role}
+                <Typography variant="body1" color="textSecondary">
+                  Roles: {user?.allRoles?.join(", ") || "Viewer"}
                 </Typography>
 
 

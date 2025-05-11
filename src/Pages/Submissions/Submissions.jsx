@@ -211,7 +211,6 @@ const Submissions = () => {
               onChange={(e) => setArticleType(e.target.value)}
             >
               <MenuItem value="Case Studies">Case Studies</MenuItem>
-              <MenuItem value="Original Research">Original Research</MenuItem>
               <MenuItem value="Literature Review">Literature Review</MenuItem>
             </Select>
             {errors.articleType && (

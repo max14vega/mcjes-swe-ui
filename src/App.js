@@ -97,13 +97,13 @@ function App() {
               }
             />
             <Route
-              path="/manuscripts"
-              element={
-                <Layout user={user} setUser={setUser} >
-                  <Manuscripts />
-                </Layout>
-              }
-            />
+            path="/manuscripts"
+            element={
+              <Layout user={user} setUser={setUser}>
+                <Manuscripts user={user} />
+              </Layout>
+            }
+          />
             <Route
               path="/update-manuscripts"
               element={
