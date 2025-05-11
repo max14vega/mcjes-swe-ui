@@ -7,24 +7,76 @@ import {
   MenuItem,
   TextField,
   Box,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ManuscriptsAPI } from "../../Client/API";
 
+// Display options for categories
 const displayNameOptions = [
   { value: "Case Studies", label: "Case Studies" },
   { value: "Original Research", label: "Original Research" },
   { value: "Literature Review", label: "Literature Review" },
 ];
 
-const stateOptions = [
-  { value: "SUB", label: "Submitted" },
-  { value: "ARF", label: "In Review" },
-  { value: "REJ", label: "Rejected" },
-  { value: "WIT", label: "Withdrawn" },
-];
+// FSM mapping actions to labels
+const actionToStateOption = {
+  "Assign Referee": { value: "REF_REVIEW", label: "In Review" },
+  "Rejected": { value: "REJECTED", label: "Rejected" },
+  "Withdrawn": { value: "WITHDRAWN", label: "Withdrawn" },
+  "Submit Revisions": { value: "REF_REVIEW", label: "In Review" },
+  "Accept": { value: "COPY_EDIT", label: "Copy Edit" },
+  "Accept with Revisions": {
+    value: "AUTHOR_REVISION",
+    label: "Author Revision",
+  },
+  "Done": { value: "NEXT", label: "Advance to Next Step" },
+};
 
-const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
+// FSM state-to-actions mapping
+const stateToActions = {
+  SUBMITTED: ["Assign Referee", "Rejected", "Withdrawn"],
+  REF_REVIEW: [
+    "Assign Referee",
+    "Remove Referee",
+    "Submit Revisions",
+    "Accept",
+    "Accept with Revisions",
+    "Rejected",
+    "Withdrawn",
+  ],
+  AUTHOR_REVISION: ["Done", "Withdrawn"],
+  EDITOR_REVIEW: ["Accept", "Withdrawn"],
+  COPY_EDIT: ["Done", "Withdrawn"],
+  AUTHOR_REVIEW: ["Done", "Withdrawn"],
+  FORMATTING: ["Done", "Withdrawn"],
+  REJECTED: ["Withdrawn"],
+  WITHDRAWN: ["Withdrawn"],
+  PUBLISHED: ["Withdrawn"],
+};
+const stateLabelMap = {
+  AUTHOR_REVIEW: "Author Review",
+  AUTHOR_REVISION: "Author Revision",
+  COPY_EDIT: "Copy Edit",
+  EDITOR_REVIEW: "Editor Review",
+  FORMATTING: "Formatting",
+  PUBLISHED: "Published",
+  REF_REVIEW: "Referee Review",
+  REJECTED: "Rejected",
+  SUBMITTED: "Submitted",
+  WITHDRAWN: "Withdrawn",
+};
+const EditManuscript = ({
+  open,
+  onClose,
+  manuscriptData,
+  onDelete,
+  user,
+}) => {
+  const isEditor = user?.role === 'ED';
+  console.log("EditManuscript loaded with user:", user);
+  console.log("Is editor:", isEditor);
+
   const [form, setForm] = useState({
     manuscript_key: "",
     title: "",
@@ -36,6 +88,10 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
     author_email: "",
     state: "",
   });
+
+  const [availableStates, setAvailableStates] = useState([]);
+  const [forceState, setForceState] = useState("");
+  const [showOverride, setShowOverride] = useState(false);
 
   useEffect(() => {
     if (manuscriptData) {
@@ -50,6 +106,12 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
         author_email: manuscriptData.author_email || "",
         state: manuscriptData.state || "",
       });
+
+      const actions = manuscriptData.current_actions || [];
+      const mapped = actions
+        .map((action) => actionToStateOption[action])
+        .filter(Boolean);
+      setAvailableStates(mapped);
     }
   }, [manuscriptData]);
 
@@ -63,7 +125,7 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const requiredFields = [
       "title",
       "display_name",
@@ -73,39 +135,50 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
       "author_last_name",
       "author_email",
     ];
-
+  
     const missingFields = requiredFields.filter(
       (field) => !form[field] || form[field].trim() === ""
     );
-
+  
     if (missingFields.length > 0) {
       alert(`Please fill in all required fields:\n${missingFields.join(", ")}`);
       return;
     }
-
+  
     try {
       const { manuscript_key, state, ...metadata } = form;
-
+  
+      // Always update manuscript metadata first
       await ManuscriptsAPI.updateManuscript(manuscript_key, metadata);
-
-      // Map from selected state codes to backend actions
-      const stateToAction = {
-        REJ: "Rejected",
-        WIT: "Withdrawn",
-        ARF: "Assign Referee",
-      };
-
-      const selectedAction = stateToAction[state];
-
+  
+      // Force override path for editor — EXIT immediately after
+      if (isEditor && showOverride && forceState) {
+        const forcePayload = {
+          state: stateLabelMap[forceState] || forceState, // Convert FSM key to proper label
+          current_actions: stateToActions[forceState] || [],
+        };
+      
+        console.log("🔄 Submitting forced editor override payload:", JSON.stringify(forcePayload, null, 2));
+      
+        await ManuscriptsAPI.updateManuscript(manuscript_key, forcePayload);
+        onClose();
+        return;
+      }
+  
+      // FSM transition (non-override)
+      const selectedAction = Object.keys(actionToStateOption).find(
+        (key) => actionToStateOption[key].value === state
+      );
+  
       if (selectedAction && state !== manuscriptData.state) {
         const payload = {
           ...metadata,
           action: selectedAction,
         };
-        console.log("Submitting FSM action:", payload);
+        console.log("FSM transition payload:", payload);
         await ManuscriptsAPI.updateManuscriptState(manuscript_key, payload);
       }
-
+  
       onClose();
     } catch (err) {
       console.error("Update failed:", err);
@@ -202,15 +275,48 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
             fullWidth
             margin="normal"
           >
-            {stateOptions.map((opt) => (
+            {availableStates.map((opt) => (
               <MenuItem key={opt.value} value={opt.value}>
                 {opt.label}
               </MenuItem>
             ))}
           </TextField>
+
+          {isEditor && (
+            <>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+                <Typography variant="subtitle1">Editor Override</Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => setShowOverride((prev) => !prev)}
+                >
+                  Editor Move
+                </Button>
+              </Box>
+              {showOverride && (
+                <TextField
+                  select
+                  label="Force New State"
+                  value={forceState}
+                  onChange={(e) => setForceState(e.target.value)}
+                  fullWidth
+                  margin="normal"
+                >
+                  {Object.keys(stateToActions).map((stateKey) => (
+                    <MenuItem key={stateKey} value={stateKey}>
+                      {stateKey}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            </>
+          )}
         </form>
       </DialogContent>
-      <DialogActions sx={{ display: "flex", justifyContent: "space-between", px: 3, pb: 2 }}>
+      <DialogActions
+        sx={{ display: "flex", justifyContent: "space-between", px: 3, pb: 2 }}
+      >
         <Button color="error" onClick={handleDelete}>
           Delete
         </Button>
@@ -218,7 +324,12 @@ const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
           <Button onClick={onClose} sx={{ mr: 1 }}>
             Cancel
           </Button>
-          <Button type="submit" form="edit-manuscript-form" variant="contained" color="primary">
+          <Button
+            type="submit"
+            form="edit-manuscript-form"
+            variant="contained"
+            color="primary"
+          >
             Save
           </Button>
         </Box>

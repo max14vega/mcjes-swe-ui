@@ -17,6 +17,7 @@ import Register from "./Pages/Register";
 import Submissions from "./Pages/Submissions";
 import AdminPage from "./Pages/Admin/AdminPage";
 import UpdateManuscriptsPage from "./Pages/UpdateManuscripts/UpdateManuscripts";
+import Revisions from "./Pages/Revisions";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -44,7 +45,7 @@ function App() {
               path="/admin"
               element={
                 <Layout user={user} setUser={setUser}>
-                  <AdminPage />
+                  <AdminPage user={user} />
                 </Layout>
               }
             />
@@ -112,6 +113,15 @@ function App() {
                 </Layout>
               }
             />
+            <Route
+              path="/revisions"
+              element={
+                <Layout user={user} setUser={setUser}>
+                  <Revisions user={user} />
+                </Layout>
+              }
+            />
+
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>

@@ -4,7 +4,7 @@ import { ManuscriptsAPI } from "../../Client/API";
 import DataTable from "../../Components/DataTable/DataTable";
 import EditManuscript from "../../Components/EditManuscript/EditManuscript";
 
-const ManuscriptsTab = () => {
+const ManuscriptsTab = ({user}) => {
   const [data, setData] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [selectedManuscript, setSelectedManuscript] = useState(null);
@@ -79,6 +79,7 @@ const ManuscriptsTab = () => {
         manuscriptData={selectedManuscript}
         onSubmit={handleUpdateManuscript}
         onDelete={handleDelete}
+        user={user}
       />
     </>
   );

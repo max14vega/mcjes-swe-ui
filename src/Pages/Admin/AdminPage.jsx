@@ -10,39 +10,35 @@ import {
   Grid2,
 } from '@mui/material';
 
-const AdminPage = () => {
-    const [value, setValue] = useState(0);
-  
-    const handleTabChange = (event, tab) => {
-      setValue(tab);
-    };
-  
-    return (
-      <Container>
-        <Grid2
-          container
-          xs={12}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingTop: 4,
-          }}
-        >
-          <Grid2 item="true" direction={'row'}>
-            <Tabs value={value} onChange={handleTabChange}>
-              <Tab label="People" />
-              <Tab label="Manuscripts" />
-              <Tab label="Texts" />
-            </Tabs>
-          </Grid2>
-        </Grid2>
-        <hr />
-        {value === 0 && <PeopleTab />}
-        {value === 1 && <ManuscriptsTab />}
-        {value === 2 && <TextsTab />}
-      </Container>
-    );
+const AdminPage = ({ user }) => {
+  const [value, setValue] = useState(0);
+  const isDeveloper = user?.role === 'DE';
+
+  const tabs = isDeveloper
+    ? ['People', 'Manuscripts', 'Texts']
+    : ['Manuscripts', 'Texts'];
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
   };
+
+  return (
+    <Container>
+      <Grid2 container xs={12} sx={{ display: 'flex', justifyContent: 'space-between', paddingTop: 4 }}>
+        <Grid2 item>
+          <Tabs value={value} onChange={handleTabChange}>
+            {tabs.map((label) => (
+              <Tab key={label} label={label} />
+            ))}
+          </Tabs>
+        </Grid2>
+      </Grid2>
+      <hr />
+      {tabs[value] === 'People' && <PeopleTab />}
+      {tabs[value] === 'Manuscripts' && <ManuscriptsTab user={user} />}
+      {tabs[value] === 'Texts' && <TextsTab />}
+    </Container>
+  );
+};
 
   export default AdminPage;

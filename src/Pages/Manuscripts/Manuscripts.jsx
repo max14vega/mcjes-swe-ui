@@ -13,10 +13,13 @@ import {
   Paper,
   TextField,
   Typography,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
+import Revisions from "../Revisions"; // Adjust path if needed
 
 const Manuscript = ({ user }) => {
   const [manuscripts, setManuscripts] = useState([]);
@@ -26,8 +29,13 @@ const Manuscript = ({ user }) => {
   const [selectedManuscript, setSelectedManuscript] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMineOnly, setViewMineOnly] = useState(false);
+  const [tab, setTab] = useState("all");
 
   const location = useLocation();
+
+  const handleTabChange = (event, newValue) => {
+    setTab(newValue);
+  };
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -122,147 +130,162 @@ const Manuscript = ({ user }) => {
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
-          <Paper elevation={3} style={{ padding: "1rem", height: "fit-content" }}>
-            <Typography variant="h6" component="h2" gutterBottom>
-              Filter
-            </Typography>
-            <Box component="form" sx={{ mt: 2 }}>
-              <Typography variant="body1" gutterBottom>
-                Categories
+      <Tabs value={tab} onChange={handleTabChange} sx={{ mb: 3 }}>
+        <Tab label="All Manuscripts" value="all" />
+        {user?.allRoles?.includes("AU") && (
+          <Tab label="My Revisions" value="revisions" />
+        )}
+      </Tabs>
+
+      {tab === "all" && (
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={3}>
+            <Paper elevation={3} style={{ padding: "1rem", height: "fit-content" }}>
+              <Typography variant="h6" component="h2" gutterBottom>
+                Filter
               </Typography>
-              <Box display="flex" flexDirection="column" gap={1}>
-                {["Ecology", "Conservation", "Parasitology", "Genetics", "Taxonomy"].map((cat) => (
-                  <Box key={cat} display="flex" alignItems="center">
-                    <input type="checkbox" style={{ marginRight: "0.5rem" }} />
-                    <Typography variant="body2">{cat}</Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          <Box display="flex" gap={2} mb={2} alignItems="center">
-            <TextField
-              fullWidth
-              label="Search by title or author"
-              variant="outlined"
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            {user?.allRoles?.includes("AU") && !user?.allRoles?.includes("DE") && (
-              <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
-                {viewMineOnly
-                  ? "View All Manuscripts"
-                  : "View My Author Manuscripts"}
-              </Button>
-            )}
-            {!user?.allRoles?.includes("AU") && user?.allRoles?.includes("DE") && (
-              <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
-                {viewMineOnly
-                  ? "View All Manuscripts"
-                  : "View My Developer Manuscripts"}
-              </Button>
-            )}
-          </Box>
-
-          {loading && (
-            <Box display="flex" justifyContent="center" my={4}>
-              <CircularProgress />
-            </Box>
-          )}
-          {error && manuscripts.length === 0 && (
-            <Alert severity="error" style={{ marginBottom: "2rem" }}>
-              {error}
-            </Alert>
-          )}
-
-          <Box mb={2}>
-            <Typography variant="body2" color="textSecondary">
-              Logged in as: {user?.firstName || "Unknown"} ({user?.email || "No email"})<br />
-              Role: {user?.role || "No role"} | Role Code: {user?.role_code || "No role code"}<br />
-              All Roles: {user?.allRoles?.join(", ") || "None"}
-            </Typography>
-          </Box>
-
-          <Box display="flex" flexDirection="column" gap={3}>
-            {displayManuscripts.length === 0 ? (
-              <>
-                <Typography variant="body1">
-                  {viewMineOnly
-                    ? "You have not submitted any manuscripts yet. Submit one to get started."
-                    : "No manuscripts match your search."}
+              <Box component="form" sx={{ mt: 2 }}>
+                <Typography variant="body1" gutterBottom>
+                  Categories
                 </Typography>
-                {viewMineOnly && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => window.location.href = "/submissions"}
-                    style={{ marginTop: "1rem", width: "fit-content" }}
-                  >
-                    Submit Manuscript
-                  </Button>
-                )}
-              </>
-            ) : (
-              displayManuscripts.map((book) => {
-                const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
-                return (
-                  <Card
-                    elevation={3}
-                    key={book.manuscript_key || book._id}
-                    style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
-                  >
-                    <CardContent style={{ flex: 1 }}>
-                      <Typography variant="h5" component="h2" gutterBottom>
-                        {book.title || "No Title"}
-                      </Typography>
-                      <Typography variant="subtitle1" component="p" gutterBottom>
-                        <strong>Author:</strong> {author || "Unknown Author"}
-                      </Typography>
-                      <Typography variant="body1" component="p">
-                        <strong>Abstract:</strong> {book.abstract || "No abstract available"}
-                      </Typography>
-                      <Box mt={2} display="flex" gap={2}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleOpen(book)}
-                        >
-                          View Details
-                        </Button>
-                        {user?.email === book.author_email &&
-                          book.state === "Submitted" &&
-                          !user?.allRoles?.includes("DE") && (
+                <Box display="flex" flexDirection="column" gap={1}>
+                  {["Ecology", "Conservation", "Parasitology", "Genetics", "Taxonomy"].map((cat) => (
+                    <Box key={cat} display="flex" alignItems="center">
+                      <input type="checkbox" style={{ marginRight: "0.5rem" }} />
+                      <Typography variant="body2">{cat}</Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={9}>
+            <Box display="flex" gap={2} mb={2} alignItems="center">
+              <TextField
+                fullWidth
+                label="Search by title or author"
+                variant="outlined"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              {user?.allRoles?.includes("AU") && !user?.allRoles?.includes("DE") && (
+                <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
+                  {viewMineOnly
+                    ? "View All Manuscripts"
+                    : "View My Author Manuscripts"}
+                </Button>
+              )}
+              {!user?.allRoles?.includes("AU") && user?.allRoles?.includes("DE") && (
+                <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
+                  {viewMineOnly
+                    ? "View All Manuscripts"
+                    : "View My Developer Manuscripts"}
+                </Button>
+              )}
+            </Box>
+
+            {loading && (
+              <Box display="flex" justifyContent="center" my={4}>
+                <CircularProgress />
+              </Box>
+            )}
+            {error && manuscripts.length === 0 && (
+              <Alert severity="error" style={{ marginBottom: "2rem" }}>
+                {error}
+              </Alert>
+            )}
+
+            <Box mb={2}>
+              <Typography variant="body2" color="textSecondary">
+                Logged in as: {user?.firstName || "Unknown"} ({user?.email || "No email"})<br />
+                Role: {user?.role || "No role"} | Role Code: {user?.role_code || "No role code"}<br />
+                All Roles: {user?.allRoles?.join(", ") || "None"}
+              </Typography>
+            </Box>
+
+            <Box display="flex" flexDirection="column" gap={3}>
+              {displayManuscripts.length === 0 ? (
+                <>
+                  <Typography variant="body1">
+                    {viewMineOnly
+                      ? "You have not submitted any manuscripts yet. Submit one to get started."
+                      : "No manuscripts match your search."}
+                  </Typography>
+                  {viewMineOnly && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => window.location.href = "/submissions"}
+                      style={{ marginTop: "1rem", width: "fit-content" }}
+                    >
+                      Submit Manuscript
+                    </Button>
+                  )}
+                </>
+              ) : (
+                displayManuscripts.map((book) => {
+                  const author = `${book.author_first_name || ""} ${book.author_last_name || ""}`.trim();
+                  return (
+                    <Card
+                      elevation={3}
+                      key={book.manuscript_key || book._id}
+                      style={{ display: "flex", flexDirection: "row", padding: "1rem" }}
+                    >
+                      <CardContent style={{ flex: 1 }}>
+                        <Typography variant="h5" component="h2" gutterBottom>
+                          {book.title || "No Title"}
+                        </Typography>
+                        <Typography variant="subtitle1" component="p" gutterBottom>
+                          <strong>Author:</strong> {author || "Unknown Author"}
+                        </Typography>
+                        <Typography variant="body1" component="p">
+                          <strong>Abstract:</strong> {book.abstract || "No abstract available"}
+                        </Typography>
+                        <Box mt={2} display="flex" gap={2}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleOpen(book)}
+                          >
+                            View Details
+                          </Button>
+                          {user?.email === book.author_email &&
+                            book.state === "Submitted" &&
+                            !user?.allRoles?.includes("DE") && (
+                              <Button
+                                variant="outlined"
+                                color="error"
+                                onClick={() => handleWithdraw(book.manuscript_key)}
+                              >
+                                Withdraw
+                              </Button>
+                          )}
+                          {user?.allRoles?.includes("DE") && (
                             <Button
                               variant="outlined"
                               color="error"
-                              onClick={() => handleWithdraw(book.manuscript_key)}
+                              onClick={() => handleDelete(book.manuscript_key)}
                             >
-                              Withdraw
+                              Remove
                             </Button>
                           )}
-                        {user?.allRoles?.includes("DE") && (
-                          <Button
-                            variant="outlined"
-                            color="error"
-                            onClick={() => handleDelete(book.manuscript_key)}
-                          >
-                            Remove
-                          </Button>
-                        )}
-                      </Box>
-                    </CardContent>
-                  </Card>
-                );
-              })
-            )}
-          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  );
+                })
+              )}
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
+
+      {tab === "revisions" && (
+        <Box>
+          <Revisions user={user} />
+        </Box>
+      )}
 
       <Modal
         open={open}
