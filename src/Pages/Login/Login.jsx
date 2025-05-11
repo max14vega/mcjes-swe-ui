@@ -76,7 +76,7 @@ export default function Login({ setUser }) {
           lastName: backendUser.last_name,
           email: backendUser.email,
           affiliation: backendUser.affiliation,
-          role: backendUser.role,
+          roles: backendUser.roles,
           phone: backendUser.phone || "N/A",
           Total_articles: backendUser.Total_articles || 0,
           Average_views_per_article: backendUser.Average_views_per_article || 0,

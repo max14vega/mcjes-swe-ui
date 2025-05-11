@@ -19,10 +19,12 @@ import AdminPage from "./Pages/Admin/AdminPage";
 import UpdateManuscriptsPage from "./Pages/UpdateManuscripts/UpdateManuscripts";
 
 function App() {
-  const [user, setUser] = useState(() => {
-  const savedUser = localStorage.getItem("user");
-  return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) setUser(JSON.parse(savedUser));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
