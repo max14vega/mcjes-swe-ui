@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { useState } from "react";
 
+
 export default function Profile({user, setUser }) {
   const [openEditModal, setOpenEditModal] = useState(false);
 
@@ -25,7 +26,6 @@ export default function Profile({user, setUser }) {
     setUser((prevUser) => ({ ...prevUser, ...updatedUser }));
     localStorage.setItem("user", JSON.stringify({ ...user, ...updatedUser }));
   };
-
 
   if (!user || typeof user !== "object") {
     return null; // Or show a loader/message
@@ -72,8 +72,10 @@ export default function Profile({user, setUser }) {
                 <Typography variant="h5">
                   {user.firstName} {user.lastName}
                 </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  Roles: {user?.allRoles?.join(", ") || "Viewer"}
+                <Typography variant="body1" color="text.secondary">
+                {(Array.isArray(user.roles) ? user.roles : [user.roles])
+                  .filter(Boolean)
+                  .join(", ")}
                 </Typography>
 
 
@@ -131,9 +133,9 @@ export default function Profile({user, setUser }) {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="subtitle2" color="textSecondary">
-                    DOB
+                    Affiliation
                   </Typography>
-                  <Typography variant="body1">{user.DOB}</Typography>
+                  <Typography variant="body1">{user.affiliation}</Typography>
                 </Grid>
 
                 {/* Row 2 */}
@@ -145,9 +147,13 @@ export default function Profile({user, setUser }) {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="subtitle2" color="textSecondary">
-                    Role
+                    Roles
                   </Typography>
-                  <Typography variant="body1">{user.role}</Typography>
+                  <Typography variant="body1">
+                    {(Array.isArray(user.roles) ? user.roles : [user.roles])
+                      .filter(Boolean)
+                      .join(", ")}
+                  </Typography>
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="subtitle2" color="textSecondary">
