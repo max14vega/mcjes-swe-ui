@@ -73,7 +73,7 @@ const EditManuscript = ({
   onDelete,
   user,
 }) => {
-  const isEditor = user?.role === 'ED';
+  const isEditor = user?.roles?.includes('ED');
   console.log("EditManuscript loaded with user:", user);
   console.log("Is editor:", isEditor);
 

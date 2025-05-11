@@ -12,7 +12,7 @@ import {
 
 const AdminPage = ({ user }) => {
   const [value, setValue] = useState(0);
-  const isDeveloper = user?.role === 'DE';
+  const isDeveloper = user?.roles?.includes('DE');
 
   const tabs = isDeveloper
     ? ['People', 'Manuscripts', 'Texts']

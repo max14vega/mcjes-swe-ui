@@ -156,14 +156,25 @@ const Navbar = ({ user, setUser }) => {
           >
             Contact Us
           </Button>
-          {['DE', 'ED'].includes(user?.role) && (
+          {user?.roles?.includes('DE') && (
             <Button
               variant="contained"
               startIcon={<CodeIcon />}
               component={Link}
               to="/admin"
             >
-              {user.role === 'DE' ? 'Admin' : 'View Submitted Manuscripts'}
+              Admin
+            </Button>
+          )}
+
+          {user?.roles?.includes('ED') && (
+            <Button
+              variant="contained"
+              startIcon={<CodeIcon />}
+              component={Link}
+              to="/admin"
+            >
+              View Submitted Manuscripts
             </Button>
           )}
         </Box>
