@@ -9,10 +9,22 @@ import {
   Box,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { ManuscriptsAPI } from "../../Client/API";
 
-const stateOptions = ["SUB", "ARF", "REJ", "WIT"];
+const displayNameOptions = [
+  { value: "Case Studies", label: "Case Studies" },
+  { value: "Original Research", label: "Original Research" },
+  { value: "Literature Review", label: "Literature Review" },
+];
 
-const EditManuscript = ({ open, onClose, manuscriptData, onSubmit, onDelete }) => {
+const stateOptions = [
+  { value: "SUB", label: "Submitted" },
+  { value: "ARF", label: "In Review" },
+  { value: "REJ", label: "Rejected" },
+  { value: "WIT", label: "Withdrawn" },
+];
+
+const EditManuscript = ({ open, onClose, manuscriptData, onDelete }) => {
   const [form, setForm] = useState({
     manuscript_key: "",
     title: "",
@@ -43,15 +55,66 @@ const EditManuscript = ({ open, onClose, manuscriptData, onSubmit, onDelete }) =
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(form);
+
+    const requiredFields = [
+      "title",
+      "display_name",
+      "abstract",
+      "text",
+      "author_first_name",
+      "author_last_name",
+      "author_email",
+    ];
+
+    const missingFields = requiredFields.filter(
+      (field) => !form[field] || form[field].trim() === ""
+    );
+
+    if (missingFields.length > 0) {
+      alert(`Please fill in all required fields:\n${missingFields.join(", ")}`);
+      return;
+    }
+
+    try {
+      const { manuscript_key, state, ...metadata } = form;
+
+      await ManuscriptsAPI.updateManuscript(manuscript_key, metadata);
+
+      // Map from selected state codes to backend actions
+      const stateToAction = {
+        REJ: "Rejected",
+        WIT: "Withdrawn",
+        ARF: "Assign Referee",
+      };
+
+      const selectedAction = stateToAction[state];
+
+      if (selectedAction && state !== manuscriptData.state) {
+        const payload = {
+          ...metadata,
+          action: selectedAction,
+        };
+        console.log("Submitting FSM action:", payload);
+        await ManuscriptsAPI.updateManuscriptState(manuscript_key, payload);
+      }
+
+      onClose();
+    } catch (err) {
+      console.error("Update failed:", err);
+      alert("There was an error updating this manuscript.");
+    }
   };
 
   const handleDelete = () => {
+    if (!form.manuscript_key) return;
     if (window.confirm("Are you sure you want to delete this manuscript?")) {
       onDelete(form.manuscript_key);
     }
@@ -71,17 +134,20 @@ const EditManuscript = ({ open, onClose, manuscriptData, onSubmit, onDelete }) =
             margin="normal"
           />
           <TextField
-            select
             label="Display Name"
             name="display_name"
             value={form.display_name}
             onChange={handleChange}
             fullWidth
             margin="normal"
+            select
+            disabled
           >
-            <MenuItem value="Case Studies">Case Studies</MenuItem>
-            <MenuItem value="Original Research">Original Research</MenuItem>
-            <MenuItem value="Literature Review">Literature Review</MenuItem>
+            {displayNameOptions.map((opt) => (
+              <MenuItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </MenuItem>
+            ))}
           </TextField>
           <TextField
             label="Abstract"
@@ -137,8 +203,8 @@ const EditManuscript = ({ open, onClose, manuscriptData, onSubmit, onDelete }) =
             margin="normal"
           >
             {stateOptions.map((opt) => (
-              <MenuItem key={opt} value={opt}>
-                {opt}
+              <MenuItem key={opt.value} value={opt.value}>
+                {opt.label}
               </MenuItem>
             ))}
           </TextField>

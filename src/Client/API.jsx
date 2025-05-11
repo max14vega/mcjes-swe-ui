@@ -47,10 +47,21 @@ export const ManuscriptsAPI = {
       const response = await client.get("/manuscripts");
       return response.data;
     } catch (error) {
-      console.error("Error fetching manuscripts:", error);
+      console.error("Error fetching all manuscripts:", error);
       throw error;
     }
   },
+
+  getManuscriptsByEmail: async (email) => {
+    try {
+      const response = await client.get(`/manuscripts/people/${encodeURIComponent(email)}`);
+      return response.data.Message; // your API returns { Message: [...] }
+    } catch (error) {
+      console.error(`Error fetching manuscripts for ${email}:`, error);
+      throw error;
+    }
+  },
+
   deleteManuscript: async (id) => {
     try {
       const response = await client.delete(`/manuscripts/${id}`);
@@ -60,6 +71,7 @@ export const ManuscriptsAPI = {
       throw error;
     }
   },
+
   addManuscript: async (manuscript) => {
     try {
       const response = await client.post("/manuscripts", manuscript);
@@ -69,16 +81,38 @@ export const ManuscriptsAPI = {
       throw error;
     }
   },
-  updateManuscript: async (manuscript) => {
+
+  updateManuscript: async (id, manuscript) => {
     try {
-      const { manuscript_key, ...rest } = manuscript;
-      const response = await client.put(`/manuscripts/${manuscript_key}`, rest);
+      const response = await client.put(`/manuscripts/${id}`, manuscript);
       return response.data;
     } catch (error) {
-      console.error(`Error updating manuscript with ID ${manuscript.manuscript_key}:`, error);
+      console.error(`Error updating manuscript with ID ${id}:`, error);
       throw error;
     }
   },
+
+  updateManuscriptState: async (id, manuscript) => {
+    try {
+      const response = await client.put(`/manuscripts/action/${id}`, manuscript);
+      return response.data;
+    } catch (error) {
+      console.error(`Error updating manuscript state for ID ${id}:`, error);
+      throw error;
+    }
+  },
+
+  withdrawManuscript: async (id) => {
+    try {
+      const response = await client.put(`/manuscripts/${id}`, {
+        action: "Withdrawn"
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Error withdrawing manuscript ${id}:`, error);
+      throw error;
+    }
+  }
 };
 
 // Texts REST Endpoints
