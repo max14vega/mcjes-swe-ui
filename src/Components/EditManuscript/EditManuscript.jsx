@@ -73,7 +73,9 @@ const EditManuscript = ({
   onDelete,
   user,
 }) => {
-  const isEditor = user?.roles?.includes('ED');
+  const isEditor = user?.roles?.includes("ED");
+  const isReferee = user?.roles?.includes("RE") && manuscriptData?.referees?.includes(user.email);
+  const canEdit = isEditor || isReferee;
   console.log("EditManuscript loaded with user:", user);
   console.log("Is editor:", isEditor);
 
@@ -152,7 +154,7 @@ const EditManuscript = ({
       await ManuscriptsAPI.updateManuscript(manuscript_key, metadata);
   
       // Force override path for editor — EXIT immediately after
-      if (isEditor && showOverride && forceState) {
+      if (canEdit && showOverride && forceState) {
         const forcePayload = {
           state: stateLabelMap[forceState] || forceState, // Convert FSM key to proper label
           current_actions: stateToActions[forceState] || [],
@@ -282,7 +284,7 @@ const EditManuscript = ({
             ))}
           </TextField>
 
-          {isEditor && (
+          {canEdit && (
             <>
               <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
                 <Typography variant="subtitle1">Editor Override</Typography>
@@ -310,6 +312,19 @@ const EditManuscript = ({
                   ))}
                 </TextField>
               )}
+              <TextField
+                label="Referees (comma-separated emails)"
+                name="referees"
+                value={form.referees?.join(", ") || ""}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    referees: e.target.value.split(",").map(email => email.trim())
+                  }))
+                }
+                fullWidth
+                margin="normal"
+              />
             </>
           )}
         </form>

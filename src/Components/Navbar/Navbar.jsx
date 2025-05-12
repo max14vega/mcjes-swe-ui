@@ -167,7 +167,7 @@ const Navbar = ({ user, setUser }) => {
             </Button>
           )}
 
-          {user?.roles?.includes('ED') && (
+            {(user?.roles?.includes('ED') || user?.roles?.includes('RE')) && (
             <Button
               variant="contained"
               startIcon={<CodeIcon />}

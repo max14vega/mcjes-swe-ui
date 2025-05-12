@@ -14,10 +14,21 @@ const ManuscriptsTab = ({user}) => {
   const fetchData = async () => {
     try {
       const jsonData = await ManuscriptsAPI.getManuscripts();
-      const manuscripts = Object.values(jsonData).map((manuscript) => ({
+  
+      let manuscripts = Object.values(jsonData).map((manuscript) => ({
         ...manuscript,
         referees: manuscript.referees?.join(", ") || "",
       }));
+  
+      if (user?.roles?.includes("RE")) {
+        manuscripts = manuscripts.filter((manuscript) =>
+          manuscript.referees
+            .split(",")
+            .map((email) => email.trim().toLowerCase())
+            .includes(user.email.toLowerCase())
+        );
+      }
+  
       setData(manuscripts);
     } catch (error) {
       console.error("Error fetching manuscripts:", error);
