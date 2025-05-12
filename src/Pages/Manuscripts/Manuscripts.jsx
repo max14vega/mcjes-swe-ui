@@ -19,7 +19,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ManuscriptsAPI } from "../../Client/API";
-import Revisions from "../Revisions"; // Adjust path if needed
+import Revisions from "../Revisions";
 
 const Manuscript = ({ user }) => {
   const [manuscripts, setManuscripts] = useState([]);
@@ -33,9 +33,17 @@ const Manuscript = ({ user }) => {
 
   const location = useLocation();
 
+  const allRoles = user?.roles ?? user?.allRoles ?? (user?.role_code ? [user.role_code] : []);
+  const isAuthor = allRoles.includes("AU");
+  const isDeveloper = allRoles.includes("DE");
+
   const handleTabChange = (event, newValue) => {
     setTab(newValue);
   };
+
+  useEffect(() => {
+    console.log("USER OBJECT:", user);
+  }, [user]);
 
   useEffect(() => {
     const fetchManuscripts = async () => {
@@ -132,7 +140,7 @@ const Manuscript = ({ user }) => {
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Tabs value={tab} onChange={handleTabChange} sx={{ mb: 3 }}>
         <Tab label="All Manuscripts" value="all" />
-        {user?.allRoles?.includes("AU") && (
+        {isAuthor && (
           <Tab label="My Revisions" value="revisions" />
         )}
       </Tabs>
@@ -169,18 +177,14 @@ const Manuscript = ({ user }) => {
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
-              {user?.allRoles?.includes("AU") && !user?.allRoles?.includes("DE") && (
+              {isAuthor && (
                 <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
-                  {viewMineOnly
-                    ? "View All Manuscripts"
-                    : "View My Author Manuscripts"}
+                  {viewMineOnly ? "View All Manuscripts" : "View My Author Manuscripts"}
                 </Button>
               )}
-              {!user?.allRoles?.includes("AU") && user?.allRoles?.includes("DE") && (
+              {isDeveloper && (
                 <Button variant="contained" onClick={() => setViewMineOnly((prev) => !prev)}>
-                  {viewMineOnly
-                    ? "View All Manuscripts"
-                    : "View My Developer Manuscripts"}
+                  {viewMineOnly ? "View All Manuscripts" : "View My Developer Manuscripts"}
                 </Button>
               )}
             </Box>
@@ -199,8 +203,9 @@ const Manuscript = ({ user }) => {
             <Box mb={2}>
               <Typography variant="body2" color="textSecondary">
                 Logged in as: {user?.firstName || "Unknown"} ({user?.email || "No email"})<br />
-                Role: {user?.role || "No role"} | Role Code: {user?.role_code || "No role code"}<br />
-                All Roles: {user?.allRoles?.join(", ") || "None"}
+                Is Author: {isAuthor ? "Yes" : "No"} | Is Developer: {isDeveloper ? "Yes" : "No"}<br />
+                Role Code: {user?.role_code || "No role code"}<br />
+                All Roles: {allRoles.join(", ") || "None"}
               </Typography>
             </Box>
 
@@ -252,7 +257,7 @@ const Manuscript = ({ user }) => {
                           </Button>
                           {user?.email === book.author_email &&
                             book.state === "Submitted" &&
-                            !user?.allRoles?.includes("DE") && (
+                            !isDeveloper && (
                               <Button
                                 variant="outlined"
                                 color="error"
@@ -261,7 +266,7 @@ const Manuscript = ({ user }) => {
                                 Withdraw
                               </Button>
                           )}
-                          {user?.allRoles?.includes("DE") && (
+                          {isDeveloper && (
                             <Button
                               variant="outlined"
                               color="error"
