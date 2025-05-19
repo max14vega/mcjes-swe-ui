@@ -104,7 +104,7 @@ export const ManuscriptsAPI = {
 
   withdrawManuscript: async (id) => {
     try {
-      const response = await client.put(`/manuscripts/${id}`, {
+      const response = await client.patch(`/manuscripts/${id}`, {
         action: "Withdrawn"
       });
       return response.data;
@@ -150,7 +150,7 @@ export const TextsAPI = {
       const response = await client.put(`/texts/${text.key}`, text);
       return response.data;
     } catch (error) {
-      console.error(`Error updating text with ID ${text.key}:`, error); 
+      console.error(`Error updating text with ID ${text.key}:`, error);
       throw error;
     }
   },

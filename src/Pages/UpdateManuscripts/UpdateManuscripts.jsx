@@ -26,8 +26,7 @@ const UpdateManuscriptsPage = () => {
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchManuscripts = async () => {
+  const fetchManuscripts = async () => {
       try {
         const data = await ManuscriptsAPI.getManuscripts();
         setManuscripts(Object.values(data));
@@ -35,6 +34,8 @@ const UpdateManuscriptsPage = () => {
         console.error("Error fetching manuscripts:", error);
       }
     };
+
+  useEffect(() => {
     fetchManuscripts();
   }, []);
 
@@ -53,6 +54,7 @@ const UpdateManuscriptsPage = () => {
   };
 
   const handleUpdate = async () => {
+    /*
     try {
       await ManuscriptsAPI.updateManuscript(selected.manuscript_key, selected);
       setManuscripts((prev) =>
@@ -62,6 +64,14 @@ const UpdateManuscriptsPage = () => {
     } catch (err) {
       alert("Failed to update manuscript");
     }
+    */
+    try {
+    await ManuscriptsAPI.updateManuscript(selected.manuscript_key, selected);
+    await fetchManuscripts(); // 🔄 First update the table
+    handleClose(); // ✅ Then close the modal
+  } catch (err) {
+    alert("Failed to update manuscript");
+  }
   };
 
   const handleDelete = async (manuscript_key) => {
@@ -152,9 +162,15 @@ const UpdateManuscriptsPage = () => {
                 onChange={(e) => handleChange("text", e.target.value)}
               />
               <TextField
+                id="outlined-read-only-input"
                 label="Author First Name"
                 value={selected.author_first_name || ""}
                 onChange={(e) => handleChange("author_first_name", e.target.value)}
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
               />
               <TextField
                 label="Author Last Name"

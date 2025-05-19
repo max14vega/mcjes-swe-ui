@@ -23,7 +23,6 @@ const displayNameOptions = [
 const actionToStateOption = {
   "Assign Referee": { value: "REF_REVIEW", label: "In Review" },
   "Rejected": { value: "REJECTED", label: "Rejected" },
-  "Withdrawn": { value: "WITHDRAWN", label: "Withdrawn" },
   "Submit Revisions": { value: "REF_REVIEW", label: "In Review" },
   "Accept": { value: "COPY_EDIT", label: "Copy Edit" },
   "Accept with Revisions": {
@@ -35,7 +34,7 @@ const actionToStateOption = {
 
 // FSM state-to-actions mapping
 const stateToActions = {
-  SUBMITTED: ["Assign Referee", "Rejected", "Withdrawn"],
+  SUBMITTED: ["Assign Referee", "Rejected", ""],
   REF_REVIEW: [
     "Assign Referee",
     "Remove Referee",
@@ -43,16 +42,14 @@ const stateToActions = {
     "Accept",
     "Accept with Revisions",
     "Rejected",
-    "Withdrawn",
   ],
-  AUTHOR_REVISION: ["Done", "Withdrawn"],
-  EDITOR_REVIEW: ["Accept", "Withdrawn"],
-  COPY_EDIT: ["Done", "Withdrawn"],
-  AUTHOR_REVIEW: ["Done", "Withdrawn"],
-  FORMATTING: ["Done", "Withdrawn"],
-  REJECTED: ["Withdrawn"],
-  WITHDRAWN: ["Withdrawn"],
-  PUBLISHED: ["Withdrawn"],
+  AUTHOR_REVISION: ["Done"],
+  EDITOR_REVIEW: ["Accept"],
+  COPY_EDIT: ["Done"],
+  AUTHOR_REVIEW: ["Done"],
+  FORMATTING: ["Done"],
+  REJECTED: [],
+  PUBLISHED: [],
 };
 const stateLabelMap = {
   AUTHOR_REVIEW: "Author Review",
@@ -64,7 +61,6 @@ const stateLabelMap = {
   REF_REVIEW: "Referee Review",
   REJECTED: "Rejected",
   SUBMITTED: "Submitted",
-  WITHDRAWN: "Withdrawn",
 };
 const EditManuscript = ({
   open,
@@ -127,7 +123,7 @@ const EditManuscript = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const requiredFields = [
       "title",
       "display_name",
@@ -137,41 +133,46 @@ const EditManuscript = ({
       "author_last_name",
       "author_email",
     ];
-  
+
     const missingFields = requiredFields.filter(
       (field) => !form[field] || form[field].trim() === ""
     );
-  
+
     if (missingFields.length > 0) {
       alert(`Please fill in all required fields:\n${missingFields.join(", ")}`);
       return;
     }
-  
+
     try {
       const { manuscript_key, state, ...metadata } = form;
-  
+
+        // 👇 ADD THE LOGS RIGHT HERE
+        console.log("🧾 Payload being sent:", metadata);
+        console.log("🧾 Full form object:", form);
+
       // Always update manuscript metadata first
       await ManuscriptsAPI.updateManuscript(manuscript_key, metadata);
-  
+      //onClose(true); // Trigger reload in parent
+
       // Force override path for editor — EXIT immediately after
       if (canEdit && showOverride && forceState) {
         const forcePayload = {
           state: stateLabelMap[forceState] || forceState, // Convert FSM key to proper label
           current_actions: stateToActions[forceState] || [],
         };
-      
+
         console.log("🔄 Submitting forced editor override payload:", JSON.stringify(forcePayload, null, 2));
-      
+
         await ManuscriptsAPI.updateManuscript(manuscript_key, forcePayload);
-        onClose();
+        onClose(true);
         return;
       }
-  
+
       // FSM transition (non-override)
       const selectedAction = Object.keys(actionToStateOption).find(
         (key) => actionToStateOption[key].value === state
       );
-  
+
       if (selectedAction && state !== manuscriptData.state) {
         const payload = {
           ...metadata,
@@ -180,8 +181,8 @@ const EditManuscript = ({
         console.log("FSM transition payload:", payload);
         await ManuscriptsAPI.updateManuscriptState(manuscript_key, payload);
       }
-  
-      onClose();
+
+      onClose(true);
     } catch (err) {
       console.error("Update failed:", err);
       alert("There was an error updating this manuscript.");
@@ -248,7 +249,8 @@ const EditManuscript = ({
             label="Author First Name"
             name="author_first_name"
             value={form.author_first_name}
-            onChange={handleChange}
+            //onChange={handleChange}
+            InputProps={{ readOnly: true }}
             fullWidth
             margin="normal"
           />
@@ -256,7 +258,8 @@ const EditManuscript = ({
             label="Author Last Name"
             name="author_last_name"
             value={form.author_last_name}
-            onChange={handleChange}
+            //onChange={handleChange}
+            InputProps={{ readOnly: true }}
             fullWidth
             margin="normal"
           />
@@ -264,7 +267,8 @@ const EditManuscript = ({
             label="Author Email"
             name="author_email"
             value={form.author_email}
-            onChange={handleChange}
+            //onChange={handleChange}
+            InputProps={{ readOnly: true }}
             fullWidth
             margin="normal"
           />
